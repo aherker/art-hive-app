@@ -1,0 +1,8 @@
+{
+  "name": "Art Hive App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "eac7ad37"
+}
