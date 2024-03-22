@@ -1,0 +1,15 @@
+.button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.large-button {
+    --padding-top: 20px;
+    --padding-bottom: 20px;
+    font-size: 1.5rem; /* Adjust the font size as needed */
+    width: calc(100% - 40px); /* Calculate the width to fit the screen minus horizontal padding */
+    max-width: 400px;
+}

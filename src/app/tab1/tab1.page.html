@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Hello1
+      Page 1
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Hello</ion-title>
+      <ion-title size="large">Tab 1</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-card>
@@ -62,6 +62,21 @@
       </ion-item>
     </ion-card-content> 
   </ion-card>
-  
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button fill="clear" routerLink="/previous-page">
+          <ion-icon name="arrow-back"></ion-icon>
+          Previous
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" routerLink="/next-page">
+          Next
+          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
   
 </ion-content>
