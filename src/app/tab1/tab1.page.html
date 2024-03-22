@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Hello1
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,34 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Hello</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Question 1</ion-card-title>
+      <ion-card-subtitle>This debrief form will be used for evaluation purposes, to understand the size and nature of our community, what are the main themes discussed, some highlights or challenges along the way, etc. There are questions that are required and questions that you will fill only if it applies to the current activity. If a question does not apply, please leave it blank, do not write n/a. If you are required to write numbers (i.e. Participants' sections), please write numbers; if no participants of a specific age are present, please write 0.</ion-card-subtitle>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-list>
+        <ion-radio-group>
+          <ion-item>
+            <ion-label>Option 1</ion-label>
+            <ion-radio slot="start" value="Option 1"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Option 2</ion-label>
+            <ion-radio slot="start" value="Option 2"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Option 4</ion-label>
+            <ion-radio slot="start" value="Option 3"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  
 </ion-content>
