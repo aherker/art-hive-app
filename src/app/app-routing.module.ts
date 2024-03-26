@@ -5,6 +5,14 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+  },
+  {
+    path: 'form-page2',
+    loadChildren: () => import('./form-page2/form-page2.module').then( m => m.FormPage2PageModule)
+  },
+  {
+    path: 'dapage',
+    loadChildren: () => import('./dapage/dapage.module').then( m => m.DApagePageModule)
   }
 ];
 @NgModule({
