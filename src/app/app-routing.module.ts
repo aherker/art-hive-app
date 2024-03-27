@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'dapage',
     loadChildren: () => import('./dapage/dapage.module').then( m => m.DApagePageModule)
+  },
+  {
+    path: 'form-page3',
+    loadChildren: () => import('./form-page3/form-page3.module').then( m => m.FormPage3PageModule)
   }
 ];
 @NgModule({
