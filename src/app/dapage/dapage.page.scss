@@ -1,0 +1,13 @@
+.chart-container {
+  position: relative;
+}
+
+.chart-title {
+  position: absolute;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-family: Arial;
+  color: #333;
+}

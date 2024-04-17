@@ -12,7 +12,12 @@
   </ion-header>
 
 
-  <ion-title size="small">This Page will let you view results from the forms submitted</ion-title>
+  <ion-content [fullscreen]="true">
+    <div class="chart-container">
+      <canvas id="doughnutChart"></canvas>
+      <div class="chart-title">Age Demographics</div>
+    </div>
+  </ion-content>
 
 
   <ion-tabs>
