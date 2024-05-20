@@ -12,30 +12,10 @@
   </ion-header>
 
 
-  <ion-title size="small">This Page will let you view results from the forms submitted</ion-title>
-
-
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="tab2" routerLink="/tabs/tab2">
-        <ion-icon aria-hidden="true" name="home"></ion-icon>
-        <ion-label>Home</ion-label>
-      </ion-tab-button>
-  
-      <ion-tab-button tab="tab1" routerLink="/tabs/tab1">
-        <ion-icon aria-hidden="true" name="clipboard"></ion-icon>
-        <ion-label>Form</ion-label>
-      </ion-tab-button>
-  
-      <ion-tab-button tab="tab3" routerLink="/tabs/tab3">
-        <ion-icon aria-hidden="true" name="albums"></ion-icon>
-        <ion-label>Previous Forms</ion-label>
-      </ion-tab-button>
-  
-      <ion-tab-button tab="tab4" routerLink="/dapage">
-        <ion-icon aria-hidden="true" name="trending-up"></ion-icon>
-        <ion-label>Data Analysis</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
+  <ion-content [fullscreen]="true">
+    <div class="chart-container">
+      <canvas id="doughnutChart"></canvas>
+      <div class="chart-title">Age Demographics</div>
+    </div>
+  </ion-content>
 </ion-content>

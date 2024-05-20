@@ -1,0 +1,207 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Debrief Form Art Hives</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Form Overview</ion-card-title>
+    <ion-card-subtitle>This debrief form will be used for evaluation purposes, to understand the size and nature of our community, what are the main themes discussed, some highlights or challenges along the way, etc. There are questions that are required and questions that you will fill only if it applies to the current activity. If a question does not apply, please leave it blank, do not write n/a. If you are required to write numbers (i.e. Participants' sections), please write numbers; if no participants of a specific age are present, please write 0.</ion-card-subtitle>
+  </ion-card-header>
+</ion-card>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 1</ion-card-title>
+    <ion-card-subtitle>Name of the people who are completing this form (facilitators and members of the community, if they agree to have their names written here)</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter names here"></ion-input>
+    </ion-item>
+  </ion-card-content> 
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 2</ion-card-title>
+    <ion-card-subtitle>Date of the Art Hive (First is start time and date/Second is end time and date)</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-label>Start Date and Time</ion-label>
+    <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+      <ion-label>End Date and Time</ion-label>
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+  </ion-card-content> 
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 3</ion-card-title>
+    <ion-card-subtitle>Location of Art Hive - address & geolocation</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter Location here"></ion-input>
+    </ion-item>
+  </ion-card-content> 
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 4</ion-card-title>
+    <ion-card-subtitle>Site Contact - Individual(s) name & contact </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter name(s) here"></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 5</ion-card-title>
+    <ion-card-subtitle> Partners for this Art Hive - individuals, programs, projects, or organizations  </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter partner(s) here"></ion-input>
+    </ion-item>
+  </ion-card-content> 
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 6</ion-card-title>
+    <ion-card-subtitle> List facilitator names</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter name(s) here"></ion-input>
+    </ion-item>
+  </ion-card-content> 
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 7</ion-card-title>
+    <ion-card-subtitle> Number of participants</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number of participants here"></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 8</ion-card-title>
+    <ion-card-subtitle> Number of participants (include facilitators, please write the total numbers of participants present in the activity - write a number only, no text) </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number here"></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 9</ion-card-title>
+    <ion-card-subtitle>Approximate number of older adults ≥65 (write a number only, no text) </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number here"></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 10</ion-card-title>
+    <ion-card-subtitle> Partners for this Art Hive - individuals, programs, projects, or organizations  </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter partner(s) here"></ion-input>
+    </ion-item>
+  </ion-card-content> 
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 11</ion-card-title>
+    <ion-card-subtitle> Approximate numbers of students - label with educational institutions </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number here"></ion-input>
+    </ion-item>
+  </ion-card-content> 
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 12</ion-card-title>
+    <ion-card-subtitle> Approximate number of children under 18 (write a number only, no text) </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number here"></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 13</ion-card-title>
+    <ion-card-subtitle> How many new participants? (Write a number only, no text) </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number here"></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Question 14</ion-card-title>
+    <ion-card-subtitle> How did new participants find the event? (Based on answers from the participants) If answer is different, then please use the text box  </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter here"></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        Submit Form
+        <ion-icon name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-buttons slot="end">
+      <ion-button fill="clear" routerLink="./form-page2">
+        Next
+        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header> 
+</ion-content>
