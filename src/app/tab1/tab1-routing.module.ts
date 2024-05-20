@@ -5,8 +5,11 @@ import { Tab1Page } from './tab1.page';
 const routes: Routes = [
   {
     path: '',
-    component: Tab1Page,
+    redirectTo: '/forms/form-page1',
+    pathMatch: 'full',
+    // component: Tab1Page,
   }
+  
 ];
 
 @NgModule({

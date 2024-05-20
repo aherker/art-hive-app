@@ -1,0 +1,36 @@
+
+<ion-content>
+  <div class="flex-center">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title style="text-align:center" >Signup</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-input id="register-email" type="email" label="Email" placeholder="email@siue.edu" labelPlacement="floating" required></ion-input>
+          </ion-item>
+        
+          <ion-item>
+            <ion-input id="password" label="Password" type="password" labelPlacement="floating" required></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-input id="confirm-password" label="Confirm Password" type="password" labelPlacement="floating" required></ion-input>
+          </ion-item>
+
+          <div >
+            <ion-button class="signup-button" fill="outline" >Signup</ion-button>
+          </div>
+
+          <div style="display: flex; align-items: center;">
+            <ion-label class="login-label" style="text-align:center">Already have an account?</ion-label>
+            <ion-button class="login-button" routerLink="/login" fill="clear" style="text-align:center">Login</ion-button>
+          </div>
+
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
