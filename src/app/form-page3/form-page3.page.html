@@ -74,7 +74,7 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item class="custom-item">
-        <ion-input class="custom-input" placeholder="Enter here"></ion-input>
+        <ion-input class="custom-input" [(ngModel)]="userAnswer2" placeholder="Enter here"></ion-input>
       </ion-item>
     </ion-card-content>
   </ion-card>
@@ -86,10 +86,16 @@
     </ion-card-header>
     <ion-card-content style="padding: 20px;">
       <ion-item class="custom-item">
-        <ion-input class="custom-input" placeholder="Enter here"></ion-input>
+        <ion-input class="custom-input" type="text" [(ngModel)]="userAnswer" (ionChange)="updateTemporaryAnswer()" placeholder="Enter here"></ion-input>
       </ion-item>
       </ion-card-content>
   </ion-card>
+
+  <ion-item *ngIf="showAnswer">
+    <ion-label position="stacked">Your answer:</ion-label>
+    <ion-textarea [readonly]="true">{{ savedAnswer }}</ion-textarea>
+   
+  </ion-item>
 
 
   <ion-header style="z-index: 0;">
@@ -107,7 +113,7 @@
         </ion-button>
       </ion-buttons>
       <ion-buttons class="ion-buttons-center">
-        <ion-button color="secondary" fill="clear">
+        <ion-button (click)="submitAnswer()" color="secondary" fill="clear">
           Submit
         </ion-button>
       </ion-buttons>
