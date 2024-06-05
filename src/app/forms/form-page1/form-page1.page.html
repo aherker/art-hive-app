@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Debrief Form Art Hives</ion-title>
+  <ion-toolbar class="header-background">
+    <ion-title class="custom-title-background">Art Hives Form</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="page-background">
 <ion-card>
   <ion-card-header>
     <ion-card-title>Form Overview</ion-card-title>
@@ -190,18 +190,12 @@
 </ion-card>
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-button fill="clear">
-        Submit Form
-        <ion-icon name="arrow-forward"></ion-icon>
+    <ion-buttons class="center-button">
+      <ion-button class="rounded-button">
+          Submit
+        <ion-icon slot="end" name="checkmark"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <!-- <ion-buttons slot="end">
-      <ion-button fill="clear" routerLink="./form-page2">
-        Next
-        <ion-icon slot="end" name="arrow-forward"></ion-icon>
-      </ion-button>
-    </ion-buttons> -->
   </ion-toolbar>
 </ion-header> 
 </ion-content>
