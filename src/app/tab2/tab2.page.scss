@@ -13,3 +13,11 @@
     width: calc(100% - 40px); /* Calculate the width to fit the screen minus horizontal padding */
     max-width: 400px;
 }
+
+ion-content {
+    --background: none;
+  }
+
+ion-toolbar {
+    --background: none;
+  }

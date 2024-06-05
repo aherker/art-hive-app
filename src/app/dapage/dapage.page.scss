@@ -1,5 +1,6 @@
 .chart-container {
     position: relative;
+    
   }
   
   .chart-title {
@@ -11,3 +12,13 @@
     font-family: Arial;
     color: #333;
   }
+
+
+  ion-content {
+    --background: none;
+  }
+
+  ion-toolbar {
+    --background: none;
+  }
+

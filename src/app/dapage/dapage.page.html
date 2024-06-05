@@ -1,21 +1,18 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Data Analysis</ion-title>
+<ion-header >
+  <ion-toolbar class="header-background">
+        <ion-title class="custom-title-background">Data Analysis</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">DApage</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-
-  <ion-content [fullscreen]="true">
-    <div class="chart-container">
+  <ion-content [fullscreen]="true" class="page-background">
+    <ion-card>
+    <div class="chart-container" collapse="condense">
       <canvas id="doughnutChart"></canvas>
       <div class="chart-title">Age Demographics</div>
     </div>
+    <p>
+      This is a description box for the chart.
+    </p>
+    </ion-card>
   </ion-content>
-</ion-content>
+
