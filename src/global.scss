@@ -31,3 +31,36 @@
     align-items: center;
     height: 100%;
 }
+
+.page-background {
+    background-image: url('/assets/honeycomb-texture-background.jpg');
+    background-size: contain;
+    background-attachment: scroll;
+    background-position: center;
+    height: 100%;
+    background-repeat: repeat-y;
+  }
+
+.header-background {
+    background: url('/assets/honey-drip-dark.jpg');
+    background-size: contain;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.custom-title-background {
+    display: inline-block;
+    background-color:black; /* or any other background color */
+    padding: 0.8em 0.5em; /* Adjust padding as needed */
+    color: white;
+    width: 50%;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0px;  
+  }
+
