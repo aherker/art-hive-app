@@ -1,35 +1,44 @@
 <ion-content>
   <div class="flex-center">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title style="text-align:center" >Login</ion-card-title>
-      </ion-card-header>
-    
-      <ion-card-content>
-        <ion-list>
-          <ion-item>
-            <ion-input id="email" type="email" label="Email" placeholder="email@siue.edu" labelPlacement="floating" required></ion-input>
-          </ion-item>
-        
-          <ion-item>
-            <ion-input id="password" label="Password" type="password" labelPlacement="floating" required></ion-input>
-          </ion-item>
+    <form [formGroup]="form">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title style="text-align:center">Login</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-input id="email" type="email" label="Email" labelPlacement="floating" formControlName="email" required></ion-input>
+              
+            </ion-item>
 
-          <div>
-            <ion-button class="forgot-id" fill="clear" >forgot password?</ion-button>
-          </div>
-          
-          <div >
-            <ion-button class="login-button" fill="outline" routerLink="/homepage">Login</ion-button>
-          </div>
+              <ion-label color="danger" labelPlacement="floating" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']">Please enter an email</ion-label>
+              <ion-label color="danger" labelPlacement="floating" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']">Email is invalid</ion-label>
 
-          <div style="display: flex; align-items: center;">
-            <ion-label class="register-label" style="text-align:center">Don't have an account?</ion-label>
-            <ion-button class="register-button" routerLink="/register" fill="clear" style="text-align:center">Signup</ion-button>
-          </div>
+            <ion-item>
+              <ion-input id="password" label="Password" type="password" labelPlacement="floating" formControlName="password" required></ion-input>
+            </ion-item>
 
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
+              <ion-label color="danger" *ngIf="form.get('password')?.touched && form.get('password')?.errors?.['required']">Please enter a password</ion-label>
+              <ion-label color="danger" *ngIf="form.get('password')?.touched && form.get('password')?.errors?.['password']">Password is incorrect</ion-label>
+
+            <div>
+              <ion-button class="forgot-id" fill="clear" [disabled]="!form.get('email')?.valid">forgot password?</ion-button>
+            </div>
+            
+            <div>
+              <ion-button class="login-button" fill="outline" (click)="login()" [disabled]="form.invalid">Login</ion-button>
+            </div>
+
+            <div style="display: flex; align-items: center;">
+              <ion-label class="register-label" style="text-align:center">Don't have an account?</ion-label>
+              <ion-button class="register-button" (click)="register()" fill="clear" style="text-align:center">Signup</ion-button>
+            </div>
+
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </form>
   </div>
 </ion-content>
