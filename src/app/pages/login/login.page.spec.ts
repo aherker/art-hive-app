@@ -1,14 +1,22 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { LoginPage } from './login.page';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule, Store } from '@ngrx/store';
+import { loadingReducer } from 'src/store/loading/loading.reducers';
+import { loginReducer } from 'src/store/login/login.reducers';
+import { AppState } from 'src/store/AppState';
+import { recoverPassword, recoveredPasswordFailed, recoveredPasswordSuccess } from 'src/store/login/login.actions';
 
 describe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;
   let router: Router;
+  let page: HTMLElement;
+  let store: Store<AppState>;
+  let toastController: ToastController;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -16,7 +24,10 @@ describe('LoginPage', () => {
       imports: [
         IonicModule.forRoot(),
         AppRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        StoreModule.forRoot([]),
+        StoreModule.forFeature("loading", loadingReducer),
+        StoreModule.forFeature("login", loginReducer)
       ]
     }).compileComponents();
   
@@ -24,7 +35,14 @@ describe('LoginPage', () => {
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
     fixture.detectChanges(); // should call ngOnInit
+    page = fixture.debugElement.nativeElement;
+    store = TestBed.inject(Store);
+    toastController = TestBed.inject(ToastController);
   }));
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  })
 
   it('should create a form on init', () => {
     //component.ngOnInit();
@@ -67,7 +85,49 @@ describe('LoginPage', () => {
     expect(router.navigate).toHaveBeenCalledWith(['register']);
   })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should recover email and password on forgot email/password', () =>{
+    fixture.detectChanges();
+    component.form.get('email')?.setValue("valid@email.com")
+
+    const forgotButton = page.querySelector('#forgot-id') as HTMLElement;
+    forgotButton.click();
+
+    store.select('login').subscribe(loginState => {
+      expect(loginState.isRecoveringPassword).toBeTruthy();
+    })
+  })
+
+  it('should show loading when erecovering the password', () =>{
+    fixture.detectChanges();
+    store.dispatch(recoverPassword());
+    store.select('loading').subscribe(loadingState => {
+      expect(loadingState.show).toBeTruthy();
+    })
+  })
+
+  it('should hide the loading component and show a success message when the password is recovered', () =>{
+    spyOn(toastController, 'create');
+    
+    fixture.detectChanges();
+    store.dispatch(recoverPassword());
+    store.dispatch(recoveredPasswordSuccess());
+    store.select('loading').subscribe(loadingState => {
+      expect(loadingState.show).toBeFalsy();
+    })
+
+    expect(toastController.create).toHaveBeenCalledTimes(1);
+  })
+
+  it('should hide the loading and show error message when error on recover password', () =>{
+    spyOn(toastController, 'create');
+    
+    fixture.detectChanges();
+    store.dispatch(recoverPassword());
+    store.dispatch(recoveredPasswordFailed({error: "message"}));
+    store.select('loading').subscribe(loadingState => {
+      expect(loadingState.show).toBeFalsy();
+    })
+
+    expect(toastController.create).toHaveBeenCalledTimes(1);
   })
 });
