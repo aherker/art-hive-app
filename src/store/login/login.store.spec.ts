@@ -1,5 +1,5 @@
 import { LoginState } from "./LoginState"
-import { login, loginFailed, loginSuccess, recoverPassword, recoveredPasswordFailed, recoveredPasswordSuccess } from "./login.actions"
+import { login, loginFailed, loginSuccess, recoverPassword, recoveredPasswordFailed, recoveredPasswordSuccess, resetPasswordRecoveryFlag } from "./login.actions"
 import { loginReducer } from "./login.reducers"
 import { AppInitialState } from "../AppInitialState"
 import { User } from "src/app/model/user/User"
@@ -37,6 +37,18 @@ describe("Login store", () => {
         expect(newState).toEqual({
             ...initialState,
             error, 
+            isRecoveredPassword: false,
+            isRecoveringPassword: false
+        })
+    })
+
+    it('resetPasswordRecoveryFlag', () =>{
+        const initialState: LoginState = AppInitialState.login;
+
+        const newState = loginReducer(initialState, resetPasswordRecoveryFlag());
+       
+        expect(newState).toEqual({
+            ...initialState, 
             isRecoveredPassword: false,
             isRecoveringPassword: false
         })

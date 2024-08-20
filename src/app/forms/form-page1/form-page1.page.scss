@@ -1,22 +1,330 @@
+#groupMembers{
+  .groupMembersName{
+    width: 41%;
+    text-align: left;
+  }
+
+  .addMember {
+    margin-left: 11px;
+    width: 30%;
+    margin-bottom: 10px;
+    text-transform: none;
+    font-size: 16px;
+  }
+
+  .removeMember{
+    width: 42%;
+    text-transform: none;
+    font-size: 16px;
+  }
+}
+
+#dates{
+  .DateLabels{
+    width: 28%;
+    text-align: left;
+  }
+  
+  .dateInput{
+    color: black;
+  }
+}
+
+#contacts{
+  .phoneNum{
+    width: 38%;
+    text-align: left;
+    font-size: 16px;
+    text-transform: none;
+  }
+
+  .removeContact{
+    width: 42%;
+    text-transform: none;
+    font-size: 16px;
+  }
+
+  .addContact{
+    margin-left: 11px;
+    width: 30%;
+    margin-bottom: 10px;
+    text-transform: none;
+    font-size: 16px;
+  }
+}
+
+#partners{
+  .partnerNameLabel{
+    width: 41%;
+    text-align: left;
+  }
+
+  .removePartner{
+    width: 42%;
+    text-transform: none;
+    font-size: 16px;
+  }
+
+  .addPartner{
+    margin-left: 11px;
+    width: 30%;
+    margin-bottom: 10px;
+    text-transform: none;
+    font-size: 16px;
+  }
+}
+
+#facilitator{
+  .facilitatorName{
+    width: 60%;
+    text-align: left;
+  }
+
+  .removeFacilitator{
+    width: 46%;
+    text-transform: none;
+    font-size: 16px;
+  }
+
+  .addFacilitator{
+    margin-left: 11px;
+    width: 36%;
+    margin-bottom: 10px;
+    text-transform: none;
+    font-size: 16px;
+  }
+}
+
+#numParticipants{
+  .participantsLabel{
+    width: 70%;
+    text-align: left;
+    text-transform: none;
+  }
+}
+
+#numSeniors{
+  .SeniorLabel{
+    width: 70%;
+    text-align: left;
+    text-transform: none;
+  }
+}
+
+#numStudents{
+  .numStudentsLabel{
+    width: 52%;
+    text-align: left;
+    text-transform: none;
+  }
+
+  .eduLabel{
+    width: 55%;
+    text-align: left;
+    text-transform: none;
+  }
+
+  .removeInstitution{
+    width: 45%;
+    text-transform: none;
+    font-size: 16px;
+  }
+
+  .addInstitution{
+    margin-left: 11px;
+    width: 35%;
+    margin-bottom: 10px;
+    text-transform: none;
+    font-size: 16px;
+  }
+}
+
+#numChildren{
+  .childrenLabel{
+    width: 70%;
+    text-align: left;
+    text-transform: none;
+  }
+}
+
+#newParticipants{
+  .newParticipants{
+    width: 70%;
+    text-align: left;
+    text-transform: none;
+  }
+}
+
+#discovery{
+  .otherLabel{
+    text-transform: none;
+    font-size: 22px;
+    color: black;
+    margin-bottom: 8px;
+  }
+}
+
+#dataCollectionExplanation{
+  .dataCollectionLabels{
+    text-transform: none;
+    font-size: 16px;
+    text-align: left;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    display: block;
+    color: black;
+  }
+}
+
+#CreativeArtsExpression{
+  .CreativeArtsExpressionLabel{
+    text-transform: none;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    color: black;
+  }
+}
+
+#formsOfExpressions{
+  .formsOfExpressionsLabel{
+    width: 28%;
+    text-align: left;
+    text-transform: none;
+  }
+
+  .numOfExpressionLabel{
+    width: 50%;
+    text-align: left;
+    text-transform: none;
+  }
+
+  .removeExpression{
+    width: 63%;
+    text-transform: none;
+    font-size: 16px;
+  }
+
+  .addExpression{
+    margin-left: 11px;
+    width: 37%;
+    margin-bottom: 10px;
+    text-transform: none;
+    font-size: 16px;
+  }
+}
+
+#materialsUsed{
+  .materialsUsedLabel{
+    width: 80%;
+    text-align: left;
+    text-transform: none;
+    position: stacked;
+  }
+
+  .numMaterialsUsedLabel{
+    width: 90%;
+    text-align: left;
+    text-transform: none;
+  }
+
+  .removeMaterialsUsed{
+    width: 93%;
+    text-transform: none;
+    font-size: 16px;
+  }
+
+  .addMaterialsUsed{
+    margin-left: 11px;
+    width: 77%;
+    margin-bottom: 10px;
+    text-transform: none;
+    font-size: 16px;
+  }
+}
+
+#discussionThemes{
+  .discussionThemesLabel{
+    text-transform: none;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    color: black;
+  }
+}
+
+#highlights{
+  .highlightsLabel{
+    text-transform: none;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    color: black;
+  }
+}
+
+#challenges{
+  .challengesLabel{
+    text-transform: none;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    color: black;
+  }
+}
+
+#actionStepsandFollowUp{
+  .actionStepsandFollowUpLabel{
+    text-transform: none;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    color: black;
+  }
+}
+
 .center-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
-  .rounded-button {
-    border: 2px solid;
-    border-radius: 10px; /* Adjust the value as needed */
-    background-color: rgb(175, 255, 95);
+.rounded-button {
+  border: 2px solid;
+  border-radius: 10px;
+  background-color: rgb(175, 255, 95);
+}
+ion-textarea{
+  border: 1px solid;
+  border-color: black;
+  padding-inline-start: 4px;
+}
 
-  }
+ion-item {
+  display: flex; 
+  align-items: center; 
+}
 
-  ion-content {
-    --background: none;
-  }
-  
-  ion-toolbar {
-    --background: none;
-  }
-  
+ion-card-subtitle{
+  text-align: left;
+  display: block;
+  text-transform: none;
+  font-size: 16px;
+}
+
+ion-input {
+  --placeholder-color: black;
+  --color: black;
+  height: 50px;
+  padding: 5px;
+  border: 3px underline black;
+}
+
+ion-content {
+  --background: none;
+}
+
+ion-toolbar {
+  --background: none;
+}

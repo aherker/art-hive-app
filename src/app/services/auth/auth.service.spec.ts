@@ -1,15 +1,43 @@
-import { TestBed } from '@angular/core/testing';
-import { AuthService } from './auth.service';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/model/user/User';
 
-describe('AuthService', () => {
-  let service: AuthService;
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AuthService);
-  });
+  constructor() { }
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+  recoverEmailPassword(email: string) : Observable<void>{
+    return new Observable<void>(observer => {
+      setTimeout(() => {
+        if (email == "error@email.com"){
+          observer.error({message: "Email not found"});
+        }
+
+        observer.next();
+        observer.complete();
+      }, 3000);
+    })
+  }
+
+  login(email: string, password: string) : Observable<User>{
+    return new Observable<User>(observer => {
+      setTimeout(() => {
+        if (email == "error@email.com"){
+          observer.error({message: "User not found"});
+          observer.next();
+        }else{
+          const user = new User();
+          user.email = email;
+          user.id = "userId";
+          observer.next(user);
+        }
+
+        
+        observer.complete();
+      }, 3000);
+    })
+  }
+}

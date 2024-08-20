@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -13,7 +13,8 @@ import { FormPage1Page } from './form-page1.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    FormPage1PageRoutingModule
+    FormPage1PageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [FormPage1Page]
 })

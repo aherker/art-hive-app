@@ -1,201 +1,654 @@
-<ion-header [translucent]="true">
-  <ion-toolbar class="header-background">
-    <ion-title class="custom-title-background">Art Hives Form</ion-title>
-  </ion-toolbar>
-</ion-header>
 <ion-content [fullscreen]="true" class="page-background">
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Form Overview</ion-card-title>
-    <ion-card-subtitle>This debrief form will be used for evaluation purposes, to understand the size and nature of our community, what are the main themes discussed, some highlights or challenges along the way, etc. There are questions that are required and questions that you will fill only if it applies to the current activity. If a question does not apply, please leave it blank, do not write n/a. If you are required to write numbers (i.e. Participants' sections), please write numbers; if no participants of a specific age are present, please write 0.</ion-card-subtitle>
-  </ion-card-header>
-</ion-card>
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 1</ion-card-title>
-    <ion-card-subtitle>Name of the people who are completing this form (facilitators and members of the community, if they agree to have their names written here)</ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter names here"></ion-input>
-    </ion-item>
-  </ion-card-content> 
-</ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Form Overview</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card-subtitle>
+        This debrief form will be used for evaluation purposes, to understand the size and nature of our community, what
+        are the main themes discussed, some highlights or challenges along the way, etc. There are questions that are
+        required and questions that you will fill only if it applies to the current activity. If a question does not
+        apply, please leave it blank, do not write N/A.
+      </ion-card-subtitle>
+    </ion-card-content>
+  </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 2</ion-card-title>
-    <ion-card-subtitle>Date of the Art Hive (First is start time and date/Second is end time and date)</ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-label>Start Date and Time</ion-label>
-    <ion-datetime-button datetime="datetime"></ion-datetime-button>
-      <ion-modal [keepContentsMounted]="true">
-        <ng-template>
-          <ion-datetime id="datetime"></ion-datetime>
-        </ng-template>
-      </ion-modal>
-      <ion-label>End Date and Time</ion-label>
-      <ion-datetime-button datetime="datetime"></ion-datetime-button>
-      <ion-modal [keepContentsMounted]="true">
-        <ng-template>
-          <ion-datetime id="datetime"></ion-datetime>
-        </ng-template>
-      </ion-modal>
-  </ion-card-content> 
-</ion-card>
+  <form [formGroup]="artHiveQuestionare">
+    <ion-card id="groupMembers">
+      <ion-card-header>
+        <ion-card-title>Question 1</ion-card-title>
+        <ion-card-subtitle>
+        Name of the people who are completing this form (Members of the community, if they agree to have their names written here)
+      </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content *ngFor="let memberControl of membersName.controls; let i = index">
+        <ion-item>
+          <ion-label class="groupMembersName">Member's name:</ion-label>
+          <ion-input formControlName="{{ i }}"></ion-input>
+        </ion-item>
+        <ion-button class="removeMember" *ngIf="membersName.length > 1" (click)="removeMember(i)" [disabled]="membersName.length === 1" >Remove member</ion-button>
+      </ion-card-content>
+      <ion-button (click)="addMember()" class="addMember">Add member</ion-button>
+    </ion-card>   
+  
+    <ion-card id="dates">
+      <ion-card-header>
+        <ion-card-title>Question 2</ion-card-title>
+        <ion-card-subtitle>Starting and ending date of the art hive</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label class="DateLabels">Start date:</ion-label>
+          <ion-input type="date" class="dateInput" formControlName="startDate"></ion-input>
+        </ion-item>  
+        <ion-item>
+          <ion-label class="DateLabels">End date:</ion-label>
+          <ion-input type="date" class="dateInput" formControlName="endDate"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 3</ion-card-title>
-    <ion-card-subtitle>Location of Art Hive - address & geolocation</ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter Location here"></ion-input>
-    </ion-item>
-  </ion-card-content> 
-</ion-card>
+    <ion-card id="address">
+      <ion-card-header>
+        <ion-card-title>Question 3</ion-card-title>
+        <ion-card-subtitle>Address</ion-card-subtitle>
+    </ion-card-header>
+      <ion-card-content>
+        
+        <ion-item>
+          <ion-label>Name:</ion-label>
+          <ion-input formControlName="locationName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Street:</ion-label>
+          <ion-input formControlName="street"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>City:</ion-label>
+          <ion-input formControlName="city"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>State:</ion-label>
+          <ion-input formControlName="state"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>ZIP:</ion-label>
+          <ion-input formControlName="zip"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 4</ion-card-title>
-    <ion-card-subtitle>Site Contact - Individual(s) name & contact </ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter name(s) here"></ion-input>
-    </ion-item>
-  </ion-card-content>
-</ion-card>
+    <ion-card id="contacts">
+      <ion-card-header>
+        <ion-card-title>Question 4</ion-card-title>
+        <ion-card-subtitle>Contact(s)</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content *ngFor="let memberControl of contactList.controls; let i = index">
+        <ion-item>
+          <ion-label>Name:</ion-label>
+          <ion-input formControlName="contactName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Email:</ion-label>
+          <ion-input formControlName="contactEmail"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="phoneNum">Phone number:</ion-label>
+          <ion-input formControlName="contactPhone" placeholder="xxx-xxx-xxxx"></ion-input>
+        </ion-item>
+        <ion-button class="removeContact" *ngIf="contactList.length > 1" (click)="removeContact(i)" [disabled]="contactList.length === 1">Remove contact</ion-button>
+      </ion-card-content>
+      <ion-button class="addContact" (click)="addContact()">Add contact</ion-button>
+    </ion-card>
+    
+    <ion-card id="partners">
+      <ion-card-header>
+        <ion-card-title>Question 5</ion-card-title>
+        <ion-card-subtitle>Partners for this Art Hive - individuals, programs, projects, or organizations</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content *ngFor="let memberControl of partnerList.controls; let i = index">
+        <ion-item>
+          <ion-label class="partnerNameLabel">Partner name:</ion-label>
+          <ion-input formControlName="{{ i }}"></ion-input>
+        </ion-item>
+        <ion-button class="removePartner" *ngIf="partnerList.length > 1" (click)="removePartner(i)" [disabled]="partnerList.length === 1" >Remove partner</ion-button>
+      </ion-card-content>
+      <ion-button (click)="addPartner()" class="addPartner">Add partner</ion-button>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 5</ion-card-title>
-    <ion-card-subtitle> Partners for this Art Hive - individuals, programs, projects, or organizations  </ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter partner(s) here"></ion-input>
-    </ion-item>
-  </ion-card-content> 
-</ion-card>
+    <ion-card id="facilitator">
+      <ion-card-header>
+        <ion-card-title>Question 6</ion-card-title>
+        <ion-card-subtitle>List facilitator names</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content *ngFor="let memberControl of facilitatorList.controls; let i = index">
+        <ion-item>
+          <ion-label class="facilitatorName">Facilitator's name:</ion-label>
+          <ion-input formControlName="{{ i }}"></ion-input>
+        </ion-item>
+        <ion-button class="removeFacilitator" *ngIf="facilitatorList.length > 1" (click)="removeFacilitator(i)" [disabled]="facilitatorList.length === 1" >Remove facilitator</ion-button>
+      </ion-card-content>
+      <ion-button (click)="addFacilitator()" class="addFacilitator">Add facilitator</ion-button>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 6</ion-card-title>
-    <ion-card-subtitle> List facilitator names</ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter name(s) here"></ion-input>
-    </ion-item>
-  </ion-card-content> 
-</ion-card>
+    <ion-card id="numParticipants">
+      <ion-card-header>
+        <ion-card-title>Question 7</ion-card-title>
+        <ion-card-subtitle>Number of participants (include facilitators)</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label class="participantsLabel">Number of participants:</ion-label>
+          <ion-input type="number" placeholder="0" formControlName="numParticipants"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 7</ion-card-title>
-    <ion-card-subtitle> Number of participants</ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number of participants here"></ion-input>
-    </ion-item>
-  </ion-card-content>
-</ion-card>
+    <ion-card id="numSeniors">
+      <ion-card-header>
+        <ion-card-title>Question 8</ion-card-title>
+        <ion-card-subtitle>Approximate number of older adults ≥ 65</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label class="SeniorLabel">Number of older adults:</ion-label>
+          <ion-input type="number" placeholder="0" formControlName="numSeniors"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 8</ion-card-title>
-    <ion-card-subtitle> Number of participants (include facilitators, please write the total numbers of participants present in the activity - write a number only, no text) </ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number here"></ion-input>
-    </ion-item>
-  </ion-card-content>
-</ion-card>
+    <ion-card id="numStudents">
+      <ion-card-header>
+        <ion-card-title>Question 9</ion-card-title>
+        <ion-card-subtitle>Approximate numbers of students (label with educational institutions)</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content *ngFor="let memberControl of numStudentsList.controls; let i = index">
+        <ion-item>
+          <ion-label class="numStudentsLabel">Numbers of students:</ion-label>
+          <ion-input type="number" placeholder="0" formControlName="numStudents"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="eduLabel">Educational institution:</ion-label>
+          <ion-input formControlName="eduInstitution"></ion-input>
+        </ion-item>
+        <ion-button class="removeInstitution" *ngIf="numStudentsList.length > 1" (click)="removeInstitution(i)" [disabled]="numStudentsList.length === 1" >Remove institution</ion-button>
+      </ion-card-content>
+      <ion-button (click)="addInstitution()" class="addInstitution">Add institution</ion-button>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 9</ion-card-title>
-    <ion-card-subtitle>Approximate number of older adults ≥65 (write a number only, no text) </ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number here"></ion-input>
-    </ion-item>
-  </ion-card-content>
-</ion-card>
+    <ion-card id="numChildren">
+      <ion-card-header>
+        <ion-card-title>Question 10</ion-card-title>
+        <ion-card-subtitle>Approximate number of children</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label class="childrenLabel">Number of children:</ion-label>
+          <ion-input type="number" placeholder="0" formControlName="numChildren"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 10</ion-card-title>
-    <ion-card-subtitle> Partners for this Art Hive - individuals, programs, projects, or organizations  </ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter partner(s) here"></ion-input>
-    </ion-item>
-  </ion-card-content> 
-</ion-card>
+    <ion-card id="newParticipants">
+      <ion-card-header>
+        <ion-card-title>Question 11</ion-card-title>
+        <ion-card-subtitle>Number of new participants</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label class="newParticipants">Number of new participants:</ion-label>
+          <ion-input type="number" placeholder="0" formControlName="numNewParticipants"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 11</ion-card-title>
-    <ion-card-subtitle> Approximate numbers of students - label with educational institutions </ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number here"></ion-input>
-    </ion-item>
-  </ion-card-content> 
-</ion-card>
+    <ion-card id="discovery">
+      <ion-card-header>
+        <ion-card-title>Question 12</ion-card-title>
+        <ion-card-subtitle>How did new participants find the event?</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let method of discoveryMethods.controls; let i = index">
+            <ion-label>{{ i === 0 ? 'Word of mouth' : i === 1 ? 'Passing by and being curious' : 'Social media' }}</ion-label>
+            <ion-checkbox slot="start" [formControlName]="i"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked" class="otherLabel">If other, please specify:</ion-label>
+            <ion-textarea formControlName="otherDiscovery" class="otherDiscoveryInput"></ion-textarea>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 12</ion-card-title>
-    <ion-card-subtitle> Approximate number of children under 18 (write a number only, no text) </ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number here"></ion-input>
-    </ion-item>
-  </ion-card-content>
-</ion-card>
+    <ion-card id="dataCollectionExplanation">
+      <ion-card-content>
+        <ion-label class="dataCollectionLabels">
+          Data collected here will inform us if the activities hold an inclusive, diverse, and equitable space. Please note the discussions related to these three components in this section and how the community was encouraged to embrace a perspective that welcomes under-represented groups.
+        </ion-label>
+        <br>
+        <ion-label class="dataCollectionLabels">
+          The notes will also reflect any spontaneous self-identification with a group such as: Age, abilities, gender, sexual orientation, ethnicity/race, disability, religion, neighborhood, language, etc.
+        </ion-label>
+        <br>
+        <ion-label class="dataCollectionLabels">
+          If a question does not apply, please leave it blank. Please do NOT write identifying information such as names. Reflections on the composition of the group (e.g., mainly similar age, mainly adults but intergenerational, intergenerational including children or students, diverse ethnicities or homogenous group, people with visible or invisible disabilities, religion, location, etc.)
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 13</ion-card-title>
-    <ion-card-subtitle> How many new participants? (Write a number only, no text) </ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 50px; border: 1px solid #ccc; "placeholder="Enter number here"></ion-input>
-    </ion-item>
-  </ion-card-content>
-</ion-card>
+    <ion-card id="EDIQuestions">
+      <ion-card-header>
+        <ion-card-title>Question 13</ion-card-title>
+        <ion-card-subtitle>
+          Were there any discussions related to EDI topics (age, gender, sexual orientation, ethnicity/race, disability, religion, neighborhood, etc.)?
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea formControlName="EDIQuestions" class="EDIQuestionsInput"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Question 14</ion-card-title>
-    <ion-card-subtitle> How did new participants find the event? (Based on answers from the participants) If answer is different, then please use the text box  </ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item>
-      <ion-input style="height: 100px; border: 1px solid #ccc; "placeholder="Enter here"></ion-input>
-    </ion-item>
-  </ion-card-content>
-</ion-card>
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons class="center-button">
-      <ion-button class="rounded-button">
-          Submit
-        <ion-icon slot="end" name="checkmark"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header> 
+    <ion-card id="selfID">
+      <ion-card-header>
+        <ion-card-title>Question 14</ion-card-title>
+        <ion-card-subtitle>If self-identification occurred, what may have facilitated it?</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea formControlName="selfID" class="selfIDInput"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="commonGround">
+      <ion-card-header>
+        <ion-card-title>Question 15</ion-card-title>
+        <ion-card-subtitle>If needed, was a common ground found? If so, how (shared goals, community projects, etc.)?</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea formControlName="commonGround" class="commonGroundInput"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="underRepresentedPerspectives">
+      <ion-card-header>
+        <ion-card-title>Question 16</ion-card-title>
+        <ion-card-subtitle>What could be done to reach out for under-represented perspectives? (If any suggestions from the group)</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea formControlName="underRepresentedPerspectives" class="underRepresentedPerspectivesInput"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="underRepresentedPerspectivesReachOut">
+      <ion-card-header>
+        <ion-card-title>Question 17</ion-card-title>
+        <ion-card-subtitle>List action steps to reach out for under-represented perspectives. How and when? Who offered to reach out? (Name the team members or community members who offered to help, or organizations that were mentioned in the discussions for each action step):</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea formControlName="underRepresentedPerspectivesReachOut" class="underRepresentedPerspectivesReachOutInput"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="CreativeArtsExpression">
+      <ion-card-header>
+        <ion-card-title>Creative Arts Expression</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label class="CreativeArtsExpressionLabel">
+          This section refers to any artistic expression present in the activity (art, drama, poetry, creative writing, design, music, dance and movement, baking, gardening, etc.)
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="formsOfExpressions">
+      <ion-card-header>
+        <ion-card-title>Question 18</ion-card-title>
+        <ion-card-subtitle>Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1)):</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content *ngFor="let memberControl of formsOfExpressionsList.controls; let i = index">
+        <ion-item>
+          <ion-label class="formsOfExpressionsLabel">Form of art:</ion-label>
+          <ion-input formControlName="formsOfExpressionType"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="numOfExpressionLabel">Number of art form:</ion-label>
+          <ion-input type="number" placeholder="0" formControlName="numOfExpression"></ion-input>
+        </ion-item>
+        <ion-button class="removeExpression" *ngIf="formsOfExpressionsList.length > 1" (click)="removeExpression(i)" [disabled]="formsOfExpressionsList.length === 1" >Remove form of expression</ion-button>
+      </ion-card-content>
+      <ion-button (click)="addExpression()" class="addExpression">Add Expression</ion-button>
+    </ion-card>
+
+    <ion-card id="themesAndSymbols">
+      <ion-card-header>
+        <ion-card-title>Question 19</ion-card-title>
+        <ion-card-subtitle>Themes & symbols (please do not write techniques and art materials here)</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="themesAndSymbolsInput" formControlName="themesAndSymbols"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="materialsUsed">
+      <ion-card-header>
+        <ion-card-title>Question 20</ion-card-title>
+        <ion-card-subtitle>Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1))):</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content *ngFor="let memberControl of materialsUsedList.controls; let i = index">
+        <ion-item>
+          <ion-label class="materialsUsedLabel">Materials or instruments used:</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-textarea formControlName="materialsUsedType" class="materialsUsedTypeInput"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="numMaterialsUsedLabel">Number materials or instruments used:</ion-label>
+          <ion-input type="number" placeholder="0" formControlName="numMaterialsUsed"></ion-input>
+        </ion-item>
+        <ion-button class="removeMaterialsUsed" *ngIf="materialsUsedList.length > 1" (click)="removeMaterialsUsed(i)" [disabled]="materialsUsedList.length === 1" >Remove materials or insturments used</ion-button>
+      </ion-card-content>
+      <ion-button (click)="addMaterialsUsed()" class="addMaterialsUsed">Add materials or insturments used</ion-button>
+    </ion-card>
+
+    <ion-card id="ETC">
+      <ion-card-header>
+        <ion-card-title>Question 21</ion-card-title>
+        <ion-card-subtitle>Expressive Therapies Continuum (ETC):</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-radio-group formControlName="selectedETC">
+            <ion-item *ngFor="let label of etcLabels; let i = index">
+              <ion-label>{{ label }}</ion-label>
+              <ion-radio slot="start" [value]="label"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="discussionThemes">
+      <ion-card-header>
+        <ion-card-title>Discussion Themes</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label class="discussionThemesLabel">This section will inform us about the discussions between the participants in the activity. We will look into the recurrence of some of the discussion’s themes in time, to understand what is important for our community. Due to technical constraints, this category seems long. However, the recommendation is to write all the themes down in one paragraph, then to check in what sub-category they fit better. If the discussions do not cover one or more of the bellow sub-categories, please leave them blank.</ion-label>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="discussionThemes">
+      <ion-card-header>
+        <ion-card-title>Question 22</ion-card-title>
+        <ion-card-subtitle>Discussion Theme: related to community</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="discussionThemesInput" formControlName="discussionCommunity"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="discussionThemes">
+      <ion-card-header>
+        <ion-card-title>Question 23</ion-card-title>
+        <ion-card-subtitle>Discussion themes: related to artmaking</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="discussionThemesInput" formControlName="discussionArtmaking"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="discussionThemes">
+      <ion-card-header>
+        <ion-card-title>Question 24</ion-card-title>
+        <ion-card-subtitle>Discussion themes: self-care and personal successes</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="discussionThemesInput" formControlName="discussionSelfCare"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="discussionThemes">
+      <ion-card-header>
+        <ion-card-title>Question 25</ion-card-title>
+        <ion-card-subtitle>Discussion themes: challenges</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="discussionThemesInput" formControlName="discussionChallenges"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="discussionThemes">
+      <ion-card-header>
+        <ion-card-title>Question 26</ion-card-title>
+        <ion-card-subtitle>Discussion themes: other</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="discussionThemesInput" formControlName="discussionOther"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="highlights">
+      <ion-card-header>
+        <ion-card-title>Highlights</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label class="highlightsLabel">
+          Describe the highlights of the activity, what worked well and needs to be mentioned, to inspire other communities. The goal is to collect what our team does well and what happens in our community, to transmit this knowledge further. Due to technical constraints, this category seems long. However, the recommendation is to write all the highlights down in one paragraph, then to check what sub-category matches better. If the highlights do not cover one or more of the bellow sub-categories, please leave them blank. Participants' leadership is a required question due to its importance.
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="highlights">
+      <ion-card-header>
+        <ion-card-title>Question 27</ion-card-title>
+        <ion-card-subtitle>Highlights: holding the physical/digital space</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="highlightsInput" formControlName="highlightsSpace"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="highlights">
+      <ion-card-header>
+        <ion-card-title>Question 28</ion-card-title>
+        <ion-card-subtitle>Highlights: community experience</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="highlightsInput" formControlName="highlightsCommunity"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="highlights">
+      <ion-card-header>
+        <ion-card-title>Question 29</ion-card-title>
+        <ion-card-subtitle>Highlights: accessible, third-space studio environment</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="highlightsInput" formControlName="highlightsEnvironment"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="highlights">
+      <ion-card-header>
+        <ion-card-title>Question 30</ion-card-title>
+        <ion-card-subtitle>Highlights: participants' leadership (e.g., participants taking lead in explaining a technique to the group - or offering to do a skill share, or an idea about a community activity they want to start, participants being ambassadors for our activities, etc.)</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="highlightsInput" formControlName="highlightsLeadership"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="highlights">
+      <ion-card-header>
+        <ion-card-title>Question 31</ion-card-title>
+        <ion-card-subtitle>Highlights: boundaries</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="highlightsInput" formControlName="highlightsBoundaries"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="highlights">
+      <ion-card-header>
+        <ion-card-title>Question 32</ion-card-title>
+        <ion-card-subtitle>Highlights: other</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="highlightsInput" formControlName="highlightsOther"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="challenges">
+      <ion-card-header>
+        <ion-card-title>Challenges</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label class="challengesLabel">
+          Describe the challenges of the activity. What needs to be looked at more carefully, what needs improvement, to transmit this knowledge to other communities. Due to technical constraints, this category seems long. However, the recommendation is to write all the themes down in one paragraph, then to check in what sub-category they fit better. If the discussions do not cover one or more of the below sub-categories, please leave them blank. If you have other sub-categories than the below ones, please write all in "Other".
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="challenges">
+      <ion-card-header>
+        <ion-card-title>Question 33</ion-card-title>
+        <ion-card-subtitle>Challenges: holding the physical/digital space</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="challengesInput" formControlName="challengesSpace"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="challenges">
+      <ion-card-header>
+        <ion-card-title>Question 34</ion-card-title>
+        <ion-card-subtitle>Challenges: community experience</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="challengesInput" formControlName="challengesCommunity"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="challenges">
+      <ion-card-header>
+        <ion-card-title>Question 35</ion-card-title>
+        <ion-card-subtitle>Challenges: artmaking</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="challengesInput" formControlName="challengesArtmaking"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="challenges">
+      <ion-card-header>
+        <ion-card-title>Question 36</ion-card-title>
+        <ion-card-subtitle>Challenges: accessible, third space studio environment</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="challengesInput" formControlName="challengesEnvironment"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="challenges">
+      <ion-card-header>
+        <ion-card-title>Question 37</ion-card-title>
+        <ion-card-subtitle>Challenges: participants' leadership</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="challengesInput" formControlName="challengesLeadership"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="challenges">
+      <ion-card-header>
+        <ion-card-title>Question 38</ion-card-title>
+        <ion-card-subtitle>Challenges: boundaries</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="challengesInput" formControlName="challengesBoundaries"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="challenges">
+      <ion-card-header>
+        <ion-card-title>Question 39</ion-card-title>
+        <ion-card-subtitle>Challenges: other</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="challengesInput" formControlName="challengesOther"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="circleOfCare">
+      <ion-card-header>
+        <ion-card-title>Question 40</ion-card-title>
+        <ion-card-subtitle>Circles of Care connections (e.g., friendships forming between participants, participant(s) sharing resources of self-care activities with the group, participants opening discussions about their circle of care, etc.):</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="circleOfCareInput" formControlName="circleOfCare"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="testimonies">
+      <ion-card-header>
+        <ion-card-title>Question 41</ion-card-title>
+        <ion-card-subtitle>Testimonies - direct quotes from individuals - please do not write down names</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="testimoniesInput" formControlName="testimonies"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="actionStepsandFollowUp">
+      <ion-card-header>
+        <ion-card-title>Action steps and further follow-up</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label class="actionStepsandFollowUpLabel">
+          In this section we collect the interests of our participants and themes of activities they may like to develop or participate in. If you need to have certain materials, or refill them, etc., or if other facilitators need to be informed about something.
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="actionStepsandFollowUp">
+      <ion-card-header>
+        <ion-card-title>Question 42</ion-card-title>
+        <ion-card-subtitle>Proposed themes/interests from participants:</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="actionStepsandFollowUpInput" formControlName="proposedThemes"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="actionStepsandFollowUp">
+      <ion-card-header>
+        <ion-card-title>Question 43</ion-card-title>
+        <ion-card-subtitle>Action items required and who will follow up:</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="actionStepsandFollowUpInput" formControlName="actionItems"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card id="actionStepsandFollowUp">
+      <ion-card-header>
+        <ion-card-title>Question 44</ion-card-title>
+        <ion-card-subtitle>Potential research questions:</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-textarea class="actionStepsandFollowUpInput" formControlName="researchQuestions"></ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons class="center-button">
+          <ion-button class="rounded-button" (click)="onSubmit()">
+            Submit
+            <ion-icon slot="end" name="checkmark"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+  </form>
 </ion-content>

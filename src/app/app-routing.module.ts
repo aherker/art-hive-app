@@ -2,33 +2,11 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  // {
-  //   //changed "loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule) to loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)"
-  //   path: '',
-  //   loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
-  // },
   {
     path: "tabs",
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
-  // {
-  //   path: "currentForm",
-  //   loadChildren: () => import('./tab1/tab1.module').then( m => m.Tab1PageModule)
-  // },
-  // {
-  //   path: 'form-page2',
-  //   loadChildren: () => import('./form-page2/form-page2.module').then( m => m.FormPage2PageModule)
-  // },
-  // {
-  //   path: 'dapage',
-  //   loadChildren: () => import('./dapage/dapage.module').then( m => m.DApagePageModule)
-  // },
-  // {
-  //   path: 'form-page3',
-  //   loadChildren: () => import('./form-page3/form-page3.module').then( m => m.FormPage3PageModule)
-  // },
-  
-  //changed "path: 'login => path: ''"
+
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
