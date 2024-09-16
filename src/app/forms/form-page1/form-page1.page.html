@@ -18,18 +18,28 @@
       <ion-card-header>
         <ion-card-title>Question 1</ion-card-title>
         <ion-card-subtitle>
-        Name of the people who are completing this form (Members of the community, if they agree to have their names written here)
-      </ion-card-subtitle>
+          Name of the people who are completing this form (Members of the community, if they agree to have their names written here)
+        </ion-card-subtitle>
       </ion-card-header>
-      <ion-card-content *ngFor="let memberControl of membersName.controls; let i = index">
-        <ion-item>
-          <ion-label class="groupMembersName">Member's name:</ion-label>
-          <ion-input formControlName="{{ i }}"></ion-input>
-        </ion-item>
-        <ion-button class="removeMember" *ngIf="membersName.length > 1" (click)="removeMember(i)" [disabled]="membersName.length === 1" >Remove member</ion-button>
+      
+      <ion-card-content formArrayName="membersName">
+        <div *ngFor="let memberControl of membersName.controls; let i = index">
+          <ion-item>
+            <ion-label class="groupMembersName">Member's name:</ion-label>
+            <ion-input [formControlName]="i"></ion-input>
+          </ion-item>
+          <ion-button 
+            class="removeMember" 
+            *ngIf="membersName.length > 1" 
+            (click)="removeMember(i)" 
+            [disabled]="membersName.length === 1">
+            Remove member
+          </ion-button>
+        </div>
       </ion-card-content>
+      
       <ion-button (click)="addMember()" class="addMember">Add member</ion-button>
-    </ion-card>   
+    </ion-card> 
   
     <ion-card id="dates">
       <ion-card-header>
@@ -37,24 +47,25 @@
         <ion-card-subtitle>Starting and ending date of the art hive</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        <ion-item>
-          <ion-label class="DateLabels">Start date:</ion-label>
-          <ion-input type="date" class="dateInput" formControlName="startDate"></ion-input>
-        </ion-item>  
-        <ion-item>
-          <ion-label class="DateLabels">End date:</ion-label>
-          <ion-input type="date" class="dateInput" formControlName="endDate"></ion-input>
+        <ion-item *ngIf="artHiveQuestionare">
+          <ion-label class="DateLabels" position="stacked">Start date:</ion-label>
+          <ion-datetime class="dateInput" displayFormat="MM/DD/YYYY" presentation="date" formControlName="startDate"></ion-datetime>
         </ion-item>
+        <br>
+        <ion-item *ngIf="artHiveQuestionare">
+          <ion-label class="DateLabels" position="stacked">End date:</ion-label>
+          <ion-datetime class="dateInput" displayFormat="MM/DD/YYYY" presentation="date" canceltext="Cancel" confirmtext="Ok" formControlName="endDate"></ion-datetime>
+        </ion-item>
+        
       </ion-card-content>
     </ion-card>
 
-    <ion-card id="address">
+      <ion-card id="address">
       <ion-card-header>
         <ion-card-title>Question 3</ion-card-title>
         <ion-card-subtitle>Address</ion-card-subtitle>
     </ion-card-header>
       <ion-card-content>
-        
         <ion-item>
           <ion-label>Name:</ion-label>
           <ion-input formControlName="locationName"></ion-input>
@@ -83,36 +94,47 @@
         <ion-card-title>Question 4</ion-card-title>
         <ion-card-subtitle>Contact(s)</ion-card-subtitle>
       </ion-card-header>
-      <ion-card-content *ngFor="let memberControl of contactList.controls; let i = index">
-        <ion-item>
-          <ion-label>Name:</ion-label>
-          <ion-input formControlName="contactName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Email:</ion-label>
-          <ion-input formControlName="contactEmail"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label class="phoneNum">Phone number:</ion-label>
-          <ion-input formControlName="contactPhone" placeholder="xxx-xxx-xxxx"></ion-input>
-        </ion-item>
-        <ion-button class="removeContact" *ngIf="contactList.length > 1" (click)="removeContact(i)" [disabled]="contactList.length === 1">Remove contact</ion-button>
+      <ion-card-content formArrayName="contactList">
+        <div *ngFor="let memberControl of contactList.controls; let i = index" [formGroupName]="i">
+          <ion-item>
+            <ion-label>Name:</ion-label>
+            <ion-input formControlName="contactName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Email:</ion-label>
+            <ion-input formControlName="contactEmail"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="phoneNum">Phone number:</ion-label>
+            <ion-input formControlName="contactPhone" placeholder="xxx-xxx-xxxx"></ion-input>
+          </ion-item>
+          <ion-button 
+            class="removeContact" 
+            *ngIf="contactList.length > 1" 
+            (click)="removeContact(i)" 
+            [disabled]="contactList.length === 1">
+            Remove contact
+          </ion-button>
+        </div>
       </ion-card-content>
       <ion-button class="addContact" (click)="addContact()">Add contact</ion-button>
     </ion-card>
+    
     
     <ion-card id="partners">
       <ion-card-header>
         <ion-card-title>Question 5</ion-card-title>
         <ion-card-subtitle>Partners for this Art Hive - individuals, programs, projects, or organizations</ion-card-subtitle>
       </ion-card-header>
-      <ion-card-content *ngFor="let memberControl of partnerList.controls; let i = index">
-        <ion-item>
-          <ion-label class="partnerNameLabel">Partner name:</ion-label>
-          <ion-input formControlName="{{ i }}"></ion-input>
-        </ion-item>
-        <ion-button class="removePartner" *ngIf="partnerList.length > 1" (click)="removePartner(i)" [disabled]="partnerList.length === 1" >Remove partner</ion-button>
-      </ion-card-content>
+      <ion-card-content formArrayName="partnerList">
+        <div *ngFor="let memberControl of partnerList.controls; let i = index">
+          <ion-item>
+            <ion-label class="partnerNameLabel">Partner name:</ion-label>
+            <ion-input [formControlName]="i"></ion-input>
+          </ion-item>
+          <ion-button class="removePartner" *ngIf="partnerList.length > 1" (click)="removePartner(i)" [disabled]="partnerList.length === 1" >Remove partner</ion-button>
+        </div>
+        </ion-card-content>
       <ion-button (click)="addPartner()" class="addPartner">Add partner</ion-button>
     </ion-card>
 
@@ -121,13 +143,15 @@
         <ion-card-title>Question 6</ion-card-title>
         <ion-card-subtitle>List facilitator names</ion-card-subtitle>
       </ion-card-header>
-      <ion-card-content *ngFor="let memberControl of facilitatorList.controls; let i = index">
-        <ion-item>
-          <ion-label class="facilitatorName">Facilitator's name:</ion-label>
-          <ion-input formControlName="{{ i }}"></ion-input>
-        </ion-item>
-        <ion-button class="removeFacilitator" *ngIf="facilitatorList.length > 1" (click)="removeFacilitator(i)" [disabled]="facilitatorList.length === 1" >Remove facilitator</ion-button>
-      </ion-card-content>
+      <ion-card-content formArrayName="facilitatorList">
+        <div *ngFor="let memberControl of facilitatorList.controls; let i = index">
+          <ion-item>
+            <ion-label class="facilitatorName">Facilitator's name:</ion-label>
+            <ion-input [formControlName]="i"></ion-input>
+          </ion-item>
+          <ion-button class="removeFacilitator" *ngIf="facilitatorList.length > 1" (click)="removeFacilitator(i)" [disabled]="facilitatorList.length === 1" >Remove facilitator</ion-button>
+        </div>
+        </ion-card-content>
       <ion-button (click)="addFacilitator()" class="addFacilitator">Add facilitator</ion-button>
     </ion-card>
 
@@ -157,7 +181,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card id="numStudents">
+    <!--<ion-card id="numStudents">
       <ion-card-header>
         <ion-card-title>Question 9</ion-card-title>
         <ion-card-subtitle>Approximate numbers of students (label with educational institutions)</ion-card-subtitle>
@@ -165,11 +189,11 @@
       <ion-card-content *ngFor="let memberControl of numStudentsList.controls; let i = index">
         <ion-item>
           <ion-label class="numStudentsLabel">Numbers of students:</ion-label>
-          <ion-input type="number" placeholder="0" formControlName="numStudents"></ion-input>
+          <ion-input type="number" placeholder="0" formControlName="numStudents[i]"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label class="eduLabel">Educational institution:</ion-label>
-          <ion-input formControlName="eduInstitution"></ion-input>
+          <ion-input formControlName="eduInstitution[i]"></ion-input>
         </ion-item>
         <ion-button class="removeInstitution" *ngIf="numStudentsList.length > 1" (click)="removeInstitution(i)" [disabled]="numStudentsList.length === 1" >Remove institution</ion-button>
       </ion-card-content>
@@ -638,7 +662,7 @@
       <ion-card-content>
         <ion-textarea class="actionStepsandFollowUpInput" formControlName="researchQuestions"></ion-textarea>
       </ion-card-content>
-    </ion-card>
+    </ion-card> -->
 
     <ion-header>
       <ion-toolbar>

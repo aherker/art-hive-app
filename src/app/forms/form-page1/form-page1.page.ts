@@ -28,64 +28,65 @@ export class FormPage1Page implements OnInit {
       facilitatorList: this.formBuilder.array([]),
       numParticipants: ['', Validators.required],
       numSeniors: ['', Validators.required],
-      numStudentsList: this.formBuilder.array([]),
-      numChildren: ['', Validators.required],
-      numNewParticipants: ['', Validators.required],
-      discoveryMethods: this.formBuilder.array([
-        this.formBuilder.control(false), // Word of mouth
-        this.formBuilder.control(false), // Passing by
-        this.formBuilder.control(false), // Social media
-      ]),
-      otherDiscovery: [''],
-      EDIQuestions: [''],
-      selfID: [''],
-      commonGround: [''],
-      underRepresentedPerspectives: [''],
-      underRepresentedPerspectivesReachOut: [''],
-      formsOfExpressionsList: this.formBuilder.array([]),
-      themsAndSymbols: [''],
-      materialsUsedList: this.formBuilder.array([]),
-      selectedETC: [''],
-      discussionCommunity: [''],
-      discussionArtmaking: [''],
-      discussionSelfCare: [''],
-      discussionChallenges: [''],
-      discussionOther: [''],
-      highlightsSpace: [''],
-      highlightsCommunity: [''],
-      highlightsEnvironment: [''],
-      highlightsLeadership: [''],
-      highlightsBoundaries: [''],
-      highlightsOther: [''],
-      challengesSpace: [''],
-      challengesCommunity: [''],
-      challengesArtmaking: [''],
-      challengesEnvironment: [''],
-      challengesLeadership: [''],
-      challengesBoundaries: [''],
-      challengesOther: [''],
-      circleOfCare: [''],
-      testimonies: [''],
-      proposedThemes: [''],
-      actionItems: [''],
-      researchQuestions: ['']
-
+      // numStudentsList: this.formBuilder.array([]),
+      // numChildren: ['', Validators.required],
+      // numNewParticipants: ['', Validators.required],
+      // discoveryMethods: this.formBuilder.array([
+      //   this.formBuilder.control(false), // Word of mouth
+      //   this.formBuilder.control(false), // Passing by
+      //   this.formBuilder.control(false), // Social media
+      // ]),
+      // otherDiscovery: [''],
+      // EDIQuestions: [''],
+      // selfID: [''],
+      // commonGround: [''],
+      // underRepresentedPerspectives: [''],
+      // underRepresentedPerspectivesReachOut: [''],
+      // formsOfExpressionsList: this.formBuilder.array([]),
+      // themsAndSymbols: [''],
+      // materialsUsedList: this.formBuilder.array([]),
+      // selectedETC: [''],
+      // discussionCommunity: [''],
+      // discussionArtmaking: [''],
+      // discussionSelfCare: [''],
+      // discussionChallenges: [''],
+      // discussionOther: [''],
+      // highlightsSpace: [''],
+      // highlightsCommunity: [''],
+      // highlightsEnvironment: [''],
+      // highlightsLeadership: [''],
+      // highlightsBoundaries: [''],
+      // highlightsOther: [''],
+      // challengesSpace: [''],
+      // challengesCommunity: [''],
+      // challengesArtmaking: [''],
+      // challengesEnvironment: [''],
+      // challengesLeadership: [''],
+      // challengesBoundaries: [''],
+      // challengesOther: [''],
+      // circleOfCare: [''],
+      // testimonies: [''],
+      // proposedThemes: [''],
+      // actionItems: [''],
+      // researchQuestions: ['']
     });
+
+    console.log(this.membersName); // Check if it is defined
   }
 
-  get membersName() {
+  get membersName(): FormArray {
     return this.artHiveQuestionare.get('membersName') as FormArray;
   }
 
-  get contactList() {
+  get contactList(): FormArray {
     return this.artHiveQuestionare.get('contactList') as FormArray;
   }
 
-  get partnerList() {
+  get partnerList(): FormArray {
     return this.artHiveQuestionare.get('partnerList') as FormArray;
   }
 
-  get facilitatorList() {
+  get facilitatorList(): FormArray {
     return this.artHiveQuestionare.get('facilitatorList') as FormArray;
   }
 
@@ -114,23 +115,21 @@ export class FormPage1Page implements OnInit {
   }
 
   removeMember(index: number) {
-    if (this.membersName.length > 1) {
-      this.membersName.removeAt(index);
-    }
+    this.membersName.removeAt(index);
   }
 
   addContact() {
-    this.contactList.push(this.formBuilder.group({
-      contactName: ['', Validators.required],
-      contactEmail: ['', [Validators.required, Validators.email]],
-      contactPhone: ['', [Validators.required, Validators.pattern('^([0-9]{3})[-]?([0-9]{3})[-]?([0-9]{4})$')]]
-    }));
+    this.contactList.push(
+      this.formBuilder.group({
+        contactName: ['', Validators.required],
+        contactEmail: ['', [Validators.required, Validators.email]],
+        contactPhone: ['', [Validators.required, Validators.pattern('^([0-9]{3})[-]?([0-9]{3})[-]?([0-9]{4})$')]]
+      })
+    );
   }
 
   removeContact(index: number) {
-    if (this.contactList.length > 1) {
-      this.contactList.removeAt(index);
-    }
+    this.contactList.removeAt(index);
   }
 
   addPartner() {
@@ -138,9 +137,7 @@ export class FormPage1Page implements OnInit {
   }
 
   removePartner(index: number) {
-    if (this.partnerList.length > 1) {
-      this.partnerList.removeAt(index);
-    }
+    this.partnerList.removeAt(index);
   }
 
   addFacilitator() {
@@ -148,9 +145,7 @@ export class FormPage1Page implements OnInit {
   }
 
   removeFacilitator(index: number) {
-    if (this.facilitatorList.length > 1) {
-      this.facilitatorList.removeAt(index);
-    }
+    this.facilitatorList.removeAt(index);
   }
 
   addInstitution() {
@@ -161,7 +156,7 @@ export class FormPage1Page implements OnInit {
   }
 
   removeInstitution(index: number) {
-    if (this.numStudentsList.length > 1) {
+    if (this.numStudentsList.length >= 1) {
       this.numStudentsList.removeAt(index);
     }
   }
@@ -174,7 +169,7 @@ export class FormPage1Page implements OnInit {
   }
 
   removeExpression(index: number){
-    if (this.formsOfExpressionsList.length > 1) {
+    if (this.formsOfExpressionsList.length > 0) {
       this.formsOfExpressionsList.removeAt(index);
     }
   }
@@ -187,7 +182,7 @@ export class FormPage1Page implements OnInit {
   }
 
   removeMaterialsUsed(index: number){
-    if (this.materialsUsedList.length > 1) {
+    if (this.materialsUsedList.length >= 1) {
       this.materialsUsedList.removeAt(index);
     }
   }
