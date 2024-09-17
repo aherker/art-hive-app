@@ -325,4 +325,29 @@ describe('FormPage1Page', () => {
   });
 
   
+  it('should initialize numParticipants controls', () => {
+    const numPartControl = component.artHiveQuestionare.get('numParticipants');
+    
+    expect(numPartControl?.hasError('required'));
+
+    expect(numPartControl).toBeDefined();
+    
+    expect(numPartControl?.value).toBe('');
+
+  });
+
+  it('should create an empty numParticipants Value and register as invalid', () =>{
+    component.artHiveQuestionare.patchValue({numParticipants: ''});
+
+    expect(component.artHiveQuestionare.get('numParticipants')?.invalid).toBeTrue();
+    expect(component.artHiveQuestionare.get('numParticipants')).toBeTruthy();
+
+  })
+
+  it('should fill numParticipants and register as valid', () =>{
+    component.artHiveQuestionare.patchValue({numParticipants: '5'});
+
+    expect(component.artHiveQuestionare.get('numParticipants')?.valid).toBeTrue();
+    expect(component.artHiveQuestionare.get('numParticipants')).toBeTruthy();
+  })
 });
