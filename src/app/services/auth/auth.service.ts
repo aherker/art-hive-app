@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth'; // Import the funct
 import { Observable } from 'rxjs';
 import { User } from 'src/app/model/user/User';
 import firebase from 'firebase/compat/app'; //importing firebase for auth services
+import { AngularFireStorage } from '@angular/fire/compat/storage'; // Import the AngularFireStorage class
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,6 @@ import firebase from 'firebase/compat/app'; //importing firebase for auth servic
 export class AuthService {
 
   constructor(private afAuth: AngularFireAuth) { }
-
-
-
   recoverEmailPassword(email: string) : Observable<void>{
     return new Observable<void>(observer => {
       setTimeout(() => {
@@ -45,6 +43,29 @@ export class AuthService {
         observer.complete();
       }, 3000);
     })
+  }
+}
+
+export class StorageService {
+  constructor(private storage: AngularFireStorage) {}
+
+  uploadFile(file: File): Observable<string> {
+    const filePath = `uploads/${new Date().getTime()}_${file.name}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+
+    return new Observable((observer) => {
+      task.snapshotChanges()
+        .pipe(
+          finalize(() => {
+            fileRef.getDownloadURL().subscribe((url) => {
+              observer.next(url);
+              observer.complete();
+            });
+          })
+        )
+        .subscribe();
+    });
   }
 }
 

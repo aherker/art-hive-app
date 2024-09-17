@@ -20,6 +20,27 @@
       </ion-card-subtitle>
     </ion-card-content>
   </ion-card>
+<!-- for firebase testing purposes -->
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        Firebase Storage Upload
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-item>
+      <input type="file" (change)="onFileSelected($event)" />
+    </ion-item>
+  
+    <div *ngIf="downloadURL">
+      <p>Download URL:</p>
+      <a [href]="downloadURL" target="_blank">{{ downloadURL }}</a>
+    </div>
+  </ion-content>
+
+<!-- for firebase testing purposes -->
 
   <form [formGroup]="artHiveQuestionare">
     <ion-card id="groupMembers">

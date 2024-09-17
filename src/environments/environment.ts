@@ -13,13 +13,12 @@ export const environment = {
   //---------------------------------------------ADDED FOR FIREBASE TESTING---------------------------------------------------------------------------//
 
   firebaseConfig:{
-  apiKey: "AIzaSyAAfMAgiwXgap0kmkv9O_Ehj9KGhVKyFMk",
-  authDomain: "arthive2024.firebaseapp.com",
-  projectId: "arthive2024",
-  storageBucket: "arthive2024.appspot.com",
-  messagingSenderId: "975354135360",
-  appId: "1:975354135360:web:fafb2df9b0de74b37370a5",
-  measurementId: "G-MPM1V6QEM6"
+    apiKey: "AIzaSyDmbEZQaXSARUZH0qiVx0xtjhlw8PnAXL4",
+    authDomain: "art-hive-20786.firebaseapp.com",
+    projectId: "art-hive-20786",
+    storageBucket: "art-hive-20786.appspot.com",
+    messagingSenderId: "1024686960621",
+    appId: "1:1024686960621:web:73fba3104a9036f3d601e4"
   //---------------------------------------------ADDED FOR FIREBASE TESTING---------------------------------------------------------------------------//
 
   }
