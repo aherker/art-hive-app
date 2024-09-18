@@ -329,11 +329,9 @@ describe('FormPage1Page', () => {
     const numPartControl = component.artHiveQuestionare.get('numParticipants');
     
     expect(numPartControl?.hasError('required'));
-
     expect(numPartControl).toBeDefined();
-    
     expect(numPartControl?.value).toBe('');
-
+    expect(numPartControl).toBeTruthy();
   });
 
   it('should create an empty numParticipants Value and register as invalid', () =>{
@@ -349,5 +347,36 @@ describe('FormPage1Page', () => {
 
     expect(component.artHiveQuestionare.get('numParticipants')?.valid).toBeTrue();
     expect(component.artHiveQuestionare.get('numParticipants')).toBeTruthy();
+  })
+
+  it('should create the numStudentsList controls as a FormArray' , () => {
+    expect(component.numStudentsList).toBeDefined();
+    expect(component.numStudentsList.controls.length).toBe(0);
+  })
+
+  it('should add a member to the numStudentsList' , () =>{
+    component.addInstitution();
+    expect(component.numStudentsList.length).toBe(1);
+    expect(component.numStudentsList.at(0)).toBeDefined();
+  })
+
+  it('should test the numStudentsList validator', () =>{
+    component.addInstitution();
+
+    const numStudentListControls = component.numStudentsList.at(0) as FormGroup;
+    
+    expect(numStudentListControls).toBeDefined();
+
+    expect(numStudentListControls.contains('numStudents')).toBeTrue();
+    expect(numStudentListControls.contains('eduInstitution')).toBeTrue();
+
+    const numStudentControl = numStudentListControls?.get('numStudents');
+    const eduInstitutionControl = numStudentListControls?.get('eduInstitution');
+
+    expect(numStudentControl?.hasError('required')).toBeTrue();
+    expect(eduInstitutionControl?.hasError('required')).toBeTrue();
+
+    expect(numStudentControl?.value).toBe('');
+    expect(eduInstitutionControl?.value).toBe('');
   })
 });

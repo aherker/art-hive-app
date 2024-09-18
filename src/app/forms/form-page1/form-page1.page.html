@@ -189,24 +189,31 @@
       </ion-card-content>
     </ion-card>
 
-    <!--<ion-card id="numStudents">
+    <ion-card id="numStudents">
       <ion-card-header>
         <ion-card-title>Question 9</ion-card-title>
-        <ion-card-subtitle>Approximate numbers of students (label with educational institutions)</ion-card-subtitle>
+        <ion-card-subtitle>
+          Approximate numbers of students (label with educational institutions)
+        </ion-card-subtitle>
       </ion-card-header>
-      <ion-card-content *ngFor="let memberControl of numStudentsList.controls; let i = index">
-        <ion-item>
-          <ion-label class="numStudentsLabel">Numbers of students:</ion-label>
-          <ion-input type="number" placeholder="0" formControlName="numStudents[i]"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label class="eduLabel">Educational institution:</ion-label>
-          <ion-input formControlName="eduInstitution[i]"></ion-input>
-        </ion-item>
-        <ion-button class="removeInstitution" *ngIf="numStudentsList.length > 1" (click)="removeInstitution(i)" [disabled]="numStudentsList.length === 1" >Remove institution</ion-button>
+      <ion-card-content formArrayName="numStudentsList">
+        <div *ngFor="let memberControl of numStudentsList.controls; let i = index" [formGroupName]="i">
+          <ion-item>
+            <ion-label class="numStudentsLabel">Numbers of students:</ion-label>
+            <ion-input type="number" placeholder="0" formControlName="numStudents"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="eduLabel">Educational institution:</ion-label>
+            <ion-input formControlName="eduInstitution"></ion-input>
+          </ion-item>
+          <ion-button class="removeInstitution" *ngIf="numStudentsList.length > 1" (click)="removeInstitution(i)" [disabled]="numStudentsList.length === 1">
+            Remove institution
+          </ion-button>
+        </div>
       </ion-card-content>
       <ion-button (click)="addInstitution()" class="addInstitution">Add institution</ion-button>
     </ion-card>
+    
 
     <ion-card id="numChildren">
       <ion-card-header>
@@ -269,7 +276,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card id="EDIQuestions">
+    <!--<ion-card id="EDIQuestions">
       <ion-card-header>
         <ion-card-title>Question 13</ion-card-title>
         <ion-card-subtitle>

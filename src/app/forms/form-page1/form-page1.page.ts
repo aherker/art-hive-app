@@ -28,15 +28,15 @@ export class FormPage1Page implements OnInit {
       facilitatorList: this.formBuilder.array([]),
       numParticipants: ['', Validators.required],
       numSeniors: ['', Validators.required],
-      // numStudentsList: this.formBuilder.array([]),
-      // numChildren: ['', Validators.required],
-      // numNewParticipants: ['', Validators.required],
-      // discoveryMethods: this.formBuilder.array([
-      //   this.formBuilder.control(false), // Word of mouth
-      //   this.formBuilder.control(false), // Passing by
-      //   this.formBuilder.control(false), // Social media
-      // ]),
-      // otherDiscovery: [''],
+      numStudentsList: this.formBuilder.array([]),
+      numChildren: ['', Validators.required],
+      numNewParticipants: ['', Validators.required],
+      discoveryMethods: this.formBuilder.array([
+        this.formBuilder.control(false), // Word of mouth
+        this.formBuilder.control(false), // Passing by
+        this.formBuilder.control(false), // Social media
+      ]),
+      otherDiscovery: [''],
       // EDIQuestions: [''],
       // selfID: [''],
       // commonGround: [''],
@@ -90,7 +90,7 @@ export class FormPage1Page implements OnInit {
     return this.artHiveQuestionare.get('facilitatorList') as FormArray;
   }
 
-  get numStudentsList(){
+  get numStudentsList(): FormArray{
     return this.artHiveQuestionare.get('numStudentsList') as FormArray;
   }
 
