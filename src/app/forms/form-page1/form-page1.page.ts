@@ -8,7 +8,6 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 })
 export class FormPage1Page implements OnInit {
   artHiveQuestionare!: FormGroup;
-  isOtherDiscoveryChecked: boolean = false;
   etcLabels: string[] = ['kinesthetic', 'sensory', 'perceptual', 'affective', 'cognitive', 'symbolic', 'creative'];
 
   constructor(private formBuilder: FormBuilder) {}
@@ -32,11 +31,11 @@ export class FormPage1Page implements OnInit {
       numChildren: ['', Validators.required],
       numNewParticipants: ['', Validators.required],
       discoveryMethods: this.formBuilder.array([
-        this.formBuilder.control(false), // Word of mouth
-        this.formBuilder.control(false), // Passing by
-        this.formBuilder.control(false), // Social media
+        this.formBuilder.group({ checked: [false] }), // Word of mouth
+        this.formBuilder.group({ checked: [false] }), // Passing by
+        this.formBuilder.group({ checked: [false] }), // Social media
       ]),
-      otherDiscovery: [''],
+      otherDiscovery: ['']
       // EDIQuestions: [''],
       // selfID: [''],
       // commonGround: [''],
@@ -96,6 +95,10 @@ export class FormPage1Page implements OnInit {
 
   get discoveryMethods() : FormArray{
     return this.artHiveQuestionare.get('discoveryMethods') as FormArray;
+  }
+
+  getLabel(index: number): string {
+    return index === 0 ? 'Word of mouth' : index === 1 ? 'Passing by and being curious' : 'Social media';
   }
 
   get formsOfExpressionsList(){

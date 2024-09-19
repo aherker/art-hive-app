@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormPage1Page } from './form-page1.page';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 describe('FormPage1Page', () => {
@@ -379,4 +379,49 @@ describe('FormPage1Page', () => {
     expect(numStudentControl?.value).toBe('');
     expect(eduInstitutionControl?.value).toBe('');
   })
+
+  it('should initialize the discoveryMethods Form Array', () =>{
+    const discoveryMethodsArray = component.artHiveQuestionare.get('discoveryMethods') as FormArray;
+    
+    expect(discoveryMethodsArray).toBeDefined();
+    expect(component.artHiveQuestionare.get('otherDiscovery')).toBeDefined();
+
+    expect(discoveryMethodsArray.at(0).get('checked')?.value).toBeFalse();  // Word of mouth
+    expect(discoveryMethodsArray.at(1).get('checked')?.value).toBeFalse();  // Passing by
+    expect(discoveryMethodsArray.at(2).get('checked')?.value).toBeFalse();  // Social media
+    expect(component.artHiveQuestionare.get('otherDiscovery')?.value).toBe('');
+  })
+
+  it('should fill the values for the Discovery Methods and register them as true', () =>{
+    const discoveryMethodsArray = component.artHiveQuestionare.get('discoveryMethods') as FormArray;
+
+    discoveryMethodsArray.at(0).patchValue({ checked: true });
+    discoveryMethodsArray.at(1).patchValue({ checked: true });
+    discoveryMethodsArray.at(2).patchValue({ checked: true });
+    component.artHiveQuestionare.get('otherDiscovery')?.patchValue('test');
+    expect(discoveryMethodsArray.at(0).get('checked')?.value).toBeTrue();
+    expect(discoveryMethodsArray.at(1).get('checked')?.value).toBeTrue();
+    expect(discoveryMethodsArray.at(2).get('checked')?.value).toBeTrue();
+    expect(component.artHiveQuestionare.get('otherDiscovery')?.value).toBe('test');
+
+    discoveryMethodsArray.at(0).patchValue({ checked: true });
+    discoveryMethodsArray.at(1).patchValue({ checked: false });
+    discoveryMethodsArray.at(2).patchValue({ checked: false });
+    component.artHiveQuestionare.get('otherDiscovery')?.patchValue('');
+    expect(discoveryMethodsArray.at(0).get('checked')?.value).toBeTrue();
+    expect(discoveryMethodsArray.at(1).get('checked')?.value).toBeFalse();
+    expect(discoveryMethodsArray.at(2).get('checked')?.value).toBeFalse();
+    expect(component.artHiveQuestionare.get('otherDiscovery')?.value).toBe('');
+
+    discoveryMethodsArray.at(0).patchValue({ checked: false });
+    discoveryMethodsArray.at(1).patchValue({ checked: true });
+    discoveryMethodsArray.at(2).patchValue({ checked: false });
+    component.artHiveQuestionare.get('otherDiscovery')?.patchValue('');
+    expect(discoveryMethodsArray.at(0).get('checked')?.value).toBeFalse();
+    expect(discoveryMethodsArray.at(1).get('checked')?.value).toBeTrue();
+    expect(discoveryMethodsArray.at(2).get('checked')?.value).toBeFalse();
+    expect(component.artHiveQuestionare.get('otherDiscovery')?.value).toBe('');
+  })
+
+  
 });
