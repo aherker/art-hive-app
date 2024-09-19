@@ -12,8 +12,15 @@
       <!-- <ion-title size="large">Tab 3</ion-title> -->
     </ion-toolbar>
   </ion-header>
-
-  <ion-title size="small">This Page will let you view previous forms the user submitted</ion-title>
-    
-
+  <ion-list>
+    <ion-item>
+      <ion-select aria-label="fruit" placeholder="Select fruit">
+        <ion-select-option value="apples">Apples</ion-select-option>
+        <ion-select-option value="oranges">Oranges</ion-select-option>
+        <ion-select-option value="bananas">Bananas</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-button (click)="addFormResponse()">Add Form Response</ion-button>
+  <ion-button (click)="getFormResponses()">Get Form Responses</ion-button>
 </ion-content>
