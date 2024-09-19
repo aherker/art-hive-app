@@ -35,14 +35,14 @@ export class FormPage1Page implements OnInit {
         this.formBuilder.group({ checked: [false] }), // Passing by
         this.formBuilder.group({ checked: [false] }), // Social media
       ]),
-      otherDiscovery: ['']
-      // EDIQuestions: [''],
-      // selfID: [''],
-      // commonGround: [''],
-      // underRepresentedPerspectives: [''],
-      // underRepresentedPerspectivesReachOut: [''],
-      // formsOfExpressionsList: this.formBuilder.array([]),
-      // themsAndSymbols: [''],
+      otherDiscovery: [''],
+      EDIQuestions: [''],
+      selfID: [''],
+      commonGround: [''],
+      underRepresentedPerspectives: [''],
+      underRepresentedPerspectivesReachOut: [''],
+      formsOfExpressionsList: this.formBuilder.array([]),
+      themesAndSymbols: [''],
       // materialsUsedList: this.formBuilder.array([]),
       // selectedETC: [''],
       // discussionCommunity: [''],

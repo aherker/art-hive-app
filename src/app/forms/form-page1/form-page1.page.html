@@ -262,7 +262,7 @@
       </ion-card-content>
     </ion-card>    
 
-    <!-- <ion-card id="dataCollectionExplanation">
+    <ion-card id="dataCollectionExplanation">
       <ion-card-content >
         <ion-label class="dataCollectionLabels">
           Data collected here will inform us if the activities hold an inclusive, diverse, and equitable space. Please note the discussions related to these three components in this section and how the community was encouraged to embrace a perspective that welcomes under-represented groups.
@@ -276,9 +276,9 @@
           If a question does not apply, please leave it blank. Please do NOT write identifying information such as names. Reflections on the composition of the group (e.g., mainly similar age, mainly adults but intergenerational, intergenerational including children or students, diverse ethnicities or homogenous group, people with visible or invisible disabilities, religion, location, etc.)
         </ion-label>
       </ion-card-content>
-    </ion-card> -->
+    </ion-card> 
 
-    <!--<ion-card id="EDIQuestions">
+    <ion-card id="EDIQuestions">
       <ion-card-header>
         <ion-card-title>Question 13</ion-card-title>
         <ion-card-subtitle>
@@ -346,18 +346,20 @@
         <ion-card-title>Question 18</ion-card-title>
         <ion-card-subtitle>Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1)):</ion-card-subtitle>
       </ion-card-header>
-      <ion-card-content *ngFor="let memberControl of formsOfExpressionsList.controls; let i = index">
-        <ion-item>
-          <ion-label class="formsOfExpressionsLabel">Form of art:</ion-label>
-          <ion-input formControlName="formsOfExpressionType"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label class="numOfExpressionLabel">Number of art form:</ion-label>
-          <ion-input type="number" placeholder="0" formControlName="numOfExpression"></ion-input>
-        </ion-item>
-        <ion-button class="removeExpression" *ngIf="formsOfExpressionsList.length > 1" (click)="removeExpression(i)" [disabled]="formsOfExpressionsList.length === 1" >Remove form of expression</ion-button>
+      <ion-card-content formArrayName="formsOfExpressionsList">
+        <div *ngFor="let memberControl of formsOfExpressionsList.controls; let i = index" [formGroupName]="i">
+          <ion-item>
+            <ion-label class="formsOfExpressionsLabel">Form of art:</ion-label>
+            <ion-input formControlName="formsOfExpressionType"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="numOfExpressionLabel">Number of art form:</ion-label>
+            <ion-input type="number" placeholder="0" formControlName="numOfExpression"></ion-input>
+          </ion-item>
+          <ion-button class="removeExpression" *ngIf="formsOfExpressionsList.length > 1" (click)="removeExpression(i)" [disabled]="formsOfExpressionsList.length === 1" >Remove form of expression</ion-button>
+        </div>
       </ion-card-content>
-      <ion-button (click)="addExpression()" class="addExpression">Add Expression</ion-button>
+      <ion-button (click)="addExpression()" class="addExpression">Add expression</ion-button>
     </ion-card>
 
     <ion-card id="themesAndSymbols">
@@ -370,7 +372,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card id="materialsUsed">
+    <!--ion-card id="materialsUsed">
       <ion-card-header>
         <ion-card-title>Question 20</ion-card-title>
         <ion-card-subtitle>Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1))):</ion-card-subtitle>

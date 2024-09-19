@@ -423,5 +423,64 @@ describe('FormPage1Page', () => {
     expect(component.artHiveQuestionare.get('otherDiscovery')?.value).toBe('');
   })
 
-  
+  it('should initialize the EDIQuestion initialize', () =>{
+    expect(component.artHiveQuestionare.get('EDIQuestions')).toBeDefined();
+    expect(component.artHiveQuestionare.get('EDIQuestions')).toBeTruthy();
+  })
+
+  it('should fill the EDIQuestion with an empty variable and register as invalid', () =>{
+    component.artHiveQuestionare.get('EDIQuestions')?.patchValue('');
+    expect(component.artHiveQuestionare.get('EDIQuestions')?.value).toBe('');
+  })
+
+  it('should fill the EDIQuestion with a variable and register as invalid', () =>{
+    component.artHiveQuestionare.get('EDIQuestions')?.patchValue('test');
+    expect(component.artHiveQuestionare.get('EDIQuestions')?.value).toBe('test');
+  })
+
+  it('should initialize the formsOfExpressionsList Form Array', () =>{
+    expect(component.formsOfExpressionsList).toBeDefined();
+    expect(component.formsOfExpressionsList.controls.length).toBe(0); // Since it is initially empty
+  })
+
+  it('should add and remove a member to the formsOfExperssionsList and test the validators', () =>{
+    component.addExpression();
+    expect(component.formsOfExpressionsList.controls.length).toBe(1);
+
+    const formsOfExpressionsListControl = component.formsOfExpressionsList.at(0) as FormGroup;
+
+    expect(formsOfExpressionsListControl.get('formsOfExpressionType')?.hasError('required')).toBeTrue();
+    expect(formsOfExpressionsListControl.get('numOfExpression')?.hasError('required')).toBeTrue();
+
+    component.removeExpression(0);
+    expect(component.formsOfExpressionsList.controls.length).toBe(0);
+  })
+
+  it('should add an empty member to the formsOfExpressions and register it as invalid', () =>{
+    component.addExpression();
+    const formsOfExpressionsListControl = component.formsOfExpressionsList.at(0) as FormGroup;
+
+    formsOfExpressionsListControl.patchValue({
+      formsOfExpressionType: '',
+      numOfExpression: ''
+    });
+
+    expect(formsOfExpressionsListControl.get('formsOfExpressionType')?.value).toBe('');
+    expect(formsOfExpressionsListControl.get('numOfExpression')?.value).toBe('');
+
+  })
+
+  it('should add a member to the formsOfExpressions and register it as valid', () =>{
+    component.addExpression();
+    const formsOfExpressionsListControl = component.formsOfExpressionsList.at(0) as FormGroup;
+
+    formsOfExpressionsListControl.patchValue({
+      formsOfExpressionType: 'test',
+      numOfExpression: '5'
+    });
+
+    expect(formsOfExpressionsListControl.get('formsOfExpressionType')?.value).toBe('test');
+    expect(formsOfExpressionsListControl.get('numOfExpression')?.value).toBe('5');
+
+  })
 });
