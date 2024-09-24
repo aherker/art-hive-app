@@ -441,6 +441,7 @@ describe('FormPage1Page', () => {
   it('should initialize the formsOfExpressionsList Form Array', () =>{
     expect(component.formsOfExpressionsList).toBeDefined();
     expect(component.formsOfExpressionsList.controls.length).toBe(0); // Since it is initially empty
+    expect(component.formsOfExpressionsList).toBeTruthy();
   })
 
   it('should add and remove a member to the formsOfExperssionsList and test the validators', () =>{
@@ -481,6 +482,82 @@ describe('FormPage1Page', () => {
 
     expect(formsOfExpressionsListControl.get('formsOfExpressionType')?.value).toBe('test');
     expect(formsOfExpressionsListControl.get('numOfExpression')?.value).toBe('5');
+  })
 
+  it('should initialize themesAndSymbols', () =>{
+    expect(component.artHiveQuestionare.get('themesAndSymbols')).toBeTruthy();
+    expect(component.artHiveQuestionare.get('themesAndSymbols')).toBeDefined();
+  })
+
+  it('should fill first fill themesAndSymbols with empty data and be invalid, then fill it again with real data and be valid' ,() =>{
+    component.artHiveQuestionare.get('themesAndSymbols')?.patchValue('');
+    expect(component.artHiveQuestionare.get('themesAndSymbols')?.value).toBe('');
+
+    component.artHiveQuestionare.get('themesAndSymbols')?.patchValue('testing');
+    expect(component.artHiveQuestionare.get('themesAndSymbols')?.value).toBe('testing');
+  })
+
+  it('should initialize the materialsUsedList formControlArray', () =>{
+    expect(component.materialsUsedList).toBeDefined();
+    expect(component.materialsUsedList.length).toBe(0);
+    expect(component.materialsUsedList).toBeTruthy();
+  })
+
+  it('should add and removed a member of the materialsUsedList formArrayName and test their validators', () =>{
+    component.addMaterialsUsed();
+    expect(component.materialsUsedList.length).toBe(1);
+
+    component.removeMaterialsUsed(0);
+    expect(component.materialsUsedList.length).toBe(0);
+
+    component.addMaterialsUsed();
+    const materialsUsedListControl = component.materialsUsedList.at(0) as FormGroup;
+
+    expect(materialsUsedListControl.get('materialsUsedType')?.hasError('required')).toBeTrue();
+    expect(materialsUsedListControl.get('numMaterialsUsed')?.hasError('required')).toBeTrue();
+  })
+
+  it('should initially add an empty input into the materialsUsedList Form Array and be invalid, then it should add a valid input and register as valid', () =>{
+    component.addMaterialsUsed();
+    const materialsUsedListControl = component.materialsUsedList.at(0) as FormGroup;
+
+    materialsUsedListControl.patchValue({
+      materialsUsedType: '',
+      numMaterialsUsed: 0
+    });
+
+    expect(materialsUsedListControl.get('materialsUsedType')?.value).toBe('');
+    expect(materialsUsedListControl.get('numMaterialsUsed')?.value).toBe(0);
+
+    materialsUsedListControl.patchValue({
+      materialsUsedType: 'oil paint',
+      numMaterialsUsed: 6
+    });
+
+    expect(materialsUsedListControl.get('materialsUsedType')?.value).toBe('oil paint');
+    expect(materialsUsedListControl.get('numMaterialsUsed')?.value).toBe(6);
+  })  
+
+  it('should initialize the radio buttons for selectedETC', () =>{
+    expect(component.artHiveQuestionare.get('selectedETC')).toBeDefined();
+    expect(component.artHiveQuestionare.get('selectedETC')).toBeTruthy();
+    expect(component.artHiveQuestionare.get('selectedETC')?.invalid).toBeTrue();
+
+    expect(component.artHiveQuestionare.get('selectedETC')?.hasError('required')).toBeTrue();
+  })
+
+  it('should select a radio button and store the value', () =>{
+    component.artHiveQuestionare.get('selectedETC')?.patchValue('sensory');
+    expect(component.artHiveQuestionare.get('selectedETC')?.value).toBe('sensory');
+  })
+
+  it('should initialize discussionCommunity formControl', () =>{
+    expect(component.artHiveQuestionare.get('discussionCommunity')).toBeDefined();
+    expect(component.artHiveQuestionare.get('discussionCommunity')).toBeTruthy();
+  })
+
+  it('should fill the discussionCommunity Form control', () =>{
+    component.artHiveQuestionare.get('discussionCommunity')?.patchValue('test');
+    expect(component.artHiveQuestionare.get('discussionCommunity')?.value).toBe('test');
   })
 });

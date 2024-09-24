@@ -43,31 +43,31 @@ export class FormPage1Page implements OnInit {
       underRepresentedPerspectivesReachOut: [''],
       formsOfExpressionsList: this.formBuilder.array([]),
       themesAndSymbols: [''],
-      // materialsUsedList: this.formBuilder.array([]),
-      // selectedETC: [''],
-      // discussionCommunity: [''],
-      // discussionArtmaking: [''],
-      // discussionSelfCare: [''],
-      // discussionChallenges: [''],
-      // discussionOther: [''],
-      // highlightsSpace: [''],
-      // highlightsCommunity: [''],
-      // highlightsEnvironment: [''],
-      // highlightsLeadership: [''],
-      // highlightsBoundaries: [''],
-      // highlightsOther: [''],
-      // challengesSpace: [''],
-      // challengesCommunity: [''],
-      // challengesArtmaking: [''],
-      // challengesEnvironment: [''],
-      // challengesLeadership: [''],
-      // challengesBoundaries: [''],
-      // challengesOther: [''],
-      // circleOfCare: [''],
-      // testimonies: [''],
-      // proposedThemes: [''],
-      // actionItems: [''],
-      // researchQuestions: ['']
+      materialsUsedList: this.formBuilder.array([]),
+      selectedETC: ['', Validators.required],
+      discussionCommunity: [''],
+      discussionArtmaking: [''],
+      discussionSelfCare: [''],
+      discussionChallenges: [''],
+      discussionOther: [''],
+      highlightsSpace: [''],
+      highlightsCommunity: [''],
+      highlightsEnvironment: [''],
+      highlightsLeadership: [''],
+      highlightsBoundaries: [''],
+      highlightsOther: [''],
+      challengesSpace: [''],
+      challengesCommunity: [''],
+      challengesArtmaking: [''],
+      challengesEnvironment: [''],
+      challengesLeadership: [''],
+      challengesBoundaries: [''],
+      challengesOther: [''],
+      circleOfCare: [''],
+      testimonies: [''],
+      proposedThemes: [''],
+      actionItems: [''],
+      researchQuestions: ['']
     });
 
     console.log(this.membersName); // Check if it is defined
@@ -109,9 +109,9 @@ export class FormPage1Page implements OnInit {
     return this.artHiveQuestionare.get('materialsUsedList') as FormArray;
   }
 
-  get ETC() {
-    return this.artHiveQuestionare.get('ETC') as FormArray;
-  }
+  // get ETC() {
+  //   return this.artHiveQuestionare.get('ETC') as FormArray;
+  // }
 
   addMember() {
     this.membersName.push(this.formBuilder.control('', Validators.required));

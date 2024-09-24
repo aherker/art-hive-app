@@ -372,27 +372,28 @@
       </ion-card-content>
     </ion-card>
 
-    <!--ion-card id="materialsUsed">
+    <ion-card id="materialsUsed">
       <ion-card-header>
         <ion-card-title>Question 20</ion-card-title>
-        <ion-card-subtitle>Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1))):</ion-card-subtitle>
+        <ion-card-subtitle>
+          Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1))):
+        </ion-card-subtitle>
       </ion-card-header>
-      <ion-card-content *ngFor="let memberControl of materialsUsedList.controls; let i = index">
-        <ion-item>
-          <ion-label class="materialsUsedLabel">Materials or instruments used:</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-textarea formControlName="materialsUsedType" class="materialsUsedTypeInput"></ion-textarea>
-        </ion-item>
-
-        <ion-item>
-          <ion-label class="numMaterialsUsedLabel">Number materials or instruments used:</ion-label>
-          <ion-input type="number" placeholder="0" formControlName="numMaterialsUsed"></ion-input>
-        </ion-item>
-        <ion-button class="removeMaterialsUsed" *ngIf="materialsUsedList.length > 1" (click)="removeMaterialsUsed(i)" [disabled]="materialsUsedList.length === 1" >Remove materials or insturments used</ion-button>
+      <ion-card-content formArrayName="materialsUsedList">
+        <div *ngFor="let memberControl of materialsUsedList.controls; let i = index" [formGroupName]="i">
+          <ion-item>
+            <ion-label class="materialsUsedLabel">Materials or instruments used:</ion-label>
+            <ion-textarea formControlName="materialsUsedType" class="materialsUsedTypeInput"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label class="numMaterialsUsedLabel">Number materials or instruments used:</ion-label>
+            <ion-input type="number" placeholder="0" formControlName="numMaterialsUsed"></ion-input>
+          </ion-item>
+          <ion-button class="removeMaterialsUsed" *ngIf="materialsUsedList.length > 1" (click)="removeMaterialsUsed(i)" [disabled]="materialsUsedList.length === 1">Remove materials or instruments used</ion-button>
+        </div>
       </ion-card-content>
-      <ion-button (click)="addMaterialsUsed()" class="addMaterialsUsed">Add materials or insturments used</ion-button>
-    </ion-card>
+      <ion-button (click)="addMaterialsUsed()" class="addMaterialsUsed">Add materials or instruments used</ion-button>
+    </ion-card>    
 
     <ion-card id="ETC">
       <ion-card-header>
@@ -409,7 +410,7 @@
           </ion-radio-group>
         </ion-list>
       </ion-card-content>
-    </ion-card>
+    </ion-card>    
 
     <ion-card id="discussionThemes">
       <ion-card-header>
@@ -681,7 +682,7 @@
       <ion-card-content>
         <ion-textarea class="actionStepsandFollowUpInput" formControlName="researchQuestions"></ion-textarea>
       </ion-card-content>
-    </ion-card> -->
+    </ion-card>
 
     <ion-header>
       <ion-toolbar>
