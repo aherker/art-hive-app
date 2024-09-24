@@ -11,6 +11,8 @@ import { AppStoreModule } from 'src/store/AppStoreModule';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 //---------------------------------------------ADDED FOR FIREBASE TESTING---------------------------------------------------------------------------//
 import { Store } from '@ngrx/store';
@@ -19,7 +21,14 @@ import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ...AppStoreModule, StoreDevtoolsModule.instrument({maxAge: 25}),AngularFireModule.initializeApp(environment.firebaseConfig),AngularFireAuthModule,AngularFirestoreModule ],
+  imports: [BrowserModule,
+     IonicModule.forRoot(),
+      AppRoutingModule,
+       ...AppStoreModule,
+        StoreDevtoolsModule.instrument({maxAge: 25}),
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFireAuthModule,AngularFirestoreModule,
+        provideFirestore(() => getFirestore())],  // added for cloudstore 
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
