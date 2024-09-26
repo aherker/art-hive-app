@@ -21,7 +21,7 @@ const routes: Routes = [
       },
       {
         path: 'dapage',
-        loadChildren: () => import('../dapage/dapage.module').then(m => m.DApagePageModule)
+        loadChildren: () => import('../pages/dapage/dapage.module').then(m => m.DApagePageModule)
       },
       {
         path: '',
