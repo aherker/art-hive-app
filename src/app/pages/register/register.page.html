@@ -8,28 +8,29 @@
     
       <ion-card-content>
         <ion-list>
+          <!-- Email Input -->
           <ion-item>
-            <ion-input id="register-email" type="email" label="Email" placeholder="email@siue.edu" labelPlacement="floating" required></ion-input>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input [(ngModel)]="email" type="email" required></ion-input>  <!-- Two-way binding for email -->
           </ion-item>
-        
+      
+          <!-- Password Input -->
           <ion-item>
-            <ion-input id="password" label="Password" type="password" labelPlacement="floating" required></ion-input>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input [(ngModel)]="password" type="password" required></ion-input>  <!-- Two-way binding for password -->
           </ion-item>
-          
+      
+          <!-- Confirm Password Input -->
           <ion-item>
-            <ion-input id="confirm-password" label="Confirm Password" type="password" labelPlacement="floating" required></ion-input>
+            <ion-label position="floating">Confirm Password</ion-label>
+            <ion-input [(ngModel)]="confirmPassword" type="password" required></ion-input>  <!-- Two-way binding for confirmPassword -->
           </ion-item>
-
-          <div >
-            <ion-button class="signup-button" fill="outline" >Signup</ion-button>
-          </div>
-
-          <div style="display: flex; align-items: center;">
-            <ion-label class="login-label" style="text-align:center">Already have an account?</ion-label>
-            <ion-button class="login-button" routerLink="/login" fill="clear" style="text-align:center">Login</ion-button>
-          </div>
-
         </ion-list>
+      
+        <!-- Submit Button -->
+        <ion-button expand="full" (click)="register()">Sign Up</ion-button>
+
+        <ion-button fill="clear" routerLink="/login">Already have an account? Back to Login</ion-button>
       </ion-card-content>
     </ion-card>
   </div>

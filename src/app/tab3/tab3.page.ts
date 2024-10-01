@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -6,9 +6,14 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page {
+export class Tab3Page implements OnInit {
+  formResponses: any[] = []; 
 
   constructor(private firestoreService: FirestoreService) {}
+
+  async ngOnInit() {
+    await this.getFormResponses(); // Fetch the data when the page loads
+  }
 
   // Example of adding a document
   async addFormResponse() {
@@ -24,8 +29,12 @@ export class Tab3Page {
 
   // Example of getting documents
   async getFormResponses() {
-    const responses = await this.firestoreService.getDocuments();
-    console.log(responses);
+    try {
+      const responses = await this.firestoreService.getDocuments();
+      this.formResponses = responses;  // Store the fetched data
+    } catch (error) {
+      console.error('Error fetching form responses:', error);
+    }
   }
 }
 

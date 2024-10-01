@@ -7,6 +7,8 @@ import { environment } from './environments/environment';
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
+import { getAuth } from "firebase/auth"; 
+
 if (environment.production) {
   enableProdMode();
 }
@@ -28,3 +30,4 @@ platformBrowserDynamic().bootstrapModule(AppModule)
   const app = initializeApp(firebaseConfig);
 
   export const db = getFirestore(app);
+  export const auth = getAuth(app);
