@@ -1,23 +1,32 @@
+
 <ion-header [translucent]="true">
   <ion-toolbar class="header-background">
+    <ion-menu-toggle class="custom-setting-button" slot="start">
+      <ion-button  menuToggle="mainMenu">
+        <ion-icon slot="icon-only" name="cog-outline"></ion-icon>
+      </ion-button>
+    </ion-menu-toggle>
     <ion-title class="custom-title-background">
-      Home
+      Home1
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> 
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <!-- <ion-title size="large">Tab 2</ion-title> -->
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="page-background">
+<ion-content id="main-content" [fullscreen]="true" class="page-background">
     <div class="button-container">
       <ion-button expand="block" routerLink="/tabs/tab1" class="large-button">Fill Out Form</ion-button>
       <ion-button expand="block" routerLink="/tabs/tab3" class="large-button">Your Previous Forms</ion-button>
       <ion-button expand="block" routerLink="/tabs/dapage"class="large-button">Data Analysis</ion-button>
     </div>
-  </ion-content>  
-
 </ion-content>
+
+<ion-menu contentId="main-content" side="start" menuId="mainMenu">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Settings</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-button (click)="logout()">Sign Out</ion-button> <!-- Sign Out Button -->
+  </ion-content>
+</ion-menu>

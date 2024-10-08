@@ -12,8 +12,13 @@
       <!-- <ion-title size="large">Tab 3</ion-title> -->
     </ion-toolbar>
   </ion-header>
-
-  <ion-title size="small">This Page will let you view previous forms the user submitted</ion-title>
-    
-
+  <ion-list>
+    <ion-item *ngFor="let response of formResponses">
+      <ion-label>
+        <h2>{{ response.timestamp?.toDate() | date: 'medium' }}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-button (click)="addFormResponse()">Add Form Response</ion-button>
+  <ion-button (click)="getFormResponses()">Get Form Responses</ion-button>
 </ion-content>

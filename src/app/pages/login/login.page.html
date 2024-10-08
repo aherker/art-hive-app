@@ -1,6 +1,6 @@
 <ion-content>
   <div class="flex-center">
-    <form [formGroup]="form">
+
       <ion-card>
         <ion-card-header>
           <ion-card-title style="text-align:center">Login</ion-card-title>
@@ -8,35 +8,25 @@
       
         <ion-card-content>
           <ion-list>
+            <!-- Email Input -->
             <ion-item>
-              <ion-input id="email" type="email" label="Email" labelPlacement="floating" formControlName="email" required></ion-input>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input [(ngModel)]="email" type="email" required></ion-input>  <!-- Two-way binding for email -->
             </ion-item>
-
-            <app-error-messages message="Please enter an email" labelPlacement="floating" [field]="form.get('email')" error="required"></app-error-messages>
-            <app-error-messages message="Email is invalid" labelPlacement="floating" [field]="form.get('email')" error="email"></app-error-messages>
-
+        
+            <!-- Password Input -->
             <ion-item>
-              <ion-input id="password" label="Password" type="password" labelPlacement="floating" formControlName="password" required></ion-input>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input [(ngModel)]="password" type="password" required></ion-input>  <!-- Two-way binding for password -->
             </ion-item>
-
-            <app-error-messages message="Please enter an password" labelPlacement="floating" [field]="form.get('password')" error="required"></app-error-messages>
-
-            <div>
-              <ion-button id="forgot-id" fill="clear" [disabled]="!form.get('email')?.valid" (click)="forgotEmailPassword()">Forgot email/password?</ion-button>
-            </div>
-            
-            <div>
-              <ion-button class="login-button" fill="outline" (click)="login()" [disabled]="form.invalid">Login</ion-button>
-            </div>
-
-            <div style="display: flex; align-items: center;">
-              <ion-label class="register-label" style="text-align:center">Don't have an account?</ion-label>
-              <ion-button class="register-button" (click)="register()" fill="clear" style="text-align:center">Signup</ion-button>
-            </div>
-
           </ion-list>
+        
+          <!-- Sign In Button -->
+          <ion-button expand="full" (click)="login()">Sign In</ion-button>
+        
+          <!-- Link to the Register Page -->
+          <ion-button fill="clear" routerLink="/register">Don't have an account? Sign Up</ion-button>
         </ion-card-content>
       </ion-card>
-    </form>
   </div>
 </ion-content>
