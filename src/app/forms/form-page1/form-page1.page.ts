@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+//import { db } from 'src/main';
+import {FirestoreService } from 'src/app/services/firestore.service';
+import 'firebase/firestore';
 
 @Component({
   selector: 'app-form-page1',
@@ -10,7 +13,7 @@ export class FormPage1Page implements OnInit {
   artHiveQuestionare!: FormGroup;
   etcLabels: string[] = ['kinesthetic', 'sensory', 'perceptual', 'affective', 'cognitive', 'symbolic', 'creative'];
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService) {}
 
   ngOnInit() {
     this.artHiveQuestionare = this.formBuilder.group({
@@ -190,9 +193,17 @@ export class FormPage1Page implements OnInit {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.artHiveQuestionare.valid) {
-      console.log(this.artHiveQuestionare.value);
+      const formData = this.artHiveQuestionare.value;
+      
+      try {
+        // Call the FirestoreService to add the document
+        await this.firestoreService.addDocument(formData);
+        console.log('Form data saved successfully!');
+      } catch (error) {
+        console.error('Error saving form data:', error);
+      }
     } else {
       console.error('Form is invalid');
     }

@@ -21,7 +21,7 @@
     </ion-card-content>
   </ion-card>
 
-  <form [formGroup]="artHiveQuestionare">
+  <form [formGroup]="artHiveQuestionare" (ngSubmit)="onSubmit()">
     <ion-card id="groupMembers">
       <ion-card-header>
         <ion-card-title>Question 1</ion-card-title>
@@ -687,7 +687,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons class="center-button">
-          <ion-button class="rounded-button" (click)="onSubmit()">
+          <ion-button class="rounded-button" (click)="onSubmit()" [disabled]="!artHiveQuestionare.valid">
             Submit
             <ion-icon slot="end" name="checkmark"></ion-icon>
           </ion-button>
