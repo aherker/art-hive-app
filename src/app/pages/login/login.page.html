@@ -20,6 +20,11 @@
               <ion-input [(ngModel)]="password" type="password" required></ion-input>  <!-- Two-way binding for password -->
             </ion-item>
           </ion-list>
+
+          <!-- Error Message -->
+        <ion-text color="danger" *ngIf="errorMessage">
+          <p>{{ errorMessage }}</p>
+        </ion-text>
         
           <!-- Sign In Button -->
           <ion-button expand="full" (click)="login()">Sign In</ion-button>

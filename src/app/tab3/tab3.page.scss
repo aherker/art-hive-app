@@ -5,3 +5,8 @@ ion-content {
   ion-toolbar {
     --background: none;
   }
+
+.custom-list-container {
+   height: 100px; 
+  overflow-y: auto; 
+}
