@@ -11,14 +11,19 @@ import { Store } from '@ngrx/store';
 import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { LoadingComponent } from './components/loading/loading.component';
 
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+
+//import { db } from 'src/main' //--
+import {FirestoreService } from 'src/app/services/firestore.service';
+
 import { ColorPickerModule } from 'ngx-color-picker';
 
-import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ...AppStoreModule, StoreDevtoolsModule.instrument({maxAge: 25}), FormsModule, ColorPickerModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ...AppStoreModule, StoreDevtoolsModule.instrument({maxAge: 25}), FormsModule, ReactiveFormsModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, FirestoreService, ColorPickerModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
