@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 //import { db } from 'src/main';
 import {FirestoreService } from 'src/app/services/firestore.service';
 import 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 
 @Component({
   selector: 'app-form-page1',
@@ -115,7 +116,8 @@ export class FormPage1Page implements OnInit {
       actionItemsLabel: ['Action items required and who will follow up'],
       actionItems: [''],
       researchQuestionsLabel: ['Potential research questions'],
-      researchQuestions: ['']
+      researchQuestions: [''],
+      Timestamp: new Date()
     });
 
     console.log(this.membersName); // Check if it is defined
