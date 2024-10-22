@@ -25,6 +25,10 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+:root {
+  --app-background-color: #000000; /* Default color */
+}
+
 .flex-center{
     display: flex;
     justify-content: center;
@@ -42,7 +46,8 @@
   }
 
 .header-background {
-    background: url('/assets/honey-drip-dark.jpg');
+    background: url('/assets/honey-drip-bg-remove.png');
+    background-color: var(--app-background-color);
     background-size: contain;
     background-position: center;
     display: flex;
@@ -53,7 +58,7 @@
 
 .custom-title-background {
     display: inline-block;
-    background-color:black; /* or any other background color */
+    background-color: var(--app-background-color); /* or any other background color */
     padding: 0.8em 0.5em; /* Adjust padding as needed */
     color: white;
     width: 50%;

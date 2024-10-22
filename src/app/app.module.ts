@@ -11,11 +11,13 @@ import { Store } from '@ngrx/store';
 import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { LoadingComponent } from './components/loading/loading.component';
 
+import { ColorPickerModule } from 'ngx-color-picker';
+
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ...AppStoreModule, StoreDevtoolsModule.instrument({maxAge: 25}), FormsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ...AppStoreModule, StoreDevtoolsModule.instrument({maxAge: 25}), FormsModule, ColorPickerModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service'; 
 import { Router } from '@angular/router';
+import { ColorService } from 'src/app/services/color.service';
 
 @Component({
   selector: 'app-tab2',
@@ -9,7 +10,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./tab2.page.scss'],
 })
 export class Tab2Page {
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  selectedColor: string = '#000000'; // Default color
+
+  constructor(private authService: AuthenticationService, private router: Router, private colorService: ColorService) {}
+
+  ngOnInit() {
+    // Initialize selectedColor from ColorService on component initialization
+    this.selectedColor = this.colorService.selectedColor; // Get color from ColorService
+    this.updateCSSVariable(this.selectedColor); // Update CSS variable for the initial color
+  }
 
   // Method to handle sign out
   logout() {
@@ -20,5 +29,13 @@ export class Tab2Page {
       console.error('Sign out error', error);
     });
   }
+
+  updateCSSVariable(color: string) {
+    this.colorService.selectedColor = color;
+    console.log(this.colorService.selectedColor);
+    document.documentElement.style.setProperty('--app-background-color', color);
+  }
+
+
 }
 

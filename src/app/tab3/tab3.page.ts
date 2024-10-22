@@ -34,7 +34,7 @@ export class Tab3Page implements OnInit {
   // Example of getting documents
   async getFormResponses() {
     try {
-      const responses = await this.firestoreService.getDocuments("formResponses");
+      const responses = await this.firestoreService.getDocuments(this.globalService.getUserId());
       this.formResponses = responses;  // Store the fetched data
     } catch (error) {
       console.error('Error fetching form responses:', error);

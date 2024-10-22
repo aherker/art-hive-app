@@ -7,11 +7,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="page-background">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <!-- <ion-title size="large">Tab 3</ion-title> -->
-    </ion-toolbar>
-  </ion-header>
+
   <ion-list class="custom-list-container">
     <ion-radio-group [(ngModel)]="selectedItem" (ionChange)="displaySelectedDocument()">
     <ion-item *ngFor="let response of formResponses">
@@ -22,8 +18,8 @@
     </ion-item>
     </ion-radio-group>
   </ion-list>
-  <!-- <ion-button (click)="addFormResponse()">Add Form Response</ion-button>
-  <ion-button (click)="getFormResponses()">Get Form Responses</ion-button> -->
+  <ion-button (click)="addFormResponse()">Add Form Response</ion-button>
+  <ion-button (click)="getFormResponses()">Get Form Responses</ion-button>
 
 
 <!--     
@@ -45,10 +41,14 @@
 
 
           <div *ngIf="selectedDocumentData">
-            <h2>Selected Form Data:</h2>
+            <ion-toolbar>
+              <ion-title class="custom-title-background">
+                Selected Previous Form
+              </ion-title>
+            </ion-toolbar>
             <ion-card>
               <ion-card-header>
-                <ion-card-title>{{ selectedDocumentData.timestamp?.toDate() | date: 'medium' }}</ion-card-title>
+                <ion-card-title>Time of Submission: {{ selectedDocumentData.timestamp?.toDate() | date: 'medium' }}</ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <!-- Display each key and value in the selected document -->

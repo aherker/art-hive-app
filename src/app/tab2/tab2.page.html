@@ -7,7 +7,7 @@
       </ion-button>
     </ion-menu-toggle>
     <ion-title class="custom-title-background">
-      Home1
+      Home
     </ion-title>
   </ion-toolbar>
 </ion-header> 
@@ -28,5 +28,11 @@
   </ion-header>
   <ion-content>
     <ion-button (click)="logout()">Sign Out</ion-button> <!-- Sign Out Button -->
+
+    <div>Background Color:</div>
+    <input aria-label="Background Color" [(colorPicker)]="selectedColor" (colorPickerChange)="updateCSSVariable(selectedColor)" [style.background]="selectedColor" type="text" class="color-picker" [cpPosition]="'right'" [cpOutputFormat]="'hex'"/>
+
+
+    
   </ion-content>
 </ion-menu>

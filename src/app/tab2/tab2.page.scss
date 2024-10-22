@@ -24,9 +24,18 @@ ion-toolbar {
 
 .custom-setting-button{
   display: inline-block;
-  background-color:black; 
+  background-color:var(--app-background-color); 
   padding: 0.3em 0.5em; 
   text-align: center;
   position: absolute;
   top: 0px;  
+}
+
+.color-picker {
+  height: 30px; /* Set the desired height */
+  width: 10%; /* Optional: Set the width to 100% */
+  border: 1px solid #ccc; /* Optional: Add a border for better visibility */
+  border-radius: 4px; /* Optional: Rounded corners */
+  padding: 0; /* Remove padding */
+  box-shadow: none; /* Remove any default shadow */
 }
