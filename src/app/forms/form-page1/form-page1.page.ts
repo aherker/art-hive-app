@@ -118,7 +118,7 @@ export class FormPage1Page implements OnInit {
       actionItems: [''],
       researchQuestionsLabel: ['Potential research questions'],
       researchQuestions: [''],
-      Timestamp: new Date()
+      timestamp: new Date()
     });
 
     console.log(this.membersName); // Check if it is defined
