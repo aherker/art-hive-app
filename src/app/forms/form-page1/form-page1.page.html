@@ -25,10 +25,13 @@
     <ion-card id="groupMembers">
       <ion-card-header>
         <ion-card-title>Question 1</ion-card-title>
-        <ion-card-subtitle>
+        <!-- <ion-card-subtitle>
           Name of the people who are completing this form (Members of the community, if they agree to have their names written here)
-        </ion-card-subtitle>
+        </ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>
+        Name of the people who are completing this form (Members of the community, if they agree to have their names written here)
+      </ion-card-subtitle>
       
       <ion-card-content formArrayName="membersName">
         <div *ngFor="let memberControl of membersName.controls; let i = index" [formGroupName]="i">
@@ -52,8 +55,9 @@
     <ion-card id="dates">
       <ion-card-header>
         <ion-card-title>Question 2</ion-card-title>
-        <ion-card-subtitle>Starting and ending date of the art hive</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Starting and ending date of the art hive</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Starting and ending date of the art hive</ion-card-subtitle>
       <ion-card-content>
         <ion-item *ngIf="artHiveQuestionare">
           <ion-label class="DateLabels" position="stacked" formControlName="startDateLabel">Start date:</ion-label>
@@ -71,8 +75,9 @@
       <ion-card id="address">
       <ion-card-header>
         <ion-card-title>Question 3</ion-card-title>
-        <ion-card-subtitle>Address</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Address</ion-card-subtitle> -->
     </ion-card-header>
+    <ion-card-subtitle>Address</ion-card-subtitle>
       <ion-card-content>
         <ion-item>
           <ion-label formControlName="locationNameLabel">Name:</ion-label>
@@ -100,8 +105,9 @@
     <ion-card id="contacts">
       <ion-card-header>
         <ion-card-title>Question 4</ion-card-title>
-        <ion-card-subtitle>Contact(s)</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Contact(s)</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Contact(s)</ion-card-subtitle>
       <ion-card-content formArrayName="contactList">
         <div *ngFor="let memberControl of contactList.controls; let i = index" [formGroupName]="i">
           <ion-item>
@@ -132,8 +138,9 @@
     <ion-card id="partners">
       <ion-card-header>
         <ion-card-title>Question 5</ion-card-title>
-        <ion-card-subtitle>Partners for this Art Hive - individuals, programs, projects, or organizations</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Partners for this Art Hive - individuals, programs, projects, or organizations</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Partners for this Art Hive - individuals, programs, projects, or organizations</ion-card-subtitle>
       <ion-card-content formArrayName="partnerList">
         <div *ngFor="let memberControl of partnerList.controls; let i = index" [formGroupName]="i">
           <ion-item>
@@ -149,8 +156,10 @@
     <ion-card id="facilitator">
       <ion-card-header>
         <ion-card-title>Question 6</ion-card-title>
-        <ion-card-subtitle>List facilitator names</ion-card-subtitle>
+        <!-- <ion-card-subtitle>List facilitator names</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>List facilitator names</ion-card-subtitle>
+
       <ion-card-content formArrayName="facilitatorList">
         <div *ngFor="let memberControl of facilitatorList.controls; let i = index" [formGroupName]="i">
           <ion-item>
@@ -166,8 +175,10 @@
     <ion-card id="numParticipants">
       <ion-card-header>
         <ion-card-title>Question 7</ion-card-title>
-        <ion-card-subtitle>Number of participants (include facilitators)</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Number of participants (include facilitators)</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Number of participants (include facilitators)</ion-card-subtitle>
+
       <ion-card-content>
         <ion-item>
           <ion-label class="participantsLabel" formControlName="numParticipantsLabel">Number of participants:</ion-label>
@@ -179,8 +190,10 @@
     <ion-card id="numSeniors">
       <ion-card-header>
         <ion-card-title>Question 8</ion-card-title>
-        <ion-card-subtitle>Approximate number of older adults ≥ 65</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Approximate number of older adults ≥ 65</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Approximate number of older adults ≥ 65</ion-card-subtitle>
+
       <ion-card-content>
         <ion-item>
           <ion-label class="SeniorLabel" formControlName="numSeniorsLabel">Number of older adults:</ion-label>
@@ -192,10 +205,13 @@
     <ion-card id="numStudents">
       <ion-card-header>
         <ion-card-title>Question 9</ion-card-title>
-        <ion-card-subtitle>
+        <!-- <ion-card-subtitle>
           Approximate numbers of students (label with educational institutions)
-        </ion-card-subtitle>
+        </ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>
+        Approximate numbers of students (label with educational institutions)
+      </ion-card-subtitle>
       <ion-card-content formArrayName="numStudentsList">
         <div *ngFor="let memberControl of numStudentsList.controls; let i = index" [formGroupName]="i">
           <ion-item>
@@ -218,8 +234,10 @@
     <ion-card id="numChildren">
       <ion-card-header>
         <ion-card-title>Question 10</ion-card-title>
-        <ion-card-subtitle>Approximate number of children</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Approximate number of children</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Approximate number of children</ion-card-subtitle>
+
       <ion-card-content>
         <ion-item>
           <ion-label class="childrenLabel" formControlName="numChildrenLabel">Number of children:</ion-label>
@@ -231,8 +249,10 @@
     <ion-card id="newParticipants">
       <ion-card-header>
         <ion-card-title>Question 11</ion-card-title>
-        <ion-card-subtitle>Number of new participants</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Number of new participants</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Number of new participants</ion-card-subtitle>
+
       <ion-card-content>
         <ion-item>
           <ion-label class="newParticipants" formControlName="numNewParticipantsLabel">Number of new participants:</ion-label>
@@ -244,8 +264,10 @@
     <ion-card id="discovery">
       <ion-card-header>
         <ion-card-title>Question 12</ion-card-title>
-        <ion-card-subtitle >How did new participants find the event?</ion-card-subtitle>
+        <!-- <ion-card-subtitle >How did new participants find the event?</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle >How did new participants find the event?</ion-card-subtitle>
+
       <ion-card-content>
         <ion-list>
           <div formArrayName="discoveryMethods">
@@ -281,10 +303,13 @@
     <ion-card id="EDIQuestions">
       <ion-card-header>
         <ion-card-title>Question 13</ion-card-title>
-        <ion-card-subtitle formControlName="EDIQuestionsLabel">
+        <!-- <ion-card-subtitle formControlName="EDIQuestionsLabel">
+          Were there any discussions related to EDI topics (age, gender, sexual orientation, ethnicity/race, disability, religion, neighborhood, etc.)?
+        </ion-card-subtitle> -->
+      </ion-card-header>
+      <ion-card-subtitle formControlName="EDIQuestionsLabel"></ion-card-subtitle>
           Were there any discussions related to EDI topics (age, gender, sexual orientation, ethnicity/race, disability, religion, neighborhood, etc.)?
         </ion-card-subtitle>
-      </ion-card-header>
       <ion-card-content>
         <ion-textarea formControlName="EDIQuestions" class="EDIQuestionsInput"></ion-textarea>
       </ion-card-content>
@@ -293,8 +318,10 @@
     <ion-card id="selfID">
       <ion-card-header>
         <ion-card-title>Question 14</ion-card-title>
-        <ion-card-subtitle formControlName="selfIDLabel">If self-identification occurred, what may have facilitated it?</ion-card-subtitle>
+        <!-- <ion-card-subtitle formControlName="selfIDLabel">If self-identification occurred, what may have facilitated it?</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle formControlName="selfIDLabel">If self-identification occurred, what may have facilitated it?</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea formControlName="selfID" class="selfIDInput"></ion-textarea>
       </ion-card-content>
@@ -303,8 +330,10 @@
     <ion-card id="commonGround">
       <ion-card-header>
         <ion-card-title>Question 15</ion-card-title>
-        <ion-card-subtitle formControlName="commonGroundLabel">If needed, was a common ground found? If so, how (shared goals, community projects, etc.)?</ion-card-subtitle>
+        <!-- <ion-card-subtitle formControlName="commonGroundLabel">If needed, was a common ground found? If so, how (shared goals, community projects, etc.)?</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle formControlName="commonGroundLabel">If needed, was a common ground found? If so, how (shared goals, community projects, etc.)?</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea formControlName="commonGround" class="commonGroundInput"></ion-textarea>
       </ion-card-content>
@@ -313,8 +342,10 @@
     <ion-card id="underRepresentedPerspectives">
       <ion-card-header>
         <ion-card-title>Question 16</ion-card-title>
-        <ion-card-subtitle formControlName="underRepresentedPerspectivesLabel">What could be done to reach out for under-represented perspectives? (If any suggestions from the group)</ion-card-subtitle>
+        <!-- <ion-card-subtitle formControlName="underRepresentedPerspectivesLabel">What could be done to reach out for under-represented perspectives? (If any suggestions from the group)</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle formControlName="underRepresentedPerspectivesLabel">What could be done to reach out for under-represented perspectives? (If any suggestions from the group)</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea formControlName="underRepresentedPerspectives" class="underRepresentedPerspectivesInput"></ion-textarea>
       </ion-card-content>
@@ -323,8 +354,10 @@
     <ion-card id="underRepresentedPerspectivesReachOut">
       <ion-card-header>
         <ion-card-title>Question 17</ion-card-title>
-        <ion-card-subtitle>List action steps to reach out for under-represented perspectives. How and when? Who offered to reach out? (Name the team members or community members who offered to help, or organizations that were mentioned in the discussions for each action step):</ion-card-subtitle>
+        <!-- <ion-card-subtitle>List action steps to reach out for under-represented perspectives. How and when? Who offered to reach out? (Name the team members or community members who offered to help, or organizations that were mentioned in the discussions for each action step):</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>List action steps to reach out for under-represented perspectives. How and when? Who offered to reach out? (Name the team members or community members who offered to help, or organizations that were mentioned in the discussions for each action step):</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea formControlName="underRepresentedPerspectivesReachOut" class="underRepresentedPerspectivesReachOutInput"></ion-textarea>
       </ion-card-content>
@@ -344,8 +377,10 @@
     <ion-card id="formsOfExpressions">
       <ion-card-header>
         <ion-card-title>Question 18</ion-card-title>
-        <ion-card-subtitle>Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1)):</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1)):</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1)):</ion-card-subtitle>
+
       <ion-card-content formArrayName="formsOfExpressionsList">
         <div *ngFor="let memberControl of formsOfExpressionsList.controls; let i = index" [formGroupName]="i">
           <ion-item>
@@ -365,8 +400,10 @@
     <ion-card id="themesAndSymbols">
       <ion-card-header>
         <ion-card-title>Question 19</ion-card-title>
-        <ion-card-subtitle>Themes & symbols (please do not write techniques and art materials here)</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Themes & symbols (please do not write techniques and art materials here)</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Themes & symbols (please do not write techniques and art materials here)</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="themesAndSymbolsInput" formControlName="themesAndSymbols"></ion-textarea>
       </ion-card-content>
@@ -375,10 +412,13 @@
     <ion-card id="materialsUsed">
       <ion-card-header>
         <ion-card-title>Question 20</ion-card-title>
-        <ion-card-subtitle>
+        <!-- <ion-card-subtitle>
           Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1))):
-        </ion-card-subtitle>
+        </ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>
+        Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1))):
+      </ion-card-subtitle>
       <ion-card-content formArrayName="materialsUsedList">
         <div *ngFor="let memberControl of materialsUsedList.controls; let i = index" [formGroupName]="i">
           <ion-item>
@@ -398,8 +438,10 @@
     <ion-card id="ETC">
       <ion-card-header>
         <ion-card-title>Question 21</ion-card-title>
-        <ion-card-subtitle>Expressive Therapies Continuum (ETC):</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Expressive Therapies Continuum (ETC):</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Expressive Therapies Continuum (ETC):</ion-card-subtitle>
+
       <ion-card-content>
         <ion-list>
           <ion-radio-group formControlName="selectedETC">
@@ -424,8 +466,10 @@
     <ion-card id="discussionThemes">
       <ion-card-header>
         <ion-card-title>Question 22</ion-card-title>
-        <ion-card-subtitle>Discussion Theme: related to community</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Discussion Theme: related to community</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Discussion Theme: related to community</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="discussionThemesInput" formControlName="discussionCommunity"></ion-textarea>
       </ion-card-content>
@@ -434,8 +478,10 @@
     <ion-card id="discussionThemes">
       <ion-card-header>
         <ion-card-title>Question 23</ion-card-title>
-        <ion-card-subtitle>Discussion themes: related to artmaking</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Discussion themes: related to artmaking</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Discussion themes: related to artmaking</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="discussionThemesInput" formControlName="discussionArtmaking"></ion-textarea>
       </ion-card-content>
@@ -444,8 +490,10 @@
     <ion-card id="discussionThemes">
       <ion-card-header>
         <ion-card-title>Question 24</ion-card-title>
-        <ion-card-subtitle>Discussion themes: self-care and personal successes</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Discussion themes: self-care and personal successes</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Discussion themes: self-care and personal successes</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="discussionThemesInput" formControlName="discussionSelfCare"></ion-textarea>
       </ion-card-content>
@@ -454,8 +502,10 @@
     <ion-card id="discussionThemes">
       <ion-card-header>
         <ion-card-title>Question 25</ion-card-title>
-        <ion-card-subtitle>Discussion themes: challenges</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Discussion themes: challenges</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Discussion themes: challenges</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="discussionThemesInput" formControlName="discussionChallenges"></ion-textarea>
       </ion-card-content>
@@ -464,8 +514,10 @@
     <ion-card id="discussionThemes">
       <ion-card-header>
         <ion-card-title>Question 26</ion-card-title>
-        <ion-card-subtitle>Discussion themes: other</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Discussion themes: other</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Discussion themes: other</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="discussionThemesInput" formControlName="discussionOther"></ion-textarea>
       </ion-card-content>
@@ -485,8 +537,10 @@
     <ion-card id="highlights">
       <ion-card-header>
         <ion-card-title>Question 27</ion-card-title>
-        <ion-card-subtitle>Highlights: holding the physical/digital space</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Highlights: holding the physical/digital space</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Highlights: holding the physical/digital space</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="highlightsInput" formControlName="highlightsSpace"></ion-textarea>
       </ion-card-content>
@@ -495,8 +549,10 @@
     <ion-card id="highlights">
       <ion-card-header>
         <ion-card-title>Question 28</ion-card-title>
-        <ion-card-subtitle>Highlights: community experience</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Highlights: community experience</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Highlights: community experience</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="highlightsInput" formControlName="highlightsCommunity"></ion-textarea>
       </ion-card-content>
@@ -505,8 +561,10 @@
     <ion-card id="highlights">
       <ion-card-header>
         <ion-card-title>Question 29</ion-card-title>
-        <ion-card-subtitle>Highlights: accessible, third-space studio environment</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Highlights: accessible, third-space studio environment</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Highlights: accessible, third-space studio environment</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="highlightsInput" formControlName="highlightsEnvironment"></ion-textarea>
       </ion-card-content>
@@ -515,8 +573,10 @@
     <ion-card id="highlights">
       <ion-card-header>
         <ion-card-title>Question 30</ion-card-title>
-        <ion-card-subtitle>Highlights: participants' leadership (e.g., participants taking lead in explaining a technique to the group - or offering to do a skill share, or an idea about a community activity they want to start, participants being ambassadors for our activities, etc.)</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Highlights: participants' leadership (e.g., participants taking lead in explaining a technique to the group - or offering to do a skill share, or an idea about a community activity they want to start, participants being ambassadors for our activities, etc.)</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Highlights: participants' leadership (e.g., participants taking lead in explaining a technique to the group - or offering to do a skill share, or an idea about a community activity they want to start, participants being ambassadors for our activities, etc.)</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="highlightsInput" formControlName="highlightsLeadership"></ion-textarea>
       </ion-card-content>
@@ -525,8 +585,10 @@
     <ion-card id="highlights">
       <ion-card-header>
         <ion-card-title>Question 31</ion-card-title>
-        <ion-card-subtitle>Highlights: boundaries</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Highlights: boundaries</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Highlights: boundaries</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="highlightsInput" formControlName="highlightsBoundaries"></ion-textarea>
       </ion-card-content>
@@ -535,8 +597,10 @@
     <ion-card id="highlights">
       <ion-card-header>
         <ion-card-title>Question 32</ion-card-title>
-        <ion-card-subtitle>Highlights: other</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Highlights: other</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Highlights: other</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="highlightsInput" formControlName="highlightsOther"></ion-textarea>
       </ion-card-content>
@@ -556,8 +620,10 @@
     <ion-card id="challenges">
       <ion-card-header>
         <ion-card-title>Question 33</ion-card-title>
-        <ion-card-subtitle>Challenges: holding the physical/digital space</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Challenges: holding the physical/digital space</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Challenges: holding the physical/digital space</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="challengesInput" formControlName="challengesSpace"></ion-textarea>
       </ion-card-content>
@@ -566,8 +632,10 @@
     <ion-card id="challenges">
       <ion-card-header>
         <ion-card-title>Question 34</ion-card-title>
-        <ion-card-subtitle>Challenges: community experience</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Challenges: community experience</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Challenges: community experience</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="challengesInput" formControlName="challengesCommunity"></ion-textarea>
       </ion-card-content>
@@ -576,8 +644,10 @@
     <ion-card id="challenges">
       <ion-card-header>
         <ion-card-title>Question 35</ion-card-title>
-        <ion-card-subtitle>Challenges: artmaking</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Challenges: artmaking</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Challenges: artmaking</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="challengesInput" formControlName="challengesArtmaking"></ion-textarea>
       </ion-card-content>
@@ -586,8 +656,10 @@
     <ion-card id="challenges">
       <ion-card-header>
         <ion-card-title>Question 36</ion-card-title>
-        <ion-card-subtitle>Challenges: accessible, third space studio environment</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Challenges: accessible, third space studio environment</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Challenges: accessible, third space studio environment</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="challengesInput" formControlName="challengesEnvironment"></ion-textarea>
       </ion-card-content>
@@ -596,8 +668,10 @@
     <ion-card id="challenges">
       <ion-card-header>
         <ion-card-title>Question 37</ion-card-title>
-        <ion-card-subtitle>Challenges: participants' leadership</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Challenges: participants' leadership</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Challenges: participants' leadership</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="challengesInput" formControlName="challengesLeadership"></ion-textarea>
       </ion-card-content>
@@ -606,8 +680,10 @@
     <ion-card id="challenges">
       <ion-card-header>
         <ion-card-title>Question 38</ion-card-title>
-        <ion-card-subtitle>Challenges: boundaries</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Challenges: boundaries</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Challenges: boundaries</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="challengesInput" formControlName="challengesBoundaries"></ion-textarea>
       </ion-card-content>
@@ -616,8 +692,10 @@
     <ion-card id="challenges">
       <ion-card-header>
         <ion-card-title>Question 39</ion-card-title>
-        <ion-card-subtitle>Challenges: other</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Challenges: other</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Challenges: other</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="challengesInput" formControlName="challengesOther"></ion-textarea>
       </ion-card-content>
@@ -626,8 +704,10 @@
     <ion-card id="circleOfCare">
       <ion-card-header>
         <ion-card-title>Question 40</ion-card-title>
-        <ion-card-subtitle>Circles of Care connections (e.g., friendships forming between participants, participant(s) sharing resources of self-care activities with the group, participants opening discussions about their circle of care, etc.):</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Circles of Care connections (e.g., friendships forming between participants, participant(s) sharing resources of self-care activities with the group, participants opening discussions about their circle of care, etc.):</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Circles of Care connections (e.g., friendships forming between participants, participant(s) sharing resources of self-care activities with the group, participants opening discussions about their circle of care, etc.):</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="circleOfCareInput" formControlName="circleOfCare"></ion-textarea>
       </ion-card-content>
@@ -636,8 +716,10 @@
     <ion-card id="testimonies">
       <ion-card-header>
         <ion-card-title>Question 41</ion-card-title>
-        <ion-card-subtitle>Testimonies - direct quotes from individuals - please do not write down names</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Testimonies - direct quotes from individuals - please do not write down names</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Testimonies - direct quotes from individuals - please do not write down names</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="testimoniesInput" formControlName="testimonies"></ion-textarea>
       </ion-card-content>
@@ -657,8 +739,10 @@
     <ion-card id="actionStepsandFollowUp">
       <ion-card-header>
         <ion-card-title>Question 42</ion-card-title>
-        <ion-card-subtitle>Proposed themes/interests from participants:</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Proposed themes/interests from participants:</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Proposed themes/interests from participants:</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="actionStepsandFollowUpInput" formControlName="proposedThemes"></ion-textarea>
       </ion-card-content>
@@ -667,8 +751,10 @@
     <ion-card id="actionStepsandFollowUp">
       <ion-card-header>
         <ion-card-title>Question 43</ion-card-title>
-        <ion-card-subtitle>Action items required and who will follow up:</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Action items required and who will follow up:</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Action items required and who will follow up:</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="actionStepsandFollowUpInput" formControlName="actionItems"></ion-textarea>
       </ion-card-content>
@@ -677,8 +763,10 @@
     <ion-card id="actionStepsandFollowUp">
       <ion-card-header>
         <ion-card-title>Question 44</ion-card-title>
-        <ion-card-subtitle>Potential research questions:</ion-card-subtitle>
+        <!-- <ion-card-subtitle>Potential research questions:</ion-card-subtitle> -->
       </ion-card-header>
+      <ion-card-subtitle>Potential research questions:</ion-card-subtitle>
+
       <ion-card-content>
         <ion-textarea class="actionStepsandFollowUpInput" formControlName="researchQuestions"></ion-textarea>
       </ion-card-content>
