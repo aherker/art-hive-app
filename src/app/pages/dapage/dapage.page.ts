@@ -10,7 +10,7 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class DApagePage implements OnInit {
 
-  @ViewChild('doughnutCanvas') doughnutCanvas!: ElementRef; // Reference to canvas
+  @ViewChild('attendanceDoughnutCanvas') attendanceDoughnutCanvas!: ElementRef; // Reference to canvas
   doughnutChart: any;
 
   totalChildren: number = 0;
@@ -48,7 +48,7 @@ export class DApagePage implements OnInit {
   }
 
   initializeAttendanceChart() {
-    this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
+    this.doughnutChart = new Chart(this.attendanceDoughnutCanvas.nativeElement, {
       type: 'doughnut',
       data: {
         labels: ['Children', 'Seniors', 'Students'],
