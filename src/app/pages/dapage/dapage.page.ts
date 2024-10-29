@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Chart} from 'chart.js/auto';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import Chart from 'chart.js/auto';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-dapage',
@@ -7,51 +9,75 @@ import {Chart} from 'chart.js/auto';
   styleUrls: ['./dapage.page.scss'],
 })
 export class DApagePage implements OnInit {
+
+  @ViewChild('doughnutCanvas') doughnutCanvas!: ElementRef; // Reference to canvas
   doughnutChart: any;
 
-  constructor() { }
+  totalChildren: number = 0;
+  totalSeniors: number = 0;
+  totalStudents: number = 0;
 
-  ngOnInit() {
-    this.setupDoughnutChart();
+  constructor(private firestoreService: FirestoreService, private globalService: GlobalService) { }
+
+  async ngOnInit() {
+    await this.fetchChartData();
+    this.initializeAttendanceChart();
   }
 
-  setupDoughnutChart() {
-    this.doughnutChart = new Chart('doughnutChart', {
+  async fetchChartData(){
+    try{
+      const data = await this.firestoreService.getDocuments(this.globalService.getUserId());
+
+      data.forEach((dataForm: any) =>{
+        this.totalChildren += dataForm.numChildren || 0;
+        this.totalSeniors += dataForm.numSeniors || 0;
+        
+        if (Array.isArray(dataForm.numStudentsList)) {
+          dataForm.numStudentsList.forEach((studentObj: any) => {
+            this.totalStudents += studentObj.numStudents || 0; 
+          });
+        }
+
+        console.log(`Fetched Totals - Children: ${this.totalChildren}, Seniors: ${this.totalSeniors}, Students: ${this.totalStudents}`);
+        console.log('total num students:', this.totalStudents);
+        console.log('Successfully fetched attendance chart data')
+      });
+    }catch(error){
+      console.error('failed to fetch attendance chart data', error);
+    }
+  }
+
+  initializeAttendanceChart() {
+    this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
       type: 'doughnut',
       data: {
-        labels: ['0-18', '19-30', '31-40', '41-50', '51-60', '60+'],
+        labels: ['Children', 'Seniors', 'Students'],
         datasets: [{
-          label: 'age ranges',
-          data: [4, 18, 12, 5, 2, 1],
-          backgroundColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+          data: [this.totalChildren, this.totalSeniors, this.totalStudents],
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
         }]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           title: {
-            display: false,
-            // text: 'Age Demographics',
-            // color: '#333',
-            // font: {
-            //   size: 20,
-            //   family: 'Arial'
-            // }
+            display: true,
+            text: 'Attendance Demographics',
+            align: 'center',
+            font: {
+              size: 20,
+              weight: 'bold'
+            },
+            padding: {
+              top: 10,
+              bottom: 20
+            }
+          }
+        },
+        layout: {
+          padding: {
+            top: 20
           }
         }
       }
