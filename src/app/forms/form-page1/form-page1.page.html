@@ -25,15 +25,15 @@
     <ion-card id="groupMembers">
       <ion-card-header>
         <ion-card-title>Question 1</ion-card-title>
-        <ion-card-subtitle>
-          Name of the people who are completing this form (Members of the community, if they agree to have their names written here)
-        </ion-card-subtitle>
       </ion-card-header>
       
       <ion-card-content formArrayName="membersName">
+        <ion-card-subtitle>
+          Name of the people who are completing this form (Members of the community, if they agree to have their names written here)
+        </ion-card-subtitle>
         <div *ngFor="let memberControl of membersName.controls; let i = index" [formGroupName]="i">
           <ion-item>
-            <ion-label class="groupMembersName" formControlName="membersNameLabel">Member's name:</ion-label>
+            <ion-label class="groupMembersName">Member's name:</ion-label>
             <ion-input formControlName="membersNameInput"></ion-input>
           </ion-item>
           <ion-button 
@@ -49,55 +49,55 @@
       <ion-button (click)="addMember()" class="addMember">Add member</ion-button>
     </ion-card> 
   
-    <ion-card id="dates">
+  <!-- <ion-card id="dates">
       <ion-card-header>
         <ion-card-title>Question 2</ion-card-title>
         <ion-card-subtitle>Starting and ending date of the art hive</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-item *ngIf="artHiveQuestionare">
-          <ion-label class="DateLabels" position="stacked" formControlName="startDateLabel">Start date:</ion-label>
+          <ion-label class="DateLabels" position="stacked" >Start date:</ion-label>
           <ion-datetime class="dateInput" displayFormat="MM/DD/YYYY" presentation="date" formControlName="startDate"></ion-datetime>
         </ion-item>
         <br>
         <ion-item *ngIf="artHiveQuestionare">
-          <ion-label class="DateLabels" position="stacked" formControlName="endDateLabel">End date:</ion-label>
+          <ion-label class="DateLabels" position="stacked" >End date:</ion-label>
           <ion-datetime class="dateInput" displayFormat="MM/DD/YYYY" presentation="date" canceltext="Cancel" confirmtext="Ok" formControlName="endDate"></ion-datetime>
         </ion-item>
         
       </ion-card-content>
     </ion-card>
 
-      <ion-card id="address">
+   <ion-card id="address">
       <ion-card-header>
         <ion-card-title>Question 3</ion-card-title>
         <ion-card-subtitle>Address</ion-card-subtitle>
     </ion-card-header>
       <ion-card-content>
         <ion-item>
-          <ion-label formControlName="locationNameLabel">Name:</ion-label>
+          <ion-label >Name:</ion-label>
           <ion-input formControlName="locationName"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label formControlName="streetLabel">Street:</ion-label>
+          <ion-label >Street:</ion-label>
           <ion-input formControlName="street"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label formControlName="cityLabel">City:</ion-label>
+          <ion-label >City:</ion-label>
           <ion-input formControlName="city"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label formControlName="stateLabel">State:</ion-label>
+          <ion-label >State:</ion-label>
           <ion-input formControlName="state"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label formControlName="zipLabel">ZIP:</ion-label>
+          <ion-label >ZIP:</ion-label>
           <ion-input formControlName="zip"></ion-input>
         </ion-item>
       </ion-card-content>
     </ion-card>
 
-    <ion-card id="contacts">
+ <ion-card id="contacts">
       <ion-card-header>
         <ion-card-title>Question 4</ion-card-title>
         <ion-card-subtitle>Contact(s)</ion-card-subtitle>
@@ -105,15 +105,15 @@
       <ion-card-content formArrayName="contactList">
         <div *ngFor="let memberControl of contactList.controls; let i = index" [formGroupName]="i">
           <ion-item>
-            <ion-label formControlName="contactNameLabel">Name:</ion-label>
+            <ion-label >Name:</ion-label>
             <ion-input formControlName="contactName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label formControlName="contactEmailLabel">Email:</ion-label>
+            <ion-label >Email:</ion-label>
             <ion-input formControlName="contactEmail"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label class="phoneNum" formControlName="contactPhoneLabel">Phone number:</ion-label>
+            <ion-label class="phoneNum" >Phone number:</ion-label>
             <ion-input formControlName="contactPhone" placeholder="xxx-xxx-xxxx"></ion-input>
           </ion-item>
           <ion-button 
@@ -129,7 +129,7 @@
     </ion-card>
     
     
-    <ion-card id="partners">
+   <ion-card id="partners">
       <ion-card-header>
         <ion-card-title>Question 5</ion-card-title>
         <ion-card-subtitle>Partners for this Art Hive - individuals, programs, projects, or organizations</ion-card-subtitle>
@@ -137,7 +137,7 @@
       <ion-card-content formArrayName="partnerList">
         <div *ngFor="let memberControl of partnerList.controls; let i = index" [formGroupName]="i">
           <ion-item>
-            <ion-label class="partnerNameLabel" formControlName="partnerListLabel">Partner's name:</ion-label>
+            <ion-label class="partnerNameLabel" >Partner's name:</ion-label>
             <ion-input formControlName="partnerNameInput"></ion-input>
           </ion-item>
           <ion-button class="removePartner" *ngIf="partnerList.length > 1" (click)="removePartner(i)" [disabled]="partnerList.length === 1" >Remove partner</ion-button>
@@ -146,7 +146,7 @@
       <ion-button (click)="addPartner()" class="addPartner">Add partner</ion-button>
     </ion-card>
 
-    <ion-card id="facilitator">
+     <ion-card id="facilitator">
       <ion-card-header>
         <ion-card-title>Question 6</ion-card-title>
         <ion-card-subtitle>List facilitator names</ion-card-subtitle>
@@ -154,7 +154,7 @@
       <ion-card-content formArrayName="facilitatorList">
         <div *ngFor="let memberControl of facilitatorList.controls; let i = index" [formGroupName]="i">
           <ion-item>
-            <ion-label class="facilitatorName" formControlName="facilitatorListLabel">Facilitator's name:</ion-label>
+            <ion-label class="facilitatorName">Facilitator's name:</ion-label>
             <ion-input formControlName="facilitatorListInput"></ion-input>
           </ion-item>
           <ion-button class="removeFacilitator" *ngIf="facilitatorList.length > 1" (click)="removeFacilitator(i)" [disabled]="facilitatorList.length === 1" >Remove facilitator</ion-button>
@@ -163,27 +163,27 @@
       <ion-button (click)="addFacilitator()" class="addFacilitator">Add facilitator</ion-button>
     </ion-card>
 
-    <ion-card id="numParticipants">
+   <ion-card id="numParticipants">
       <ion-card-header>
         <ion-card-title>Question 7</ion-card-title>
         <ion-card-subtitle>Number of participants (include facilitators)</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-item>
-          <ion-label class="participantsLabel" formControlName="numParticipantsLabel">Number of participants:</ion-label>
+          <ion-label class="participantsLabel">Number of participants:</ion-label>
           <ion-input type="number" placeholder="0" formControlName="numParticipants"></ion-input>
         </ion-item>
       </ion-card-content>
     </ion-card>
 
-    <ion-card id="numSeniors">
+  <ion-card id="numSeniors">
       <ion-card-header>
         <ion-card-title>Question 8</ion-card-title>
         <ion-card-subtitle>Approximate number of older adults ≥ 65</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-item>
-          <ion-label class="SeniorLabel" formControlName="numSeniorsLabel">Number of older adults:</ion-label>
+          <ion-label class="SeniorLabel">Number of older adults:</ion-label>
           <ion-input type="number" placeholder="0" formControlName="numSeniors"></ion-input>
         </ion-item>
       </ion-card-content>
@@ -199,11 +199,11 @@
       <ion-card-content formArrayName="numStudentsList">
         <div *ngFor="let memberControl of numStudentsList.controls; let i = index" [formGroupName]="i">
           <ion-item>
-            <ion-label class="numStudentsLabel" formControlName="numStudentsLabel">Numbers of students:</ion-label>
+            <ion-label class="numStudentsLabel">Numbers of students:</ion-label>
             <ion-input type="number" placeholder="0" formControlName="numStudents"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label class="eduLabel" formControlName="eduInstitutionLabel">Educational institution:</ion-label>
+            <ion-label class="eduLabel">Educational institution:</ion-label>
             <ion-input formControlName="eduInstitution"></ion-input>
           </ion-item>
           <ion-button class="removeInstitution" *ngIf="numStudentsList.length > 1" (click)="removeInstitution(i)" [disabled]="numStudentsList.length === 1">
@@ -222,7 +222,7 @@
       </ion-card-header>
       <ion-card-content>
         <ion-item>
-          <ion-label class="childrenLabel" formControlName="numChildrenLabel">Number of children:</ion-label>
+          <ion-label class="childrenLabel">Number of children:</ion-label>
           <ion-input type="number" placeholder="0" formControlName="numChildren"></ion-input>
         </ion-item>
       </ion-card-content>
@@ -235,7 +235,7 @@
       </ion-card-header>
       <ion-card-content>
         <ion-item>
-          <ion-label class="newParticipants" formControlName="numNewParticipantsLabel">Number of new participants:</ion-label>
+          <ion-label class="newParticipants">Number of new participants:</ion-label>
           <ion-input type="number" placeholder="0" formControlName="numNewParticipants"></ion-input>
         </ion-item>
       </ion-card-content>
@@ -255,7 +255,7 @@
             </ion-item>
           </div>          
           <ion-item>
-            <ion-label position="stacked" class="otherLabel" formControlName="otherDiscoveryLabel">If other, please specify:</ion-label>
+            <ion-label position="stacked" class="otherLabel">If other, please specify:</ion-label>
             <ion-textarea formControlName="otherDiscovery" class="otherDiscoveryInput"></ion-textarea>
           </ion-item>
         </ion-list>
@@ -281,7 +281,7 @@
     <ion-card id="EDIQuestions">
       <ion-card-header>
         <ion-card-title>Question 13</ion-card-title>
-        <ion-card-subtitle formControlName="EDIQuestionsLabel">
+        <ion-card-subtitle>
           Were there any discussions related to EDI topics (age, gender, sexual orientation, ethnicity/race, disability, religion, neighborhood, etc.)?
         </ion-card-subtitle>
       </ion-card-header>
@@ -293,7 +293,7 @@
     <ion-card id="selfID">
       <ion-card-header>
         <ion-card-title>Question 14</ion-card-title>
-        <ion-card-subtitle formControlName="selfIDLabel">If self-identification occurred, what may have facilitated it?</ion-card-subtitle>
+        <ion-card-subtitle>If self-identification occurred, what may have facilitated it?</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-textarea formControlName="selfID" class="selfIDInput"></ion-textarea>
@@ -303,7 +303,7 @@
     <ion-card id="commonGround">
       <ion-card-header>
         <ion-card-title>Question 15</ion-card-title>
-        <ion-card-subtitle formControlName="commonGroundLabel">If needed, was a common ground found? If so, how (shared goals, community projects, etc.)?</ion-card-subtitle>
+        <ion-card-subtitle>If needed, was a common ground found? If so, how (shared goals, community projects, etc.)?</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-textarea formControlName="commonGround" class="commonGroundInput"></ion-textarea>
@@ -313,7 +313,7 @@
     <ion-card id="underRepresentedPerspectives">
       <ion-card-header>
         <ion-card-title>Question 16</ion-card-title>
-        <ion-card-subtitle formControlName="underRepresentedPerspectivesLabel">What could be done to reach out for under-represented perspectives? (If any suggestions from the group)</ion-card-subtitle>
+        <ion-card-subtitle>What could be done to reach out for under-represented perspectives? (If any suggestions from the group)</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-textarea formControlName="underRepresentedPerspectives" class="underRepresentedPerspectivesInput"></ion-textarea>
@@ -376,7 +376,7 @@
       <ion-card-header>
         <ion-card-title>Question 20</ion-card-title>
         <ion-card-subtitle>
-          Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1))):
+          Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1)):
         </ion-card-subtitle>
       </ion-card-header>
       <ion-card-content formArrayName="materialsUsedList">
@@ -395,7 +395,7 @@
       <ion-button (click)="addMaterialsUsed()" class="addMaterialsUsed">Add materials or instruments used</ion-button>
     </ion-card>    
 
-    <ion-card id="ETC">
+  <ion-card id="ETC">
       <ion-card-header>
         <ion-card-title>Question 21</ion-card-title>
         <ion-card-subtitle>Expressive Therapies Continuum (ETC):</ion-card-subtitle>
@@ -682,7 +682,7 @@
       <ion-card-content>
         <ion-textarea class="actionStepsandFollowUpInput" formControlName="researchQuestions"></ion-textarea>
       </ion-card-content>
-    </ion-card>
+    </ion-card>  -->
 
     <ion-header>
       <ion-toolbar>
@@ -695,8 +695,6 @@
       </ion-toolbar>
     </ion-header>
 
-    <div> </div>>
-    <div> </div>>
-    <div> </div>>
+
   </form>
 </ion-content>

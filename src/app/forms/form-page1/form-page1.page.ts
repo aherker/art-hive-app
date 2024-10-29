@@ -19,105 +19,164 @@ export class FormPage1Page implements OnInit {
 
   ngOnInit() {
     this.artHiveQuestionare = this.formBuilder.group({
+
+      question1: [' Name of the people who are completing this form (Members of the community, if they agree to have their names written here)'],
       membersName: this.formBuilder.array([]),
-      startDateLabel: ['Start date'],
-      startDate: ['', Validators.required],
-      endDateLabel: ['End date'],
-      endDate: ['', Validators.required],
-      locationNameLabel: ['Name'],
-      locationName: ['', Validators.required],
-      streetLabel: ['Street'],
-      street: ['', Validators.required],
-      cityLabel: ['City'],
-      city: ['', Validators.required],
-      stateLabel: ['State'],
-      state: ['', Validators.required],
-      zipLabel: ['ZIP'],
-      zip: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
-      contactList: this.formBuilder.array([]),
-      partnerList: this.formBuilder.array([]),
-      facilitatorList: this.formBuilder.array([]),
-      numParticipantsLabel: ['Number of participants (include facilitators)'],
-      numParticipants: ['', Validators.required],
-      numSeniorsLabel: ['Approximate number of older adults >= 65'],
-      numSeniors: ['', Validators.required],
-      numStudentsList: this.formBuilder.array([]),
-      numChildrenLabel: ['Number of children'],
-      numChildren: ['', Validators.required],
-      numNewParticipantsLabel: ['Number of new participants'],
-      numNewParticipants: ['', Validators.required],
-      DiscoveryMethodZero: ['Word of mouth'],
-      DiscoveryMethodOne: ['Passing by and being curious'],
-      DiscoveryMethodTwo: ['Social Media'],
-      discoveryMethods: this.formBuilder.array([
-        this.formBuilder.group({ checked: [false] }), // Word of mouth
-        this.formBuilder.group({ checked: [false] }), // Passing by
-        this.formBuilder.group({ checked: [false] }), // Social media
-      ]),
-      otherDiscoverylabel: ['If other, please specify'],
-      otherDiscovery: [''],
-      EDIQuestionsLabel: ['Were there any discussions related to EDI topics (age, gender, sexual orientation, ethnicity/race, disability, religion, neighborhood, etc.)?'],
-      EDIQuestions: [''],
-      selfIDLabel: ['If self-identification occurred, what may have facilitated it?'],
-      selfID: [''],
-      commonGroundLabel: ['If needed, was a common ground found? If so, how (shared goals, community projects, etc.)?'],
-      commonGround: [''],
-      underRepresentedPerspectivesLabel: ['What could be done to reach out for under-represented perspectives? (If any suggestions from the group)'],
-      underRepresentedPerspectives: [''],
-      underRepresentedPerspectivesReachOutLabel: ['What could be done to reach out for under-represented perspectives? (If any suggestions from the group)'],
-      underRepresentedPerspectivesReachOut: [''],
-      formsOfExpressionsList: this.formBuilder.array([]),
-      themesAndSymbolsLabel: ['Themes & symbols (please do not write techniques and art materials here)'],
-      themesAndSymbols: [''],
-      materialsUsedList: this.formBuilder.array([]),
-      selectedETCLabel: ['Expressive Therapies Continuum (ETC)'],
-      selectedETC: ['', Validators.required],
-      discussionCommunityLabel: ['Discussion Theme: related to community'], 
-      discussionCommunity: [''],
-      discussionArtmakingLabel: ['Discussion themes: related to artmaking'],
-      discussionArtmaking: [''],
-      discussionSelfCareLabel: ['Discussion themes: self-care and personal successes'],
-      discussionSelfCare: [''],
-      discussionChallengesLabel: ['Discussion themes: challenges'],
-      discussionChallenges: [''],
-      discussionOtherLabel: ['Discussion themes: other'],
-      discussionOther: [''],
-      highlightsSpaceLabel: ['Highlights: holding the physical/digital space'],
-      highlightsSpace: [''],
-      highlightsCommunityLabel: ['Highlights: community experience'],
-      highlightsCommunity: [''],
-      highlightsEnvironmentLabel: ['Highlights: accessible, third-space studio environment'],
-      highlightsEnvironment: [''],
-      highlightsLeadershipLabel: ['Highlights: participants\' leadership (e.g., participants taking lead in explaining a technique to the group - or offering to do a skill share, or an idea about a community activity they want to start, participants being ambassadors for our activities, etc.)'],
-      highlightsLeadership: [''],
-      highlightsBoundariesLabel: ['Highlights: boundaries'],
-      highlightsBoundaries: [''],
-      highlightsOtherLabel: ['Highlights: other'],
-      highlightsOther: [''],
-      challengesSpaceLabel: ['Challenges: holding the physical/digital space'],
-      challengesSpace: [''],
-      challengesCommunityLabel: ['Challenges: community experience'],
-      challengesCommunity: [''],
-      challengesArtmakingLabel: ['Challenges: artmaking'],
-      challengesArtmaking: [''],
-      challengesEnvironmentLabel: ['Challenges: accessible, third space studio environment'],
-      challengesEnvironment: [''],
-      challengesLeadershipLabel: ['Challenges: participants\' leadership'],
-      challengesLeadership: [''],
-      challengesBoundariesLabel: ['Challenges: boundaries'],
-      challengesBoundaries: [''],
-      challengesOtherLabel: ['Challenges: other'],
-      challengesOther: [''],
-      circleofCareLabel: ['Circles of Care connections (e.g., friendships forming between participants, participant(s) sharing resources of self-care activities with the group, participants opening discussions about their circle of care, etc.)'],
-      circleOfCare: [''],
-      testimoniesLabel: ['Testimonies - direct quotes from individuals - please do not write down names'],
-      testimonies: [''],
-      proposedThemesLabel: ['Proposed themes/interests from participants'],
-      proposedThemes: [''],
-      actionItemsLabel: ['Action items required and who will follow up'],
-      actionItems: [''],
-      researchQuestionsLabel: ['Potential research questions'],
-      researchQuestions: [''],
+
+      // question2: ['Starting and ending date of the art hive'],
+      // startDateLabel: ['Start date'],
+      // startDate: ['', Validators.required],
+      // endDateLabel: ['End date'],
+      // endDate: ['', Validators.required],
+
+      // question3: ['Address'],
+      // locationNameLabel: ['Name'],
+      // locationName: ['', Validators.required],
+      // streetLabel: ['Street'],
+      // street: ['', Validators.required],
+      // cityLabel: ['City'],
+      // city: ['', Validators.required],
+      // stateLabel: ['State'],
+      // state: ['', Validators.required],
+      // zipLabel: ['ZIP'],
+      // zip: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
+
+      // question4: ['Contact(s)'],
+      // contactList: this.formBuilder.array([]),
+
+      // question5: ['Partners for this Art Hive - individuals, programs, projects, or organizations'],
+      // partnerList: this.formBuilder.array([]),
+
+      // question6: ['List facilitator names'],
+      // facilitatorList: this.formBuilder.array([]),
+
+      // question7: ['Number of participants (include facilitators)'],
+      // numParticipants: ['', Validators.required],
+
+      // question8: ['Approximate number of older adults >= 65'],
+      // numSeniors: ['', Validators.required],
+
+      // question9: ['Approximate numbers of students (label with educational institutions)'],
+      // numStudentsList: this.formBuilder.array([]),
+
+      // question10: ['Approximate number of children'],
+      // numChildrenLabel: ['Number of children'],
+      // numChildren: ['', Validators.required],
+
+      // question11: ['Number of new participants'],
+      // numNewParticipantsLabel: ['Number of new participants'],
+      // numNewParticipants: ['', Validators.required],
+
+      // question12: ['How did new participants find the event?'],
+      // DiscoveryMethodZero: ['Word of mouth'],
+      // DiscoveryMethodOne: ['Passing by and being curious'],
+      // DiscoveryMethodTwo: ['Social Media'],
+      // discoveryMethods: this.formBuilder.array([
+      //   this.formBuilder.group({ checked: [false] }), // Word of mouth
+      //   this.formBuilder.group({ checked: [false] }), // Passing by
+      //   this.formBuilder.group({ checked: [false] }), // Social media
+      // ]),
+      // otherDiscoverylabel: ['If other, please specify'],
+      // otherDiscovery: [''],
+
+
+      // question13: ['Were there any discussions related to EDI topics (age, gender, sexual orientation, ethnicity/race, disability, religion, neighborhood, etc.)?'],
+      // EDIQuestions: [''],
+
+      // question14: ['If self-identification occurred, what may have facilitated it?'],
+      // selfID: [''],
+
+      // question15: ['If needed, was a common ground found? If so, how (shared goals, community projects, etc.)?'],
+      // commonGround: [''],
+
+      // question16: ['What could be done to reach out for under-represented perspectives? (If any suggestions from the group)'],
+      // underRepresentedPerspectives: [''],
+
+      // question17: ['List action steps to reach out for under-represented perspectives. How and when? Who offered to reach out? (Name the team members or community members who offered to help, or organizations that were mentioned in the discussions for each action step)'],
+      // underRepresentedPerspectivesReachOut: [''],
+
+      // question18: ['Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1))'],
+      // formsOfExpressionsList: this.formBuilder.array([]),
+
+      // question19: ['Themes & symbols (please do not write techniques and art materials here)'],
+      // themesAndSymbols: [''],
+
+      // question20: ['Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1))'],
+      // materialsUsedList: this.formBuilder.array([]),
+
+      // question21: ['Expressive Therapies Continuum (ETC)'],
+      // selectedETC: ['', Validators.required],
+
+  
+      // question22: ['Discussion Theme: related to community'], 
+      // discussionCommunity: [''],
+
+      // question23: ['Discussion themes: related to artmaking'],
+      // discussionArtmaking: [''],
+
+      // question24: ['Discussion themes: self-care and personal successes'],
+      // discussionSelfCare: [''],
+
+      // question25: ['Discussion themes: challenges'],
+      // discussionChallenges: [''],
+
+      // question26: ['Discussion themes: other'],
+      // discussionOther: [''],
+
+      // question27: ['Highlights: holding the physical/digital space'],
+      // highlightsSpace: [''],
+
+      // question28: ['Highlights: community experience'],
+      // highlightsCommunity: [''],
+
+      // question29: ['Highlights: accessible, third-space studio environment'],
+      // highlightsEnvironment: [''],
+
+      // question30: ['Highlights: participants\' leadership (e.g., participants taking lead in explaining a technique to the group - or offering to do a skill share, or an idea about a community activity they want to start, participants being ambassadors for our activities, etc.)'],
+      // highlightsLeadership: [''],
+
+      // question31: ['Highlights: boundaries'],
+      // highlightsBoundaries: [''],
+
+      // question32: ['Highlights: other'],
+      // highlightsOther: [''],
+
+      // question33: ['Challenges: holding the physical/digital space'],
+      // challengesSpace: [''],
+
+      // question34: ['Challenges: community experience'],
+      // challengesCommunity: [''],
+
+      // question35: ['Challenges: artmaking'],
+      // challengesArtmaking: [''],
+
+      // question36: ['Challenges: accessible, third space studio environment'],
+      // challengesEnvironment: [''],
+
+      // question37: ['Challenges: participants\' leadership'],
+      // challengesLeadership: [''],
+
+      // question38: ['Challenges: boundaries'],
+      // challengesBoundaries: [''],
+
+      // question39: ['Challenges: other'],
+      // challengesOther: [''],
+
+      // question40: ['Circles of Care connections (e.g., friendships forming between participants, participant(s) sharing resources of self-care activities with the group, participants opening discussions about their circle of care, etc.)'],
+      // circleOfCare: [''],
+
+      // question41: ['Testimonies - direct quotes from individuals - please do not write down names'],
+      // testimonies: [''],
+
+      // question42: ['Proposed themes/interests from participants'],
+      // proposedThemes: [''],
+
+      // question43: ['Action items required and who will follow up'],
+      // actionItems: [''],
+
+      // question44: ['Potential research questions'],
+      // researchQuestions: [''],
+
       timestamp: new Date()
     });
 
