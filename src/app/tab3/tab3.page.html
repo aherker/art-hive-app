@@ -18,76 +18,59 @@
     </ion-item>
     </ion-radio-group>
   </ion-list>
+
   <ion-button (click)="addFormResponse()">Add Form Response</ion-button>
   <ion-button (click)="getFormResponses()">Get Form Responses</ion-button>
 
 
-<!--     
-    <ion-button expand="full" (click)="displayUID()">Show User ID</ion-button>
-
-    <div *ngIf="userId" style="text-align: center; margin-top: 20px;">
-      <h2>User ID: {{ userId }}</h2>
-    </div> -->
-
-    <!-- <ion-content>
-      <ion-list>
-        <ion-item *ngFor="let response of formResponses">
-          <ion-label>
-            {{ response | json }}
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content> -->
+    <div *ngIf="selectedDocumentData">
+      <ion-toolbar>
+        <ion-title class="custom-title-background">
+          Selected Previous Form
+        </ion-title>
+      </ion-toolbar>
 
 
-          <div *ngIf="selectedDocumentData">
-            <ion-toolbar>
-              <ion-title class="custom-title-background">
-                Selected Previous Form
-              </ion-title>
-            </ion-toolbar>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-title>Time of Submission: {{ selectedDocumentData.timestamp?.toDate() | date: 'medium' }}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <!-- Display each key and value in the selected document -->
-                <div *ngFor="let key of getKeys(selectedDocumentData)">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            Time of Submission: {{ selectedDocumentData.timestamp?.toDate() | date: 'medium' }}
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <!-- Loop through ordered keys -->
+          <ng-container *ngFor="let item of orderedKeys; let i = index">
+            <ng-container *ngIf="item.length > 0">
+              <!-- Start a new ion-card for each question -->
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-title>Question {{ i + 1 }}:</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  <h2>{{ selectedDocumentData[item[0]] }}</h2>
+      
+                  <!-- Loop through following keys -->
+                  <ng-container *ngFor="let subKey of item.slice(1)">
+                    <ng-container *ngIf="isArray(selectedDocumentData[subKey])">
+                      <div *ngFor="let subItem of selectedDocumentData[subKey]; let j = index">
+                        <ng-container *ngFor="let key of getKeys(subItem)">
+                          <span>{{ subItem[key] || 'No value available' }}</span><br>
+                        </ng-container>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="!isArray(selectedDocumentData[subKey])">
+                      <span>{{ selectedDocumentData[subKey] || 'No response' }}</span><br>
+                    </ng-container>
+                  </ng-container>
+                </ion-card-content>
+              </ion-card>
+            </ng-container>
+          </ng-container>
+        </ion-card-content>
+      </ion-card>      
+      </div>
+      
+    
 
-
-                  <div *ngIf="!isArray(selectedDocumentData[key]) && key !== 'timestamp'">
-                    <strong>{{ key }}: </strong> 
-                    <span>
-                      {{ selectedDocumentData[key] }}
-                    </span>
-                  </div>
-
-                  <div *ngIf="key === 'timestamp'">
-                    <strong>{{ key }}: </strong> 
-                    <span>
-                      {{ selectedDocumentData[key]?.toDate() | date: 'medium' }}
-                    </span>
-                  </div>
-
-
-                 
-                                  <!-- Check if the value is a list -->
-                <div *ngIf="isArray(selectedDocumentData[key])">
-                  <strong>{{ key }}: </strong>
-                  <div *ngFor="let item of selectedDocumentData[key]; let i = index">
-                    <strong>__{{ key }} {{ i + 1 }}: </strong>
-                    <div *ngFor="let subKey of getKeys(item)">
-                      <strong>____{{ subKey }}: </strong>
-                      <span>{{ item[subKey] }}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div>----------------</div>
-
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </div>
-  
+     
 </ion-content>
