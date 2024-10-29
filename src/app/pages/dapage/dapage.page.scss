@@ -1,21 +1,20 @@
 .chart-container {
-    position: relative;
-  }
-  
-  .chart-title {
-    position: absolute;
-    top: 57%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 18px;
-    font-family: Arial;
-    color: var(--ion-color-primary);
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Takes full screen height */
+  padding: 20px;
+}
 
-  ion-content {
-    --background: none;
-  }
+canvas {
+  max-width: 100%; /* Ensures the chart scales responsively */
+  max-height: 400px; /* Limits the max height */
+}
 
-  ion-toolbar {
-    --background: none;
-  }
+ion-content {
+  --background: none;
+}
+
+ion-toolbar {
+  --background: none;
+}
