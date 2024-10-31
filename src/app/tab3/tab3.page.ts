@@ -58,6 +58,18 @@ export class Tab3Page implements OnInit {
     ['question43', 'actionItems'],
     ['question44', 'researchQuestions']                               
   ];
+
+  keyOrderMapping: { [key: string]: string[] } = {
+    membersName: ['membersNameLabel', 'membersNameInput'],
+    contactList: [ 'contactNameLabel', 'contactName', 'contactEmailLabel', 'contactEmail', 'contactPhoneLabel', 'contactPhone']
+  };
+  
+  getOrderedSubKeys(key: string): string[] {
+    return this.keyOrderMapping[key] || [];
+  }
+  
+  
+  
   
 
   constructor(private firestoreService: FirestoreService, private globalService: GlobalService) {}

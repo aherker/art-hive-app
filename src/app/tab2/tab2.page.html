@@ -1,11 +1,7 @@
 
 <ion-header [translucent]="true">
   <ion-toolbar class="header-background">
-    <ion-buttons>
-    <ion-menu-button slot="start">
-      <ion-icon name="cog-outline"></ion-icon>
-    </ion-menu-button>
-  </ion-buttons>
+    <ion-button slot="start" (click)="openMenu()"><ion-icon name="cog-outline"></ion-icon></ion-button>
     <ion-title class="custom-title-background">
       Home
     </ion-title>
@@ -20,7 +16,7 @@
     </div>
 </ion-content>
 
-<ion-menu contentId="main-content" side="start" menuId="mainMenu">
+<ion-menu contentId="main-content" side="start" menuId="mainMenu" (ionDidOpen)="menuDidOpen()" (ionDidClose)="menuDidClose()">
   <ion-header>
     <ion-toolbar color="primary">
       <ion-title>Settings</ion-title>

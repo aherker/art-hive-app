@@ -25,7 +25,7 @@ export class LoginPage {
         const userId = userCredential.user.uid;
         this.globalService.setUserId(userId);
         
-        this.router.navigate(['homepage']); // Navigate to dashboard or home after successful login
+        this.router.navigate(['/tabs/tab2']); // Navigate to dashboard or home after successful login
       },
       (error) => {
         console.error('Login failed', error);
