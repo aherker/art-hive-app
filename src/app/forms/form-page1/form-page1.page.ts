@@ -13,9 +13,26 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class FormPage1Page implements OnInit {
   artHiveQuestionare!: FormGroup;
-  etcLabels: string[] = ['kinesthetic', 'sensory', 'perceptual', 'affective', 'cognitive', 'symbolic', 'creative'];
+  //etcLabels: string[] = ['kinesthetic', 'sensory', 'perceptual', 'affective', 'cognitive', 'symbolic', 'creative'];
 
   constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService, private globalService: GlobalService) {}
+
+  selectedETCOptions  = [
+    { label: 'kinesthetic', value: 'kinesthetic' },
+    { label: 'sensory', value: 'sensory' },
+    { label: 'perceptual', value: 'perceptual' },
+    { label: 'affective', value: 'affective' },
+    { label: 'cognitive', value: 'cognitive' },
+    { label: 'symbolic', value: 'symbolic' },
+    { label: 'creative', value: 'creative' }
+
+  ];
+
+  discoveryMethodsOptions = [
+    {label: 'Word of mouth' , value: 'Word of mouth' },
+    { label: 'Passing by' , value: 'Passing by'},
+    { label: 'Social media' , value: 'Social media' }
+  ];
 
   ngOnInit() {
     this.artHiveQuestionare = this.formBuilder.group({
@@ -68,14 +85,10 @@ export class FormPage1Page implements OnInit {
       numNewParticipants: ['', Validators.required],
 
       question12: ['How did new participants find the event?'],
-      DiscoveryMethodZero: ['Word of mouth'],
-      DiscoveryMethodOne: ['Passing by and being curious'],
-      DiscoveryMethodTwo: ['Social Media'],
-      discoveryMethods: this.formBuilder.array([
-        this.formBuilder.group({ checked: [false] }), // Word of mouth
-        this.formBuilder.group({ checked: [false] }), // Passing by
-        this.formBuilder.group({ checked: [false] }), // Social media
-      ]),
+      DiscoveryMethodZero: ['Word of mouth'], //need to be deleted after recognized in the previous form
+      DiscoveryMethodOne: ['Passing by and being curious'], //need to be deleted after recognized in the previous form
+      DiscoveryMethodTwo: ['Social Media'], //need to be deleted after recognized in the previous form
+      discoveryMethods: this.formBuilder.array(this.discoveryMethodsOptions.map(() => this.formBuilder.control(false))), // Ensure at least one checkbox is selected,
       otherDiscoverylabel: ['If other, please specify'],
       otherDiscovery: [''],
 
@@ -104,7 +117,7 @@ export class FormPage1Page implements OnInit {
       materialsUsedList: this.formBuilder.array([]),
 
       question21: ['Expressive Therapies Continuum (ETC)'],
-      selectedETC: ['', Validators.required],
+      selectedETC: this.formBuilder.array(this.selectedETCOptions.map(() => this.formBuilder.control(false))), // Ensure at least one checkbox is selected
 
       question22: ['Discussion Theme: related to community'], 
       discussionCommunity: [''],
@@ -205,9 +218,9 @@ export class FormPage1Page implements OnInit {
     return this.artHiveQuestionare.get('discoveryMethods') as FormArray;
   }
 
-  getLabel(index: number): string {
-    return index === 0 ? 'Word of mouth' : index === 1 ? 'Passing by and being curious' : 'Social media';
-  }
+  // getLabel(index: number): string {
+  //   return index === 0 ? 'Word of mouth' : index === 1 ? 'Passing by and being curious' : 'Social media';
+  // }
 
   get formsOfExpressionsList(){
     return this.artHiveQuestionare.get('formsOfExpressionsList') as FormArray;
@@ -217,9 +230,9 @@ export class FormPage1Page implements OnInit {
     return this.artHiveQuestionare.get('materialsUsedList') as FormArray;
   }
 
-  // get ETC() {
-  //   return this.artHiveQuestionare.get('ETC') as FormArray;
-  // }
+  get selectedETC() {
+    return (this.artHiveQuestionare.get('selectedETC') as FormArray);
+  }
 
   addMember() {
     this.membersName.push(
@@ -325,7 +338,22 @@ export class FormPage1Page implements OnInit {
   async onSubmit() {
     if (this.artHiveQuestionare.valid) {
       const formData = this.artHiveQuestionare.value;
+
+      const selectedETCPreferences = formData.selectedETC
+        .map((selected: boolean, index: number) => selected ? this.selectedETCOptions[index].value : null)
+        .filter((value: any) => value !== null);  // Filter out null values (unchecked boxes)
+
+      const discoveryMethodsPreferences = formData.discoveryMethods
+      .map((selected: boolean, index: number) => selected ? this.discoveryMethodsOptions[index].value : null)
+      .filter((value: any) => value !== null);  // Filter out null values (unchecked boxes)
+    // Now add the processed selectedETC preferences to the formData object
       
+    formData.discoveryMethods = discoveryMethodsPreferences
+    formData.selectedETC = selectedETCPreferences;
+
+    console.log(formData.discoveryMethods);
+    console.log(formData.selectedETC);
+
       try {
         // Call the FirestoreService to add the document
         await this.firestoreService.addDocument(this.globalService.getUserId(), formData);

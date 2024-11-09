@@ -251,12 +251,18 @@
       <ion-card-content>       
       <ion-card-subtitle >How did new participants find the event?</ion-card-subtitle>
         <ion-list>
-          <div formArrayName="discoveryMethods">
+          <!-- <div formArrayName="discoveryMethods">
             <ion-item *ngFor="let method of discoveryMethods.controls; let i = index" [formGroupName]="i">
               <ion-label>{{ getLabel(i) }}</ion-label>
               <ion-checkbox slot="start" formControlName="checked"></ion-checkbox>
             </ion-item>
-          </div>          
+          </div> -->
+          <ion-checkbox-group formArrayName="discoveryMethods">
+            <ion-item *ngFor="let option of discoveryMethodsOptions; let i = index">
+              <ion-label>{{ option.label }}</ion-label>
+              <ion-checkbox [formControlName]="i"></ion-checkbox>
+            </ion-item>
+          </ion-checkbox-group>          
           <ion-item>
             <ion-label position="stacked" class="otherLabel">If other, please specify:</ion-label>
             <ion-textarea formControlName="otherDiscovery" class="otherDiscoveryInput"></ion-textarea>
@@ -405,12 +411,20 @@
       <ion-card-content>     
       <ion-card-subtitle>Expressive Therapies Continuum (ETC):</ion-card-subtitle>
         <ion-list>
-          <ion-radio-group formControlName="selectedETC">
+          <!-- <ion-radio-group formControlName="selectedETC">
             <ion-item *ngFor="let label of etcLabels; let i = index">
               <ion-label>{{ label }}</ion-label>
               <ion-radio slot="start" [value]="label"></ion-radio>
             </ion-item>
-          </ion-radio-group>
+          </ion-radio-group> -->
+          <ion-item>
+            <ion-checkbox-group formArrayName="selectedETC">
+              <ion-item *ngFor="let option of selectedETCOptions; let i = index">
+                <ion-label>{{ option.label }}</ion-label>
+                <ion-checkbox [formControlName]="i"></ion-checkbox>
+              </ion-item>
+            </ion-checkbox-group>
+          </ion-item>
         </ion-list>
       </ion-card-content>
     </ion-card>    
