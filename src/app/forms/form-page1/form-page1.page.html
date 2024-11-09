@@ -57,12 +57,12 @@
         <ion-card-subtitle>Starting and ending date of the art hive</ion-card-subtitle>
         <ion-item *ngIf="artHiveQuestionare">
           <ion-label class="DateLabels" position="stacked" >Start date:</ion-label>
-          <ion-datetime class="dateInput" displayFormat="MM/DD/YYYY" presentation="date" formControlName="startDate"></ion-datetime>
+          <ion-datetime class="dateInput" displayFormat="MM/DD/YYYY" formControlName="startDate"></ion-datetime>
         </ion-item>
         <br>
         <ion-item *ngIf="artHiveQuestionare">
           <ion-label class="DateLabels" position="stacked" >End date:</ion-label>
-          <ion-datetime class="dateInput" displayFormat="MM/DD/YYYY" presentation="date" canceltext="Cancel" confirmtext="Ok" formControlName="endDate"></ion-datetime>
+          <ion-datetime class="dateInput" displayFormat="MM/DD/YYYY" canceltext="Cancel" confirmtext="Ok" formControlName="endDate"></ion-datetime>
         </ion-item>
         
       </ion-card-content>
@@ -202,12 +202,12 @@
         </ion-card-subtitle>
         <div *ngFor="let memberControl of numStudentsList.controls; let i = index" [formGroupName]="i">
           <ion-item>
-            <ion-label class="numStudentsLabel">Numbers of students:</ion-label>
-            <ion-input type="number" placeholder="0" formControlName="numStudents"></ion-input>
-          </ion-item>
-          <ion-item>
             <ion-label class="eduLabel">Educational institution:</ion-label>
             <ion-input formControlName="eduInstitution"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="numStudentsLabel">Numbers of students:</ion-label>
+            <ion-input type="number" placeholder="0" formControlName="numStudents"></ion-input>
           </ion-item>
           <ion-button class="removeInstitution" *ngIf="numStudentsList.length > 1" (click)="removeInstitution(i)" [disabled]="numStudentsList.length === 1">
             Remove institution
@@ -296,7 +296,6 @@
     <ion-card id="selfID">
       <ion-card-header>
         <ion-card-title>Question 14</ion-card-title>
-        <ion-card-subtitle>If self-identification occurred, what may have facilitated it?</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content> 
       <ion-card-subtitle>If self-identification occurred, what may have facilitated it?</ion-card-subtitle>
@@ -307,7 +306,6 @@
     <ion-card id="commonGround">
       <ion-card-header>
         <ion-card-title>Question 15</ion-card-title>
-        <ion-card-subtitle>If needed, was a common ground found? If so, how (shared goals, community projects, etc.)?</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>       
          <ion-card-subtitle >If needed, was a common ground found? If so, how (shared goals, community projects, etc.)?</ion-card-subtitle>
@@ -318,7 +316,6 @@
     <ion-card id="underRepresentedPerspectives">
       <ion-card-header>
         <ion-card-title>Question 16</ion-card-title>
-        <ion-card-subtitle>What could be done to reach out for under-represented perspectives? (If any suggestions from the group)</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>  
       <ion-card-subtitle>What could be done to reach out for under-represented perspectives? (If any suggestions from the group)</ion-card-subtitle>
@@ -388,7 +385,7 @@
         </ion-card-subtitle>
         <div *ngFor="let memberControl of materialsUsedList.controls; let i = index" [formGroupName]="i">
           <ion-item>
-            <ion-label class="materialsUsedLabel">Materials or instruments used:</ion-label>
+            <ion-label class="materialsUsedLabel" position="stacked">Materials or instruments used:</ion-label>
             <ion-textarea formControlName="materialsUsedType" class="materialsUsedTypeInput"></ion-textarea>
           </ion-item>
           <ion-item>
