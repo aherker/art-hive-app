@@ -3,6 +3,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { GlobalService } from 'src/app/services/global.service';
 import * as XLSX from 'xlsx';    // Import XLSX from xlsx
 import { saveAs } from 'file-saver';   // Import saveAs from file-saver
+import { FormArray, FormControl } from '@angular/forms';
 
 
 @Component({
@@ -180,6 +181,31 @@ export class Tab3Page implements OnInit {
     XLSX.writeFile(workbook, "FormResponses.xlsx");
   }
 
+  // prepareExcelData() {
+  //   // Add "Timestamp" as the first header, followed by the question headers
+  //   const headers = ['Timestamp', ...this.orderedKeys.map((_, index) => `Question ${index + 1}`)];
+  
+  //   // Create rows by mapping through each response
+  //   const rows = this.formResponses.map(response => {
+  //     const timestamp = response.timestamp ? response.timestamp.toDate().toLocaleString() : 'No timestamp';
+      
+  //     // Prepend the timestamp to each row, then add answers for each question group
+  //     const rowData = this.orderedKeys.map((questionGroup) => {
+  //       // Concatenate answers for each question in the group
+  //       return questionGroup.map(key => response[key] || 'No answer').join(', ');
+  //     });
+  
+  //     return [timestamp, ...rowData];
+  //   });
+  
+  //   // Return headers and rows in a structured format
+  //   return { headers, rows };
+  // }
+
+  // saveAsExcelFile(buffer: any, fileName: string): void {
+  //   const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  //   saveAs(data, `${fileName}.xlsx`);
+  // }
   prepareExcelData() {
     // Add "Timestamp" as the first header, followed by the question headers
     const headers = ['Timestamp', ...this.orderedKeys.map((_, index) => `Question ${index + 1}`)];
@@ -187,11 +213,34 @@ export class Tab3Page implements OnInit {
     // Create rows by mapping through each response
     const rows = this.formResponses.map(response => {
       const timestamp = response.timestamp ? response.timestamp.toDate().toLocaleString() : 'No timestamp';
-      
+  
       // Prepend the timestamp to each row, then add answers for each question group
       const rowData = this.orderedKeys.map((questionGroup) => {
-        // Concatenate answers for each question in the group
-        return questionGroup.map(key => response[key] || 'No answer').join(', ');
+        return questionGroup.map(key => {
+          const answer = response[key] || 'No answer';
+  
+          // Check if the answer is a FormArray and handle it properly
+          if (this.isFormArray(answer)) {
+            // If it's a FormArray, extract its values and join them with a comma
+            return answer.controls.map((control: FormControl) => control.value || '').join(', ');
+          } else if (Array.isArray(answer)) {
+            // If the answer is an array of objects, extract values from them
+            return answer.map((item: any) => {
+              // If the item is an object, extract its relevant fields as needed
+              if (typeof item === 'object' && item !== null) {
+                // Handle nested objects (like `numStudents` with `eduInstitution` and `numStudents` labels)
+                return Object.values(item).join(' ');
+              }
+              return item;
+            }).join(', ');
+          } else if (typeof answer === 'object' && answer !== null) {
+            // If it's an object (like FormControl), stringify it for readability
+            return JSON.stringify(answer);
+          }
+  
+          // Otherwise, return the answer as is (it should be a string, number, or null)
+          return answer;
+        }).join(', '); // Join answers for the group with a comma
       });
   
       return [timestamp, ...rowData];
@@ -200,12 +249,11 @@ export class Tab3Page implements OnInit {
     // Return headers and rows in a structured format
     return { headers, rows };
   }
-
-  saveAsExcelFile(buffer: any, fileName: string): void {
-    const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    saveAs(data, `${fileName}.xlsx`);
+  
+  // Helper method to check if a value is a FormArray
+  isFormArray(value: any): boolean {
+    return value instanceof FormArray;
   }
-
 
 
 
