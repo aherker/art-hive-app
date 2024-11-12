@@ -12,13 +12,14 @@ import { MenuController } from '@ionic/angular';
 })
 export class Tab2Page {
   selectedColor: string = '#000000'; // Default color
+  temporaryColor: string = '#000000'; 
 
   constructor(private authService: AuthenticationService, private router: Router, private colorService: ColorService, private menu: MenuController) {}
 
   ngOnInit() {
     // Initialize selectedColor from ColorService on component initialization
     this.selectedColor = this.colorService.selectedColor; // Get color from ColorService
-    this.updateCSSVariable(this.selectedColor); // Update CSS variable for the initial color
+    
   }
 
 
@@ -45,10 +46,15 @@ export class Tab2Page {
     });
   }
 
-  updateCSSVariable(color: string) {
-    this.colorService.selectedColor = color;
-    console.log(this.colorService.selectedColor);
-    document.documentElement.style.setProperty('--app-background-color', color);
+  previewColor(color: string) {
+    this.temporaryColor = color;
+  }
+  
+  // Apply the color when the button is clicked
+  applyColor() {
+    this.colorService.selectedColor = this.temporaryColor;
+    document.documentElement.style.setProperty('--app-background-color', this.temporaryColor);
+    console.log('Applied color:', this.colorService.selectedColor);
   }
 
 

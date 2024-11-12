@@ -19,56 +19,8 @@
     </ion-radio-group>
   </ion-list>
 
-  <ion-button (click)="addFormResponse()">Add Form Response</ion-button>
+
   <ion-button (click)="getFormResponses()">Get Form Responses</ion-button>
-
-
-    <!-- <div *ngIf="selectedDocumentData">
-      <ion-toolbar>
-        <ion-title class="custom-title-background">
-          Selected Previous Form
-        </ion-title>
-      </ion-toolbar>
-
-
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>
-            Time of Submission: {{ selectedDocumentData.timestamp?.toDate() | date: 'medium' }}
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-     
-          <ng-container *ngFor="let item of orderedKeys; let i = index">
-            <ng-container *ngIf="item.length > 0">
-         
-              <ion-card>
-                <ion-card-header>
-                  <ion-card-title>Question {{ i + 1 }}:</ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                  <h2>{{ selectedDocumentData[item[0]] }}</h2>
-      
-                  
-                  <ng-container *ngFor="let subKey of item.slice(1)">
-                    <ng-container *ngIf="isArray(selectedDocumentData[subKey])">
-                      <div *ngFor="let subItem of selectedDocumentData[subKey]; let j = index">
-                        <ng-container *ngFor="let key of getKeys(subItem)">
-                          <span>1{{ subItem[key] || 'No value available' }}</span><br>
-                        </ng-container>
-                      </div>
-                    </ng-container>
-                    <ng-container *ngIf="!isArray(selectedDocumentData[subKey])">
-                      <span>{{ selectedDocumentData[subKey] || 'No response' }}</span><br>
-                    </ng-container>
-                  </ng-container>
-                </ion-card-content>
-              </ion-card>
-            </ng-container>
-          </ng-container>
-        </ion-card-content>
-      </ion-card>      
-      </div> -->
 
 
       <div *ngIf="selectedDocumentData">
@@ -99,10 +51,16 @@
                     <ng-container *ngFor="let mainKey of item.slice(1)">
                       <ng-container *ngIf="isArray(selectedDocumentData[mainKey])">
                         <div *ngFor="let subItem of selectedDocumentData[mainKey]">
-                      
-                          <ng-container *ngFor="let subKey of getOrderedSubKeys(mainKey)">
-                            <span>{{ subItem[subKey] || 'No value available' }}</span><br>
+                          <ng-container *ngIf="getOrderedSubKeys(mainKey).length > 0; else noSubKey">
+                            <!-- Loop through subkeys if they exist -->
+                            <ng-container *ngFor="let subKey of getOrderedSubKeys(mainKey)">
+                              <span>{{ subItem[subKey] || 'No value available' }}</span><br>
+                            </ng-container>
                           </ng-container>
+                          <!-- Display subItem directly if no subkeys are found -->
+                          <ng-template #noSubKey>
+                            <span>{{ subItem || 'No value available' }}</span><br>
+                          </ng-template>
                         </div>
                       </ng-container>
                       <ng-container *ngIf="!isArray(selectedDocumentData[mainKey])">

@@ -20,51 +20,51 @@ export class FormPage1Page implements OnInit {
   ngOnInit() {
     this.artHiveQuestionare = this.formBuilder.group({
 
-      question1: [' Name of the people who are completing this form (Members of the community, if they agree to have their names written here)'],
+      question1: [' Name of the people who are completing this form (Members of the community, if they agree to have their names written here):'],
       membersName: this.formBuilder.array([]),
 
-      question2: ['Starting and ending date of the art hive'],
-      startDateLabel: ['Start date'],
+      question2: ['Starting and ending date of the art hive:'],
+      startDateLabel: ['Start date:'],
       startDate: ['', Validators.required],
-      endDateLabel: ['End date'],
+      endDateLabel: ['End date:'],
       endDate: ['', Validators.required],
 
-      question3: ['Address'],
-      locationNameLabel: ['Name'],
+      question3: ['Address:'],
+      locationNameLabel: ['Name:'],
       locationName: ['', Validators.required],
-      streetLabel: ['Street'],
+      streetLabel: ['Street:'],
       street: ['', Validators.required],
-      cityLabel: ['City'],
+      cityLabel: ['City:'],
       city: ['', Validators.required],
-      stateLabel: ['State'],
+      stateLabel: ['State:'],
       state: ['', Validators.required],
-      zipLabel: ['ZIP'],
+      zipLabel: ['ZIP:'],
       zip: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
 
-      question4: ['Contact(s)'],
+      question4: ['Contact(s):'],
       contactList: this.formBuilder.array([]),
 
-      question5: ['Partners for this Art Hive - individuals, programs, projects, or organizations'],
+      question5: ['Partners for this Art Hive - individuals, programs, projects, or organizations:'],
       partnerList: this.formBuilder.array([]),
 
-      question6: ['List facilitator names'],
+      question6: ['List facilitator names:'],
       facilitatorList: this.formBuilder.array([]),
 
-      question7: ['Number of participants (include facilitators)'],
+      question7: ['Number of participants (include facilitators):'],
       numParticipants: ['', Validators.required],
 
-      question8: ['Approximate number of older adults >= 65'],
+      question8: ['Approximate number of older adults >= 65:'],
       numSeniors: ['', Validators.required],
 
-      question9: ['Approximate numbers of students (label with educational institutions)'],
+      question9: ['Approximate numbers of students (label with educational institutions):'],
       numStudentsList: this.formBuilder.array([]),
 
-      question10: ['Approximate number of children'],
-      numChildrenLabel: ['Number of children'],
+      question10: ['Approximate number of children:'],
+      numChildrenLabel: ['Number of children:'],
       numChildren: ['', Validators.required],
 
-      question11: ['Number of new participants'],
-      numNewParticipantsLabel: ['Number of new participants'],
+      question11: ['Number of new participants:'],
+      numNewParticipantsLabel: ['Number of new participants:'],
       numNewParticipants: ['', Validators.required],
 
       question12: ['How did new participants find the event?'],
@@ -76,7 +76,7 @@ export class FormPage1Page implements OnInit {
         this.formBuilder.group({ checked: [false] }), // Passing by
         this.formBuilder.group({ checked: [false] }), // Social media
       ]),
-      otherDiscoverylabel: ['If other, please specify'],
+      otherDiscoverylabel: ['If other, please specify:'],
       otherDiscovery: [''],
 
       question13: ['Were there any discussions related to EDI topics (age, gender, sexual orientation, ethnicity/race, disability, religion, neighborhood, etc.)?'],
@@ -91,19 +91,19 @@ export class FormPage1Page implements OnInit {
       question16: ['What could be done to reach out for under-represented perspectives? (If any suggestions from the group)'],
       underRepresentedPerspectives: [''],
 
-      question17: ['List action steps to reach out for under-represented perspectives. How and when? Who offered to reach out? (Name the team members or community members who offered to help, or organizations that were mentioned in the discussions for each action step)'],
+      question17: ['List action steps to reach out for under-represented perspectives. How and when? Who offered to reach out? (Name the team members or community members who offered to help, or organizations that were mentioned in the discussions for each action step):'],
       underRepresentedPerspectivesReachOut: [''],
 
-      question18: ['Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1))'],
+      question18: ['Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1)):'],
       formsOfExpressionsList: this.formBuilder.array([]),
 
-      question19: ['Themes & symbols (please do not write techniques and art materials here)'],
+      question19: ['Themes & symbols (please do not write techniques and art materials here):'],
       themesAndSymbols: [''],
 
-      question20: ['Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1))'],
+      question20: ['Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1)):'],
       materialsUsedList: this.formBuilder.array([]),
 
-      question21: ['Expressive Therapies Continuum (ETC)'],
+      question21: ['Expressive Therapies Continuum (ETC):'],
       selectedETC: ['', Validators.required],
 
       question22: ['Discussion Theme: related to community'], 

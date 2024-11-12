@@ -24,7 +24,7 @@ export class Tab3Page implements OnInit {
     ['question9', 'numStudentsList'],
     ['question10', 'numChildrenLabel', 'numChildren'],
     ['question11', 'numNewParticipantsLabel', 'numNewParticipants'],
-    ['question12', 'DiscoveryMethodZero', 'DiscoveryMethodOne', 'DiscoveryMethodTwo'],
+    ['question12', 'discoveryMethods', 'otherDiscoverylabel', 'otherDiscovery'],
     ['question13', 'EDIQuestions'],
     ['question14', 'selfID'],
     ['question15', 'commonGround'],
@@ -61,7 +61,12 @@ export class Tab3Page implements OnInit {
 
   keyOrderMapping: { [key: string]: string[] } = {
     membersName: ['membersNameLabel', 'membersNameInput'],
-    contactList: [ 'contactNameLabel', 'contactName', 'contactEmailLabel', 'contactEmail', 'contactPhoneLabel', 'contactPhone']
+    contactList: [ 'contactNameLabel', 'contactName', 'contactEmailLabel', 'contactEmail', 'contactPhoneLabel', 'contactPhone'],
+    facilitatorList: ['facilitatorListLabel', 'facilitatorListInput'],
+    formsOfExpressionsList: ['formsOfExpressionsLabel', 'formsOfExpressionType', 'numOfExpressionLabel', 'numOfExpression'],
+    materialsUsedList: ['materialsUsedLabel', 'materialsUsedType', 'numMaterialsUsedLabel', 'numMaterialsUsed'],
+    numStudentsList: ['eduInstitutionLabel', 'eduInstitution', 'numStudentsLabel', 'numStudents'],
+    partnerList: ['partnerNameLabel', 'partnerNameInput']
   };
   
   getOrderedSubKeys(key: string): string[] {
