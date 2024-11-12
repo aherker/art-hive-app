@@ -20,19 +20,22 @@
   </ion-list>
 
 
-  <ion-button (click)="getFormResponses()">Get Form Responses</ion-button>
-  <ion-button (click)="exportToExcel()">Export To Excel</ion-button>
+  <div class="button-container">
+    <ion-button (click)="getFormResponses()">Get Form Responses</ion-button>
+    <ion-button (click)="exportToExcel()">Export To Excel</ion-button>
+  </div>
+
 
       <div *ngIf="selectedDocumentData">
         <ion-toolbar>
           <ion-title class="custom-title-background">
-            Selected Previous Form
+            Selected Form
           </ion-title>
         </ion-toolbar>
       
         <ion-card>
           <ion-card-header>
-            <ion-card-title>
+            <ion-card-title class="time-stamp-title">
               Time of Submission: {{ selectedDocumentData.timestamp?.toDate() | date: 'medium' }}
             </ion-card-title>
           </ion-card-header>
@@ -45,7 +48,7 @@
                     <ion-card-title>Question {{ i + 1 }}:</ion-card-title>
                   </ion-card-header>
                   <ion-card-content>
-                    <h2>{{ selectedDocumentData[item[0]] }}</h2> 
+                    <h2 class="question-label">{{ selectedDocumentData[item[0]] }}</h2> 
       
                   
                     <ng-container *ngFor="let mainKey of item.slice(1)">

@@ -14,3 +14,27 @@ ion-content {
   height: 150px;
   overflow-y: auto;
 }
+
+.time-stamp-title {
+  color: var(--ion-color-primary);
+  font-size: 3.3vw;
+  text-align: center;
+}
+
+.button-container {
+  display: flex;             /* Aligns buttons horizontally */
+
+  justify-content: center;   /* Centers buttons horizontally */
+  padding: 0 10px;
+}
+
+.button-container ion-button {
+  flex: 1;                   /* Makes each button occupy equal space */
+  text-align: center;
+  font-size: 13px;
+
+}
+
+.question-label{
+  color: var(--ion-color-primary);
+}
