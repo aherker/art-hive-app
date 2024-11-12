@@ -191,7 +191,7 @@
 
 #formsOfExpressions{
   .formsOfExpressionsLabel{
-    width: 28%;
+    width: 30%;
     text-align: left;
     text-transform: none;
   }
@@ -222,7 +222,10 @@
     width: 80%;
     text-align: left;
     text-transform: none;
-    position: stacked;
+    //position: stacked;
+    font-size: 21px;
+    text-wrap: nowrap;
+    margin-bottom: 4px;
   }
 
   .numMaterialsUsedLabel{

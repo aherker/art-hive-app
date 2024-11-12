@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { GlobalService } from 'src/app/services/global.service';
+import * as XLSX from 'xlsx';    // Import XLSX from xlsx
+import { saveAs } from 'file-saver';   // Import saveAs from file-saver
+
 
 @Component({
   selector: 'app-tab3',
@@ -141,6 +144,70 @@ export class Tab3Page implements OnInit {
   isArray(value: any): boolean {
     return Array.isArray(value);
   }
+  // Export to Excel //////////////////////////////////////////////////////////////////////////////////////////////////
+  exportToExcel() {
+    // Get headers and rows from prepareExcelData
+    const { headers, rows } = this.prepareExcelData();
+  
+    // Create a worksheet with headers and rows
+    const worksheet = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+  
+    // Sets the column widths to auto-size 
+    const colWidths = headers.map((_, colIndex) => {
+      const maxLength = Math.max(
+        ...[headers, ...rows].map(row => String(row[colIndex] || '').length)
+      );
+      return { wch: maxLength }; // Set column width to the max character length
+    });
+    
+    worksheet['!cols'] = colWidths;  // Apply column widths
+  
+    // Applies text wrapping for all cells
+    Object.keys(worksheet).forEach(key => {
+      if (key[0] !== '!') {
+        worksheet[key].s = {
+          ...worksheet[key].s,
+          alignment: { wrapText: true },
+        };
+      }
+    });
+  
+    // Create a new workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Form Responses");
+  
+    // Export the workbook as an Excel file
+    XLSX.writeFile(workbook, "FormResponses.xlsx");
+  }
+
+  prepareExcelData() {
+    // Add "Timestamp" as the first header, followed by the question headers
+    const headers = ['Timestamp', ...this.orderedKeys.map((_, index) => `Question ${index + 1}`)];
+  
+    // Create rows by mapping through each response
+    const rows = this.formResponses.map(response => {
+      const timestamp = response.timestamp ? response.timestamp.toDate().toLocaleString() : 'No timestamp';
+      
+      // Prepend the timestamp to each row, then add answers for each question group
+      const rowData = this.orderedKeys.map((questionGroup) => {
+        // Concatenate answers for each question in the group
+        return questionGroup.map(key => response[key] || 'No answer').join(', ');
+      });
+  
+      return [timestamp, ...rowData];
+    });
+  
+    // Return headers and rows in a structured format
+    return { headers, rows };
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(data, `${fileName}.xlsx`);
+  }
+
+
+
 
 }
 
