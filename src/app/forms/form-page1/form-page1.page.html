@@ -244,32 +244,32 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card id="discovery">
-      <ion-card-header>
-        <ion-card-title>Question 12</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>       
-      <ion-card-subtitle >How did new participants find the event?</ion-card-subtitle>
-        <ion-list>
-          <!-- <div formArrayName="discoveryMethods">
-            <ion-item *ngFor="let method of discoveryMethods.controls; let i = index" [formGroupName]="i">
-              <ion-label>{{ getLabel(i) }}</ion-label>
-              <ion-checkbox slot="start" formControlName="checked"></ion-checkbox>
-            </ion-item>
-          </div> -->
-          <ion-checkbox-group formArrayName="discoveryMethods">
-            <ion-item *ngFor="let option of discoveryMethodsOptions; let i = index">
-              <ion-label>{{ option.label }}</ion-label>
-              <ion-checkbox [formControlName]="i"></ion-checkbox>
-            </ion-item>
-          </ion-checkbox-group>          
-          <ion-item>
-            <ion-label position="stacked" class="otherLabel">If other, please specify:</ion-label>
-            <ion-textarea formControlName="otherDiscovery" class="otherDiscoveryInput"></ion-textarea>
+  <ion-card id="discovery">
+    <ion-card-header>
+      <ion-card-title>Question 12</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>       
+    <ion-card-subtitle >How did new participants find the event?</ion-card-subtitle>
+      <ion-list>
+        <!-- <div formArrayName="discoveryMethods">
+          <ion-item *ngFor="let method of discoveryMethods.controls; let i = index" [formGroupName]="i">
+            <ion-label>{{ getLabel(i) }}</ion-label>
+            <ion-checkbox slot="start" formControlName="checked"></ion-checkbox>
           </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>    
+        </div> -->
+        <ion-checkbox-group formArrayName="discoveryMethods">
+          <ion-item *ngFor="let option of discoveryMethodsOptions; let i = index">
+            <ion-label>{{ option.label }}</ion-label>
+            <ion-checkbox [formControlName]="i"></ion-checkbox>
+          </ion-item>
+        </ion-checkbox-group>          
+        <ion-item>
+          <ion-label position="stacked" class="otherLabel">If other, please specify:</ion-label>
+          <ion-textarea formControlName="otherDiscovery" class="otherDiscoveryInput"></ion-textarea>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>    
 
    <ion-card id="dataCollectionExplanation">
       <ion-card-content>

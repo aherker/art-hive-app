@@ -5,6 +5,9 @@ import {FirestoreService } from 'src/app/services/firestore.service';
 import 'firebase/firestore';
 import { Timestamp } from 'firebase/firestore';
 import { GlobalService } from 'src/app/services/global.service';
+import { AlertController } from '@ionic/angular';
+
+
 
 @Component({
   selector: 'app-form-page1',
@@ -15,7 +18,10 @@ export class FormPage1Page implements OnInit {
   artHiveQuestionare!: FormGroup;
   //etcLabels: string[] = ['kinesthetic', 'sensory', 'perceptual', 'affective', 'cognitive', 'symbolic', 'creative'];
 
-  constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService, private globalService: GlobalService) {}
+  constructor(private formBuilder: FormBuilder,
+    private firestoreService: FirestoreService,
+    private globalService: GlobalService,
+    private alertController: AlertController) {}
 
   selectedETCOptions  = [
     { label: 'kinesthetic', value: 'kinesthetic' },
@@ -335,26 +341,25 @@ export class FormPage1Page implements OnInit {
   async onSubmit() {
     if (this.artHiveQuestionare.valid) {
       const formData = this.artHiveQuestionare.value;
-
+  
       const selectedETCPreferences = formData.selectedETC
         .map((selected: boolean, index: number) => selected ? this.selectedETCOptions[index].value : null)
         .filter((value: any) => value !== null);  // Filter out null values (unchecked boxes)
-
+  
       const discoveryMethodsPreferences = formData.discoveryMethods
-      .map((selected: boolean, index: number) => selected ? this.discoveryMethodsOptions[index].value : null)
-      .filter((value: any) => value !== null);  // Filter out null values (unchecked boxes)
-    // Now add the processed selectedETC preferences to the formData object
-      
-    formData.discoveryMethods = discoveryMethodsPreferences
-    formData.selectedETC = selectedETCPreferences;
-
-    console.log(formData.discoveryMethods);
-    console.log(formData.selectedETC);
-
+        .map((selected: boolean, index: number) => selected ? this.discoveryMethodsOptions[index].value : null)
+        .filter((value: any) => value !== null);  // Filter out null values (unchecked boxes)
+  
+      formData.discoveryMethods = discoveryMethodsPreferences;
+      formData.selectedETC = selectedETCPreferences;
+  
       try {
         // Call the FirestoreService to add the document
         await this.firestoreService.addDocument(this.globalService.getUserId(), formData);
         console.log('Form data saved successfully!');
+        
+        // Show submission success alert
+        await this.showSubmissionAlert();
       } catch (error) {
         console.error('Error saving form data:', error);
       }
@@ -362,4 +367,16 @@ export class FormPage1Page implements OnInit {
       console.error('Form is invalid');
     }
   }
+
+  async showSubmissionAlert() {
+    const alert = await this.alertController.create({
+      header: 'Submission Successful',
+      message: 'Your form has been submitted successfully!',
+      buttons: ['OK']
+    });
+  
+    await alert.present();
+  }
+  
+
 }

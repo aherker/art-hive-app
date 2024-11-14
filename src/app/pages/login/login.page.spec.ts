@@ -1,17 +1,17 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { LoginPage } from './login.page';
-import { Router } from '@angular/router';
-import { IonicModule, ToastController } from '@ionic/angular';
-import { AppRoutingModule } from 'src/app/app-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { StoreModule, Store } from '@ngrx/store';
-import { loadingReducer } from 'src/store/loading/loading.reducers';
-import { loginReducer } from 'src/store/login/login.reducers';
-import { AppState } from 'src/store/AppState';
-import { loginFailed, recoverPassword, recoveredPasswordFailed, recoveredPasswordSuccess } from 'src/store/login/login.actions';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { of, throwError } from 'rxjs';
-import { User } from 'src/app/model/user/User';
+// import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+// import { LoginPage } from './login.page';
+// import { Router } from '@angular/router';
+// import { IonicModule, ToastController } from '@ionic/angular';
+// import { AppRoutingModule } from 'src/app/app-routing.module';
+// import { ReactiveFormsModule } from '@angular/forms';
+// import { StoreModule, Store } from '@ngrx/store';
+// import { loadingReducer } from 'src/store/loading/loading.reducers';
+// import { loginReducer } from 'src/store/login/login.reducers';
+// import { AppState } from 'src/store/AppState';
+// import { loginFailed, recoverPassword, recoveredPasswordFailed, recoveredPasswordSuccess } from 'src/store/login/login.actions';
+// import { AuthService } from 'src/app/services/auth/auth.service';
+// import { of, throwError } from 'rxjs';
+// import { User } from 'src/app/model/user/User';
 
 // describe('LoginPage', () => {
 //   let component: LoginPage;
