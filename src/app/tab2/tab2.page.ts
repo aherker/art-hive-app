@@ -51,9 +51,10 @@ export class Tab2Page {
   }
   
   // Apply the color when the button is clicked
-  applyColor() {
+  async applyColor() {
     this.colorService.selectedColor = this.temporaryColor;
-    document.documentElement.style.setProperty('--app-background-color', this.temporaryColor);
+    document.documentElement.style.setProperty('--app-background-color', this.colorService.selectedColor);
+    await this.colorService.saveColorToFirestore(this.temporaryColor);
     console.log('Applied color:', this.colorService.selectedColor);
   }
 

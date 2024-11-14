@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service'; 
 import { Router } from '@angular/router';
 import { GlobalService } from 'src/app/services/global.service';
+import { FirestoreService } from 'src/app/services/firestore.service';  // Import FirestoreService
+import { ColorService } from 'src/app/services/color.service';
 
 @Component({
   selector: 'app-login',
@@ -13,17 +15,21 @@ export class LoginPage {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthenticationService, private router: Router, private globalService: GlobalService) {}
+  constructor(private authService: AuthenticationService, private router: Router, private globalService: GlobalService, private firestoreService: FirestoreService, private colorService: ColorService) {}
 
   // Function to handle user login
   login() {
     this.authMessageReset();
 
     this.authService.login(this.email, this.password).then(
-      (userCredential) => {
+      async (userCredential) => {
         console.log('User logged in:', userCredential);
         const userId = userCredential.user.uid;
         this.globalService.setUserId(userId);
+
+        const color = await this.firestoreService.getUserColor(userId);
+        this.colorService.selectedColor = color
+        document.documentElement.style.setProperty('--app-background-color', color);
         
         this.router.navigate(['/tabs/tab2']); // Navigate to dashboard or home after successful login
       },

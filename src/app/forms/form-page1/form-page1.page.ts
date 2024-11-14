@@ -85,11 +85,8 @@ export class FormPage1Page implements OnInit {
       numNewParticipants: ['', Validators.required],
 
       question12: ['How did new participants find the event?'],
-      DiscoveryMethodZero: ['Word of mouth'], //need to be deleted after recognized in the previous form
-      DiscoveryMethodOne: ['Passing by and being curious'], //need to be deleted after recognized in the previous form
-      DiscoveryMethodTwo: ['Social Media'], //need to be deleted after recognized in the previous form
       discoveryMethods: this.formBuilder.array(this.discoveryMethodsOptions.map(() => this.formBuilder.control(false))), // Ensure at least one checkbox is selected,
-      otherDiscoverylabel: ['If other, please specify'],
+      otherDiscoverylabel: ['If other, please specify:'],
       otherDiscovery: [''],
 
       question13: ['Were there any discussions related to EDI topics (age, gender, sexual orientation, ethnicity/race, disability, religion, neighborhood, etc.)?'],
@@ -116,7 +113,7 @@ export class FormPage1Page implements OnInit {
       question20: ['Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1)):'],
       materialsUsedList: this.formBuilder.array([]),
 
-      question21: ['Expressive Therapies Continuum (ETC)'],
+      question21: ['Expressive Therapies Continuum (ETC):'],
       selectedETC: this.formBuilder.array(this.selectedETCOptions.map(() => this.formBuilder.control(false))), // Ensure at least one checkbox is selected
 
       question22: ['Discussion Theme: related to community'], 
@@ -237,7 +234,7 @@ export class FormPage1Page implements OnInit {
   addMember() {
     this.membersName.push(
       this.formBuilder.group({
-        membersNameLabel: ['Member\'s name'],
+        membersNameLabel: ['Member\'s name:'],
         membersNameInput: ['', Validators.required]
       })
     );
@@ -250,11 +247,11 @@ export class FormPage1Page implements OnInit {
   addContact() {
     this.contactList.push(
       this.formBuilder.group({
-        contactNameLabel: ['Name'],
+        contactNameLabel: ['Name:'],
         contactName: ['', Validators.required],
-        contactEmailLabel: ['Email'],
+        contactEmailLabel: ['Email:'],
         contactEmail: ['', [Validators.required, Validators.email]],
-        contactPhoneLabel: ['Phone number'],
+        contactPhoneLabel: ['Phone number:'],
         contactPhone: ['', [Validators.required, Validators.pattern('^([0-9]{3})[-]?([0-9]{3})[-]?([0-9]{4})$')]]
       })
     );
@@ -267,7 +264,7 @@ export class FormPage1Page implements OnInit {
   addPartner() {
     this.partnerList.push(
       this.formBuilder.group({
-        partnerNameLabel: ['Partner\'s name'],
+        partnerNameLabel: ['Partner\'s name:'],
         partnerNameInput: ['', Validators.required]
       })
     );
@@ -280,7 +277,7 @@ export class FormPage1Page implements OnInit {
   addFacilitator() {
     this.facilitatorList.push(
       this.formBuilder.group({
-        facilitatorListLabel: ['Facilitator\'s name'],
+        facilitatorListLabel: ['Facilitator\'s name:'],
         facilitatorListInput: ['', Validators.required]
       })
     );
@@ -292,9 +289,9 @@ export class FormPage1Page implements OnInit {
 
   addInstitution() {
     this.numStudentsList.push(this.formBuilder.group({
-      numStudentsLabel: ['Numbers of students'],
+      numStudentsLabel: ['Numbers of students:'],
       numStudents: ['', Validators.required],
-      eduInstitutionLabel: ['Educational institution'],
+      eduInstitutionLabel: ['Educational institution:'],
       eduInstitution: ['', Validators.required],
     }));
   }
@@ -307,9 +304,9 @@ export class FormPage1Page implements OnInit {
 
   addExpression(){
     this.formsOfExpressionsList.push(this.formBuilder.group({
-      formsOfExpressionsLabel: ['Form of art'],
+      formsOfExpressionsLabel: ['Form of art:'],
       formsOfExpressionType: ['', Validators.required],
-      numOfExpressionLabel: ['Number of art form'],
+      numOfExpressionLabel: ['Number of art form:'],
       numOfExpression: ['', Validators.required]
     }));
   }
@@ -322,9 +319,9 @@ export class FormPage1Page implements OnInit {
 
   addMaterialsUsed(){
     this.materialsUsedList.push(this.formBuilder.group({
-      materialsUsedLabel: ['Materials or instruments used'],
+      materialsUsedLabel: ['Materials or instruments used:'],
       materialsUsedType: ['', Validators.required],
-      numMaterialsUsedLabel: ['Number materials or instruments used'],
+      numMaterialsUsedLabel: ['Number materials or instruments used:'],
       numMaterialsUsed: ['', Validators.required]
     }));
   }

@@ -53,7 +53,7 @@
                   
                     <ng-container *ngFor="let mainKey of item.slice(1)">
                       <ng-container *ngIf="isArray(selectedDocumentData[mainKey])">
-                        <div *ngFor="let subItem of selectedDocumentData[mainKey]">
+                        <div class="answer" *ngFor="let subItem of selectedDocumentData[mainKey]">
                           <ng-container *ngIf="getOrderedSubKeys(mainKey).length > 0; else noSubKey">
                             <!-- Loop through subkeys if they exist -->
                             <ng-container *ngFor="let subKey of getOrderedSubKeys(mainKey)">
@@ -67,7 +67,7 @@
                         </div>
                       </ng-container>
                       <ng-container *ngIf="!isArray(selectedDocumentData[mainKey])">
-                        <span>{{ selectedDocumentData[mainKey] || 'No response' }}</span><br>
+                        <span class="answer">{{ selectedDocumentData[mainKey] || 'No response' }}</span><br>
                       </ng-container>
                     </ng-container>
                   </ion-card-content>

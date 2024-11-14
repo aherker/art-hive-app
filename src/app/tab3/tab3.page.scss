@@ -38,3 +38,11 @@ ion-content {
 .question-label{
   color: var(--ion-color-primary);
 }
+
+.answer{
+  color: var(--ion-color-primary);
+  -webkit-user-select: text; /* For Safari */
+  -moz-user-select: text;    /* For Firefox */
+  -ms-user-select: text;     /* For IE/Edge */
+  user-select: text;         /* Standard syntax */
+}

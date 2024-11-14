@@ -27,6 +27,7 @@
 
 :root {
   --app-background-color: #000000; /* Default color */
+  --app-text-color: #FFFFFF;  /* Default color */
 }
 
 .flex-center{
@@ -60,7 +61,7 @@
     display: inline-block;
     background-color: var(--app-background-color); /* or any other background color */
     padding: 0.8em 0.5em; /* Adjust padding as needed */
-    color: white;
+    color: var(--app-text-color);
     width: 50%;
     text-align: center;
     position: absolute;

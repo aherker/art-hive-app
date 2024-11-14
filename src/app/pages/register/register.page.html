@@ -26,6 +26,10 @@
             <ion-input [(ngModel)]="confirmPassword" type="password" required></ion-input>  <!-- Two-way binding for confirmPassword -->
           </ion-item>
         </ion-list>
+
+        <ion-text color="danger" *ngIf="errorMessage">
+          <p>{{ errorMessage }}</p>
+        </ion-text>
       
         <!-- Submit Button -->
         <ion-button expand="full" (click)="register()">Sign Up</ion-button>

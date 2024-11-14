@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { GlobalService } from 'src/app/services/global.service';
 import * as XLSX from 'xlsx';    // Import XLSX from xlsx
 import { saveAs } from 'file-saver';   // Import saveAs from file-saver
 import { FormArray, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { FormArray, FormControl } from '@angular/forms';
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page implements OnInit {
+export class Tab3Page implements OnInit, OnDestroy {
   selectedItem: any;
   formResponses: any[] = []; 
   userId: string | null = null;
@@ -79,13 +80,21 @@ export class Tab3Page implements OnInit {
   
   
   
-  
+  private userIdSubscription!: Subscription;
 
   constructor(private firestoreService: FirestoreService, private globalService: GlobalService) {}
 
-  async ngOnInit() {
-    await this.getFormResponses(); // Fetch the data when the page loads
 
+
+  async ngOnInit() {
+    this.userIdSubscription = this.globalService.userId$.subscribe(() => {
+      this.getFormResponses();
+    });
+  }
+
+  ngOnDestroy() {
+    // Unsubscribe to avoid memory leaks
+    this.userIdSubscription.unsubscribe();
   }
 
   sortFormResponses() {
@@ -120,10 +129,6 @@ export class Tab3Page implements OnInit {
     }
 
     this.sortFormResponses();
-  }
-
-  displayUID() {
-    this.userId = this.globalService.getUserId(); // Get the UID from the global service
   }
 
   displaySelectedDocument() {

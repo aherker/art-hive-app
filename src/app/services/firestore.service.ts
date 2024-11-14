@@ -1,6 +1,6 @@
 // src/app/services/firestore.service.ts
 import { Injectable } from '@angular/core';
-import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc, getDoc } from "firebase/firestore";
 import { db } from 'src/main';  // Import the Firestore instance
 
 
@@ -35,5 +35,23 @@ export class FirestoreService {
   async deleteDocument(collectionName: string, id: string) {
     const docRef = doc(db, collectionName, id);
     await deleteDoc(docRef);
+  }
+
+  async getUserColor(userId: string): Promise<string> {
+    try {
+      const colorDocRef = doc(db, 'userColors', 'colorChoices');  // Reference to the 'colorChoices' document
+      const docSnap = await getDoc(colorDocRef);  // Fetch the document
+
+      if (docSnap.exists()) {
+        const color = docSnap.data()?.[userId];  // Get the color for the userId
+        if (color) {
+          return color; // Return the user's color
+        }
+      }
+      return '#000000'; // Return default color if user has no color set or document does not exist
+    } catch (error) {
+      console.error('Error fetching user color:', error);
+      return '#000000';  // Return default color on error
+    }
   }
 }
