@@ -1,3 +1,32 @@
+#welcomeBanner {
+    width: 94%; /* Full width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px; /* Optional padding for spacing */
+    // box-sizing: border-box;
+    //margin-top: 20px; /* To provide some spacing from top elements */
+
+    .welcomeTitle {
+        // font-size: 24px; /* Adjust font size to be more readable on mobile */
+        // text-align: center;
+        // white-space: nowrap;
+    
+        color:white;
+        font-size: 5.5vw;
+        display: flex;             // Enables flexbox for alignment /
+        align-items: center;       // Centers text vertically /
+        justify-content: center;   // Centers text horizontally /
+        text-align: center;        // Ensures text alignment /
+    }
+}
+
+
+.spacer{
+    padding: 20px;
+    flex: 1;
+}
+
 #forgot-id{
     font-size: 12px;
     color:rgb(150, 146, 146);
@@ -23,10 +52,16 @@
 }
 
 .register-button{
-    margin-left: -11px;
-    font-size: 12px;
-    color:blue;
-    text-decoration:underline;
-    text-transform:none;
+    // margin-left: 20px;
+    // text-align: center;
+    // font-size: 13px;
+    // //text-decoration:underline;
+    // //text-transform:none;
+
+    font-size: 3.2vw;
+    display: flex;             // Enables flexbox for alignment /
+    align-items: center;       // Centers text vertically /
+    justify-content: center;   // Centers text horizontally /
+    text-align: center;        // Ensures text alignment /
     
 }
