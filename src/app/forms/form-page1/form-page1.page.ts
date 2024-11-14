@@ -5,6 +5,9 @@ import {FirestoreService } from 'src/app/services/firestore.service';
 import 'firebase/firestore';
 import { Timestamp } from 'firebase/firestore';
 import { GlobalService } from 'src/app/services/global.service';
+import { AlertController } from '@ionic/angular';
+
+
 
 @Component({
   selector: 'app-form-page1',
@@ -15,7 +18,10 @@ export class FormPage1Page implements OnInit {
   artHiveQuestionare!: FormGroup;
   //etcLabels: string[] = ['kinesthetic', 'sensory', 'perceptual', 'affective', 'cognitive', 'symbolic', 'creative'];
 
-  constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService, private globalService: GlobalService) {}
+  constructor(private formBuilder: FormBuilder,
+    private firestoreService: FirestoreService,
+    private globalService: GlobalService,
+    private alertController: AlertController) {}
 
   selectedETCOptions  = [
     { label: 'kinesthetic', value: 'kinesthetic' },
@@ -37,51 +43,51 @@ export class FormPage1Page implements OnInit {
   ngOnInit() {
     this.artHiveQuestionare = this.formBuilder.group({
 
-      question1: [' Name of the people who are completing this form (Members of the community, if they agree to have their names written here)'],
+      question1: [' Name of the people who are completing this form (Members of the community, if they agree to have their names written here):'],
       membersName: this.formBuilder.array([]),
 
-      question2: ['Starting and ending date of the art hive'],
-      startDateLabel: ['Start date'],
+      question2: ['Starting and ending date of the art hive:'],
+      startDateLabel: ['Start date:'],
       startDate: ['', Validators.required],
-      endDateLabel: ['End date'],
+      endDateLabel: ['End date:'],
       endDate: ['', Validators.required],
 
-      question3: ['Address'],
-      locationNameLabel: ['Name'],
+      question3: ['Address:'],
+      locationNameLabel: ['Name:'],
       locationName: ['', Validators.required],
-      streetLabel: ['Street'],
+      streetLabel: ['Street:'],
       street: ['', Validators.required],
-      cityLabel: ['City'],
+      cityLabel: ['City:'],
       city: ['', Validators.required],
-      stateLabel: ['State'],
+      stateLabel: ['State:'],
       state: ['', Validators.required],
-      zipLabel: ['ZIP'],
+      zipLabel: ['ZIP:'],
       zip: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
 
-      question4: ['Contact(s)'],
+      question4: ['Contact(s):'],
       contactList: this.formBuilder.array([]),
 
-      question5: ['Partners for this Art Hive - individuals, programs, projects, or organizations'],
+      question5: ['Partners for this Art Hive - individuals, programs, projects, or organizations:'],
       partnerList: this.formBuilder.array([]),
 
-      question6: ['List facilitator names'],
+      question6: ['List facilitator names:'],
       facilitatorList: this.formBuilder.array([]),
 
-      question7: ['Number of participants (include facilitators)'],
+      question7: ['Number of participants (include facilitators):'],
       numParticipants: ['', Validators.required],
 
-      question8: ['Approximate number of older adults >= 65'],
+      question8: ['Approximate number of older adults >= 65:'],
       numSeniors: ['', Validators.required],
 
-      question9: ['Approximate numbers of students (label with educational institutions)'],
+      question9: ['Approximate numbers of students (label with educational institutions):'],
       numStudentsList: this.formBuilder.array([]),
 
-      question10: ['Approximate number of children'],
-      numChildrenLabel: ['Number of children'],
+      question10: ['Approximate number of children:'],
+      numChildrenLabel: ['Number of children:'],
       numChildren: ['', Validators.required],
 
-      question11: ['Number of new participants'],
-      numNewParticipantsLabel: ['Number of new participants'],
+      question11: ['Number of new participants:'],
+      numNewParticipantsLabel: ['Number of new participants:'],
       numNewParticipants: ['', Validators.required],
 
       question12: ['How did new participants find the event?'],
@@ -104,16 +110,16 @@ export class FormPage1Page implements OnInit {
       question16: ['What could be done to reach out for under-represented perspectives? (If any suggestions from the group)'],
       underRepresentedPerspectives: [''],
 
-      question17: ['List action steps to reach out for under-represented perspectives. How and when? Who offered to reach out? (Name the team members or community members who offered to help, or organizations that were mentioned in the discussions for each action step)'],
+      question17: ['List action steps to reach out for under-represented perspectives. How and when? Who offered to reach out? (Name the team members or community members who offered to help, or organizations that were mentioned in the discussions for each action step):'],
       underRepresentedPerspectivesReachOut: [''],
 
-      question18: ['Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1))'],
+      question18: ['Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1)):'],
       formsOfExpressionsList: this.formBuilder.array([]),
 
-      question19: ['Themes & symbols (please do not write techniques and art materials here)'],
+      question19: ['Themes & symbols (please do not write techniques and art materials here):'],
       themesAndSymbols: [''],
 
-      question20: ['Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1))'],
+      question20: ['Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1)):'],
       materialsUsedList: this.formBuilder.array([]),
 
       question21: ['Expressive Therapies Continuum (ETC)'],
@@ -338,26 +344,25 @@ export class FormPage1Page implements OnInit {
   async onSubmit() {
     if (this.artHiveQuestionare.valid) {
       const formData = this.artHiveQuestionare.value;
-
+  
       const selectedETCPreferences = formData.selectedETC
         .map((selected: boolean, index: number) => selected ? this.selectedETCOptions[index].value : null)
         .filter((value: any) => value !== null);  // Filter out null values (unchecked boxes)
-
+  
       const discoveryMethodsPreferences = formData.discoveryMethods
-      .map((selected: boolean, index: number) => selected ? this.discoveryMethodsOptions[index].value : null)
-      .filter((value: any) => value !== null);  // Filter out null values (unchecked boxes)
-    // Now add the processed selectedETC preferences to the formData object
-      
-    formData.discoveryMethods = discoveryMethodsPreferences
-    formData.selectedETC = selectedETCPreferences;
-
-    console.log(formData.discoveryMethods);
-    console.log(formData.selectedETC);
-
+        .map((selected: boolean, index: number) => selected ? this.discoveryMethodsOptions[index].value : null)
+        .filter((value: any) => value !== null);  // Filter out null values (unchecked boxes)
+  
+      formData.discoveryMethods = discoveryMethodsPreferences;
+      formData.selectedETC = selectedETCPreferences;
+  
       try {
         // Call the FirestoreService to add the document
         await this.firestoreService.addDocument(this.globalService.getUserId(), formData);
         console.log('Form data saved successfully!');
+        
+        // Show submission success alert
+        await this.showSubmissionAlert();
       } catch (error) {
         console.error('Error saving form data:', error);
       }
@@ -365,4 +370,16 @@ export class FormPage1Page implements OnInit {
       console.error('Form is invalid');
     }
   }
+
+  async showSubmissionAlert() {
+    const alert = await this.alertController.create({
+      header: 'Submission Successful',
+      message: 'Your form has been submitted successfully!',
+      buttons: ['OK']
+    });
+  
+    await alert.present();
+  }
+  
+
 }
