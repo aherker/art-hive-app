@@ -7,6 +7,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="page-background">
+  <ion-item>
+    <ion-toggle justify="end" color="success"  [(ngModel)]="isGlobal" (ionChange)="updateChartsBasedOnToggle()">Display Global Data</ion-toggle>
+  </ion-item>
+  
+  
   <ion-card>
     <div class="chart-container">
       <canvas #attendanceDemographicDoughnutCanvas></canvas>

@@ -9,7 +9,7 @@ import { ViewWillEnter } from '@ionic/angular';
   templateUrl: './dapage.page.html',
   styleUrls: ['./dapage.page.scss'],
 })
-export class DApagePage implements OnInit, ViewWillEnter {
+export class DApagePage implements ViewWillEnter {
 
   @ViewChild('attendanceDemographicDoughnutCanvas') attendanceDemographicDoughnutCanvas!: ElementRef; // Reference to canvas
   @ViewChild('PreviousAttendanceDoughnutCanvas') PreviousAttendanceDoughnutCanvas!: ElementRef;
@@ -46,150 +46,128 @@ export class DApagePage implements OnInit, ViewWillEnter {
   symbolicCount: number = 0;
   creativeCount: number = 0;
 
+  //Used to signify if the charts should be displaying local or global analytics data
+  isGlobal: boolean = false;
+
+  //changes the color scheme depending on if light or dark mode is enabled for the users device
   isDarkMode: boolean = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   constructor(private firestoreService: FirestoreService, private globalService: GlobalService, private cdr: ChangeDetectorRef) { }
 
-  async ngOnInit() {
-
-  }
-
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.resetCounts(); // Clear previous data to avoid duplication
-    
-
+  
     // Listen for theme changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
       this.isDarkMode = e.matches;
-      this.initializeAttendanceDemographicsChart();
-      this.initializePreviousAttendanceChart();
-      this.initializeDiscoveryChart();
-      this.initializeEtcChart();
-      this.updateChartColors();
-      this.cdr.detectChanges(); // Trigger change detection to re-render the chart with new colors
+      this.updateAllCharts(); // Updates all charts with the new theme
     });
-    this.fetchChartData();
+  
+    this.updateChartsBasedOnToggle(); // Initialize charts based on toggle state
+  }
+  
+  async toggleAnalytics(){
+    if(this.isGlobal){ //displays the global data if isGlobal is set to true
+      return this.firestoreService.getDocuments('allForms');
+    }
+
+    return this.firestoreService.getDocuments(this.globalService.getUserId());
   }
 
-  async fetchChartData(){
+  updateChartsBasedOnToggle() {
+    this.resetCounts(); // Reset counts before fetching new data
+  
+    this.toggleAnalytics()
+      .then(data => {
+        this.fetchChartData(data); // Fetch and process chart data
+        this.updateAllCharts(); // Update all charts
+      })
+      .catch(error => {
+        console.error('Failed to fetch data for charts', error);
+      });
+  }
+  
+  async fetchChartData(data: any[]) {
     try {
-      const data = await this.firestoreService.getDocuments(this.globalService.getUserId());
-
       data.forEach((dataForm: any) => {
+        // Attendance Demographics Chart Data
         this.totalChildren += dataForm.numChildren || 0;
         this.totalSeniors += dataForm.numSeniors || 0;
-        
+  
         if (Array.isArray(dataForm.numStudentsList)) {
           dataForm.numStudentsList.forEach((studentObj: any) => {
-            this.totalStudents += studentObj.numStudents || 0; 
+            this.totalStudents += studentObj.numStudents || 0;
           });
         }
-
-        console.log(`Fetched Totals - Children: ${this.totalChildren}, Seniors: ${this.totalSeniors}, Students: ${this.totalStudents}`);
-        console.log('Successfully fetched attendance demographic chart data');
-      });
-
-      this.initializeAttendanceDemographicsChart(); // Update chart after data is fetched
-    } catch (error) {
-      console.error('Failed to fetch attendance demographic chart data', error);
-    }
-
-    try{
-      const data = await this.firestoreService.getDocuments(this.globalService.getUserId());
-
-      data.forEach((dataForm: any) =>{
+  
+        // Attendance Chart Data
         this.numAttendance += dataForm.numParticipants || 0;
         this.newAttendance += dataForm.numNewParticipants || 0;
-      });
-
-      this.recurringAttendance = this.numAttendance - this.newAttendance;
-
-      console.log(`Fetched Totals - totalAttendance: ${this.numAttendance}, newAttendance: ${this.newAttendance}, recurringAttendance: ${this.recurringAttendance}`);
-      console.log('successfully fetched attendance chart data');
-
-      this.initializePreviousAttendanceChart();
-    }catch(error){
-      console.error('failed to fetch attendance chart data', error);
-    }
-
-    try{
-      const data = await this.firestoreService.getDocuments(this.globalService.getUserId());
-
-      data.forEach((dataForm: any) => {
-
+        this.recurringAttendance = this.numAttendance - this.newAttendance;
+  
+        // Discovery Methods Chart Data
         if (dataForm.otherDiscovery && dataForm.otherDiscovery.trim() !== '') {
           this.discoveryOtherCount += 1;
         }
-
         if (Array.isArray(dataForm.discoveryMethods)) {
-          dataForm.discoveryMethods.forEach((isSelected: boolean, index: number) => {
-            if (isSelected) {
-              // Increment respective counters based on index
-              switch (index) {
-                case 0:
-                  this.discoveryWordOfMouthCount += 1;
-                  break;
-                case 1:
-                  this.discoveryPassingByCount += 1;
-                  break;
-                case 2:
-                  this.discoverySocialMediaCount += 1;
-                  break;
-              }
+          dataForm.discoveryMethods.forEach((discovery: string) => {
+            switch (discovery) {
+              case 'Word of mouth':
+                this.discoveryWordOfMouthCount += 1;
+                break;
+              case 'Passing by':
+                this.discoveryPassingByCount += 1;
+                break;
+              case 'Social media':
+                this.discoverySocialMediaCount += 1;
+                break;
             }
           });
         }
-      });
-
-      this.initializeDiscoveryChart();
-
-      console.log(`Word of mouth: ${this.discoveryWordOfMouthCount} Passing by: ${this.discoveryPassingByCount} SocialMedia: ${this.discoverySocialMediaCount}, otherDiscovery: ${this.discoveryOtherCount}`);
-    }catch(error){
-      console.error('failed to fetch discovery chart data', error);
-    }
-
-    try{
-      const data = await this.firestoreService.getDocuments(this.globalService.getUserId());
-
-      data.forEach((dataForm: any) => {
+  
+        // ETC Chart Data
         if (Array.isArray(dataForm.selectedETC)) {
-          dataForm.selectedETC.forEach((isSelected: boolean, index: number) => {
-            if (isSelected) {
-              // Increment respective counters based on index
-              switch (index) {
-                case 0:
-                  this.kinestheticCount += 1;
-                  break;
-                case 1:
-                  this.sensoryCount += 1;
-                  break;
-                case 2:
-                  this.perceptualCount += 1;
-                  break;
-                case 3:
-                  this.affectiveCount += 1;
-                  break;
-                case 4:
-                  this.cognitiveCount += 1;
-                  break;
-                case 5:
-                  this.symbolicCount += 1;
-                  break;
-                case 6:
-                  this.creativeCount += 1;
-                  break;  
-              }
+          dataForm.selectedETC.forEach((etc: string) => {
+            switch (etc) {
+              case 'kinesthetic':
+                this.kinestheticCount += 1;
+                break;
+              case 'sensory':
+                this.sensoryCount += 1;
+                break;
+              case 'perceptual':
+                this.perceptualCount += 1;
+                break;
+              case 'affective':
+                this.affectiveCount += 1;
+                break;
+              case 'cognitive':
+                this.cognitiveCount += 1;
+                break;
+              case 'symbolic':
+                this.symbolicCount += 1;
+                break;
+              case 'creative':
+                this.creativeCount += 1;
+                break;
             }
           });
         }
       });
-
-      this.initializeEtcChart();
-
-      console.log(`kinestheticCount: ${this.kinestheticCount}, sensoryCount: ${this.sensoryCount}, perceptualCount: ${this.perceptualCount}, affectiveCount: ${this.affectiveCount}, cognitiveCount: ${this.cognitiveCount}, symbolicCount: ${this.symbolicCount}, creativeCount: ${this.creativeCount}`)
-    }catch(error){
-      console.error('failed to fetch ETC chart data', error);
+  
+      console.log('Data fetched and processed successfully.');
+    } catch (error) {
+      console.error('Failed to process chart data', error);
     }
+  }
+  
+  updateAllCharts() {
+    // Initialize charts after data processing
+    this.initializeAttendanceDemographicsChart();
+    this.initializePreviousAttendanceChart();
+    this.initializeDiscoveryChart();
+    this.initializeEtcChart();
+    this.updateChartColors(); // Update chart colors based on the theme
   }
 
   initializeAttendanceDemographicsChart() {

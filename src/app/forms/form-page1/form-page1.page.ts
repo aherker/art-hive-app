@@ -356,7 +356,10 @@ export class FormPage1Page implements OnInit {
       try {
         // Call the FirestoreService to add the document
         await this.firestoreService.addDocument(this.globalService.getUserId(), formData);
-        console.log('Form data saved successfully!');
+        console.log('Form data saved successfully to user\'s collection');
+
+        await this.firestoreService.addDocument('allForms', formData);
+        console.log('Form data saved successfully to allForms collection');
         
         // Show submission success alert
         await this.showSubmissionAlert();
