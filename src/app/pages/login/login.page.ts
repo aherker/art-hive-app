@@ -27,6 +27,9 @@ export class LoginPage {
         const userId = userCredential.user.uid;
         this.globalService.setUserId(userId);
 
+        this.email = '';
+        this.password = '';
+        
         const color = await this.firestoreService.getUserColor(userId);
         this.colorService.selectedColor = color
         document.documentElement.style.setProperty('--app-background-color', color);
