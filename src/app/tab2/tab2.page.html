@@ -25,7 +25,7 @@
   <ion-content>
     <ion-button (click)="logout()">Sign Out</ion-button> 
 
-    <div>Background Color: <button (click)="applyColor()">Apply Color</button></div>
+    <div>Background Color: <button class="apply-color-button" (click)="applyColor()">Apply Color</button></div>
     <div>
       <input aria-label="Background Color" [(colorPicker)]="selectedColor" (colorPickerChange)="previewColor(selectedColor)" [style.background]="selectedColor" type="text" class="color-picker" [cpPosition]="'right'" [cpOutputFormat]="'hex'"/>
     </div>
