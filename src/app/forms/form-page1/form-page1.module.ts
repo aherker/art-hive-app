@@ -8,6 +8,8 @@ import { FormPage1PageRoutingModule } from './form-page1-routing.module';
 
 import { FormPage1Page } from './form-page1.page';
 
+import { AddQuestionModalComponent } from '../add-question-modal/add-question-modal.component'; 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +18,6 @@ import { FormPage1Page } from './form-page1.page';
     FormPage1PageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [FormPage1Page]
+  declarations: [FormPage1Page, AddQuestionModalComponent]
 })
 export class FormPage1PageModule {}

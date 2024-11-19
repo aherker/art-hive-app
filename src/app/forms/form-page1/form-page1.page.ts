@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-//import { db } from 'src/main';
 import {FirestoreService } from 'src/app/services/firestore.service';
 import 'firebase/firestore';
 import { Timestamp } from 'firebase/firestore';
 import { GlobalService } from 'src/app/services/global.service';
-import { AlertController } from '@ionic/angular';
-
+import { AlertController, ModalController } from '@ionic/angular';
+import { AddQuestionModalComponent } from 'src/app/forms/add-question-modal/add-question-modal.component';
 
 
 @Component({
@@ -14,14 +13,11 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './form-page1.page.html',
   styleUrls: ['./form-page1.page.scss']
 })
-export class FormPage1Page implements OnInit {
+export class FormPage1Page implements OnInit{
   artHiveQuestionare!: FormGroup;
-  //etcLabels: string[] = ['kinesthetic', 'sensory', 'perceptual', 'affective', 'cognitive', 'symbolic', 'creative'];
+  isAdmin$!: Promise<boolean>;
 
-  constructor(private formBuilder: FormBuilder,
-    private firestoreService: FirestoreService,
-    private globalService: GlobalService,
-    private alertController: AlertController) {}
+  constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService, private globalService: GlobalService, private alertController: AlertController, private modalCtrl: ModalController) {}
 
   selectedETCOptions  = [
     { label: 'kinesthetic', value: 'kinesthetic' },
@@ -41,6 +37,8 @@ export class FormPage1Page implements OnInit {
   ];
 
   ngOnInit() {
+    this.isAdmin$ = this.firestoreService.getAdminStatus();
+
     this.artHiveQuestionare = this.formBuilder.group({
 
       question1: [' Name of the people who are completing this form (Members of the community, if they agree to have their names written here):'],
@@ -191,6 +189,8 @@ export class FormPage1Page implements OnInit {
       question44: ['Potential research questions'],
       researchQuestions: [''],
 
+      additionalQuestions: this.formBuilder.array([]), // FormArray to hold additional questions
+
       timestamp: new Date()
     });
 
@@ -221,10 +221,6 @@ export class FormPage1Page implements OnInit {
     return this.artHiveQuestionare.get('discoveryMethods') as FormArray;
   }
 
-  // getLabel(index: number): string {
-  //   return index === 0 ? 'Word of mouth' : index === 1 ? 'Passing by and being curious' : 'Social media';
-  // }
-
   get formsOfExpressionsList(){
     return this.artHiveQuestionare.get('formsOfExpressionsList') as FormArray;
   }
@@ -235,6 +231,34 @@ export class FormPage1Page implements OnInit {
 
   get selectedETC() {
     return (this.artHiveQuestionare.get('selectedETC') as FormArray);
+  }
+
+  get additionalQuestions(): FormArray {
+    return this.artHiveQuestionare.get('additionalQuestions') as FormArray;
+  }
+
+  async openAddQuestionModal() {
+    const modal = await this.modalCtrl.create({
+      component: AddQuestionModalComponent,
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (result.data) {
+        const { questionLabel } = result.data;
+        this.addDynamicQuestion(questionLabel);
+      }
+    });
+
+    await modal.present();
+  }
+
+  addDynamicQuestion(questionLabel: string) {
+    const newQuestionGroup = this.formBuilder.group({
+      label: [questionLabel],
+      answer: [''],
+    });
+
+    this.additionalQuestions.push(newQuestionGroup);
   }
 
   addMember() {
@@ -380,6 +404,41 @@ export class FormPage1Page implements OnInit {
   
     await alert.present();
   }
-  
 
+  async showDeletionAlert() {
+    const alert = await this.alertController.create({
+      header: 'Question Successfully Deleted',
+      message: 'The question has been successfully deleted from the form.',
+      buttons: ['OK']
+    });
+  
+    await alert.present();
+  }
+
+  async deleteQuestion(index: number){
+    const control = this.artHiveQuestionare.get('additionalQuestions') as FormArray;
+
+    // Remove the question from the FormArray
+    control.removeAt(index);
+
+    try {
+      const formData = this.artHiveQuestionare.value;
+  
+      // Get the form ID or any identifier that is part of the form data
+      const formId = formData.id;  // Adjust this line according to your data structure if needed
+  
+      // Update the user's document in Firestore
+      await this.firestoreService.updateDocument(this.globalService.getUserId(), formId, formData);  // Using your updateDocument method
+      console.log('Form data updated successfully to user\'s collection');
+  
+      // Optionally, update the 'allForms' collection if needed
+      await this.firestoreService.updateDocument('allForms', formId, formData);
+      console.log('Form data updated successfully to allForms collection');
+  
+      // Optionally, show an alert to notify the admin that the question was deleted
+      await this.showDeletionAlert();
+    } catch (error) {
+      console.error('Error updating form data:', error);
+    }
+  }
 }

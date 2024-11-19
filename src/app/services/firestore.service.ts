@@ -1,6 +1,6 @@
 // src/app/services/firestore.service.ts
 import { Injectable } from '@angular/core';
-import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc, getDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc, getDoc, query, where } from "firebase/firestore";
 import { db } from 'src/main';  // Import the Firestore instance
 
 
@@ -8,6 +8,8 @@ import { db } from 'src/main';  // Import the Firestore instance
   providedIn: 'root'
 })
 export class FirestoreService {
+
+  private isUserAdmin = false;
 
   // Add a new document
   async addDocument(collectionName: string, data: any) {
@@ -53,5 +55,40 @@ export class FirestoreService {
       console.error('Error fetching user color:', error);
       return '#000000';  // Return default color on error
     }
+  }
+
+  async addAdmin(userId: string){
+    const adminsCollection = collection(db, 'Admins') //access the admins collection
+    await addDoc(adminsCollection, {userId}) //adds the user to the admins collection
+    console.log(`User ${userId} added to the admins collection.`);
+  }
+
+  //checks if the user is an admin
+  async isAdmin(userId: string): Promise<boolean> {
+    try {
+      const adminsCollectionRef = collection(db, 'Admins');
+      const querySnapshot = await getDocs(adminsCollectionRef);
+
+      // Check if user is in the admin list
+      for (const doc of querySnapshot.docs) {
+        const adminData = doc.data();
+        if (adminData['userId'] === userId) {
+          this.isUserAdmin = true; // Update the property
+          return true;
+        }
+      }
+
+      this.isUserAdmin = false; // If not found, set to false
+      return false;
+    } catch (error) {
+      console.error("Error checking if user is admin: ", error);
+      this.isUserAdmin = false;
+      return false;
+    }
+  }
+
+  //Allows for admins to have special privleges on certain pages if true
+  getAdminStatus(): Promise<boolean> {
+    return Promise.resolve(this.isUserAdmin);
   }
 }

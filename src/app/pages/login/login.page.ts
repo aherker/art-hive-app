@@ -34,6 +34,18 @@ export class LoginPage {
         this.colorService.selectedColor = color
         document.documentElement.style.setProperty('--app-background-color', color);
         
+        const isUserAdmin = await this.firestoreService.isAdmin(userId)
+        try{
+          if(isUserAdmin){
+            console.log('User is an admin')
+          }else{
+            console.log('User is not an admin')
+          }
+        }catch(error){
+          console.error("Error checking admin status: ", error);
+        }
+
+
         this.router.navigate(['/tabs/tab2']); // Navigate to dashboard or home after successful login
       },
       (error) => {

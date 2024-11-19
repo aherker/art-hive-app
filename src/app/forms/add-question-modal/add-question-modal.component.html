@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add New Question</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="questionForm" (ngSubmit)="addQuestion()">
+    <ion-item>
+      <ion-label position="floating">Enter the question you want to add to the form</ion-label>
+      <ion-textarea formControlName="questionLabel" required></ion-textarea>
+    </ion-item>
+
+    <ion-footer>
+      <ion-button expand="full" type="submit" [disabled]="questionForm.invalid">Add Question</ion-button>
+    </ion-footer>
+  </form>
+</ion-content>
+
