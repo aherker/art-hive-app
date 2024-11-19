@@ -28,13 +28,7 @@ export class Tab2Page {
     this.menu.toggle(); // Replace 'mainMenu' with your menu ID
   }
 
-  menuDidOpen() {
-    console.log('Menu opened');
-  }
 
-  menuDidClose() {
-    console.log('Menu closed');
-  }
 
   // Method to handle sign out
   logout() {
