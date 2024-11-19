@@ -8,6 +8,7 @@
 
 <ion-content [fullscreen]="true" class="page-background">
   <ion-button class="adminEditFormButton" *ngIf="(isAdmin$ | async)" (click)="openAddQuestionModal()">Add a question</ion-button>
+   
   <ion-card>
     <ion-card-header>
       <ion-card-title>Form Overview</ion-card-title>
@@ -683,36 +684,33 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- <ion-list>
-      <ion-card *ngFor="let question of additionalQuestions.controls; let i = index">
+    <!-- <div *ngIf="additionalQuestionsData">
+      <ion-card *ngFor="let key of objectKeys(additionalQuestionsData); let i = index" [formGroupName]="i">
         <ion-card-header>
-          <ion-card-title>Question {{ i + 1 }}</ion-card-title>
+          <ion-card-title>Question {{ i + 45 }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <ion-item>
-            <ion-label>{{ question.get('label')?.value }}</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-textarea formControlName="answer"></ion-textarea>
-          </ion-item>
+          <ion-card-subtitle>{{ additionalQuestionsData[key] }}</ion-card-subtitle>
+          <ion-textarea formControlName="answer"></ion-textarea>
         </ion-card-content>
       </ion-card>
-    </ion-list> -->
-
-    <ion-card *ngFor="let question of additionalQuestions.controls; let i = index">
-      <ion-card-header>
-        <ion-card-title>Question {{ i + 45 }}</ion-card-title> <!-- Additional questions start after question 44 --> 
-      </ion-card-header>
-      <ion-card-content>
-        <!-- Display the question label -->
-        <ion-card-subtitle class="AdditionalQuestions">{{ question.get('label')?.value }}</ion-card-subtitle>
-        <!-- Input for user responses -->
-        <ion-textarea formControlName="answer"></ion-textarea>
-        
-      </ion-card-content>
-
-      <ion-button class="adminEditFormButton" *ngIf="(isAdmin$ | async)" (click)="deleteQuestion(i)">Delete a question</ion-button>
-    </ion-card>
+    </div> -->
+    
+    <!-- <div *ngIf="additionalQuestionsData"> -->
+    <div formArrayName="dynamicQuestions">
+      <ion-card *ngFor="let group of dynamicQuestions.controls; let i = index" [formGroupName]="i">
+        <!-- <div *ngFor="let group of dynamicQuestions.controls; let i = index" [formGroupName]="i"> -->
+          <ion-card-header>
+            <ion-card-title>Question {{ i + 45 }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-subtitle>{{ group.get('question')?.value }}</ion-card-subtitle>
+            <ion-textarea formControlName="answer"></ion-textarea>
+          </ion-card-content>
+      <!-- </div> -->
+      </ion-card>
+    </div>
+    
 
     <ion-header>
       <ion-toolbar>

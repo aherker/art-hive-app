@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page implements OnInit, OnDestroy {
+  isAdmin$!: Promise<boolean>;
   selectedItem: any;
   formResponses: any[] = []; 
   userId: string | null = null;
@@ -90,6 +91,8 @@ export class Tab3Page implements OnInit, OnDestroy {
     this.userIdSubscription = this.globalService.userId$.subscribe(() => {
       this.getFormResponses();
     });
+
+    this.isAdmin$ = this.firestoreService.getAdminStatus();
   }
 
   ngOnDestroy() {
@@ -121,9 +124,13 @@ export class Tab3Page implements OnInit, OnDestroy {
   // Example of getting documents
   async getFormResponses() {
     try {
-      const responses = await this.firestoreService.getDocuments(this.globalService.getUserId());
-      this.formResponses = responses;  // Store the fetched data
-
+      if(await this.isAdmin$){
+        const responses = await this.firestoreService.getDocuments('allForms');
+        this.formResponses = responses;  // Store the fetched data
+      }else{
+        const responses = await this.firestoreService.getDocuments(this.globalService.getUserId());
+        this.formResponses = responses;  // Store the fetched data
+      }
     } catch (error) {
       console.error('Error fetching form responses:', error);
     }

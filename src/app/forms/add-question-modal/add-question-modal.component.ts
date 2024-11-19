@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -9,20 +8,14 @@ import { ModalController } from '@ionic/angular';
 })
 export class AddQuestionModalComponent{
 
-  questionForm: FormGroup;
+  questionLabel: string = ''; // Store the input
 
-  constructor(private fb: FormBuilder, private modalCtrl: ModalController) {
-    // Initialize the form
-    this.questionForm = this.fb.group({
-      questionLabel: ['', Validators.required], // Question text
-    });
-  }
+  constructor(private modalCtrl: ModalController) {}
 
   // On form submission
   addQuestion() {
-    if (this.questionForm.valid) {
-      // Pass data back to the parent component
-      this.modalCtrl.dismiss(this.questionForm.value);
+    if (this.questionLabel) {
+      this.modalCtrl.dismiss({ questionLabel: this.questionLabel });
     }
   }
 
@@ -30,5 +23,4 @@ export class AddQuestionModalComponent{
   cancel() {
     this.modalCtrl.dismiss(null);
   }
-
 }

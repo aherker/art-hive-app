@@ -91,4 +91,22 @@ export class FirestoreService {
   getAdminStatus(): Promise<boolean> {
     return Promise.resolve(this.isUserAdmin);
   }
+
+  async getDocumentLength(collectionName: string, documentId: string): Promise<number> {
+    try {
+      const docRef = doc(db, collectionName, documentId); // Reference to the document
+      const docSnapshot = await getDoc(docRef); // Fetch the document
+      
+      if (docSnapshot.exists()) {
+        const data = docSnapshot.data(); // Get the document data
+        return Object.keys(data).length; // Count the number of fields
+      } else {
+        console.error('Document does not exist!');
+        return 0;
+      }
+    } catch (error) {
+      console.error('Error fetching document length:', error);
+      return 0;
+    }
+  }
 }

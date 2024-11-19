@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import {FirestoreService } from 'src/app/services/firestore.service';
 import 'firebase/firestore';
 import { Timestamp } from 'firebase/firestore';
 import { GlobalService } from 'src/app/services/global.service';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ViewWillEnter } from '@ionic/angular';
 import { AddQuestionModalComponent } from 'src/app/forms/add-question-modal/add-question-modal.component';
 
 
@@ -13,11 +13,13 @@ import { AddQuestionModalComponent } from 'src/app/forms/add-question-modal/add-
   templateUrl: './form-page1.page.html',
   styleUrls: ['./form-page1.page.scss']
 })
-export class FormPage1Page implements OnInit{
+export class FormPage1Page implements OnInit, ViewWillEnter{
   artHiveQuestionare!: FormGroup;
   isAdmin$!: Promise<boolean>;
+  //additionalQuestionsData: { [key: string]: string } | null = null; // Store fields as key-value pairs
+  additionalQuestionsData: { [key: string]: string } = {};
 
-  constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService, private globalService: GlobalService, private alertController: AlertController, private modalCtrl: ModalController) {}
+  constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService, private globalService: GlobalService, private alertController: AlertController, private modalCtrl: ModalController, private cdr: ChangeDetectorRef) {}
 
   selectedETCOptions  = [
     { label: 'kinesthetic', value: 'kinesthetic' },
@@ -35,6 +37,10 @@ export class FormPage1Page implements OnInit{
     { label: 'Passing by' , value: 'Passing by'},
     { label: 'Social media' , value: 'Social media' }
   ];
+
+  ionViewWillEnter(){
+    this.updateAdditionalQuestions();
+  }
 
   ngOnInit() {
     this.isAdmin$ = this.firestoreService.getAdminStatus();
@@ -189,12 +195,12 @@ export class FormPage1Page implements OnInit{
       question44: ['Potential research questions'],
       researchQuestions: [''],
 
-      additionalQuestions: this.formBuilder.array([]), // FormArray to hold additional questions
+      dynamicQuestions: this.formBuilder.array([]), // FormArray to hold additional questions
 
       timestamp: new Date()
     });
 
-    console.log(this.membersName); // Check if it is defined
+    this.updateAdditionalQuestions();
   }
 
   get membersName(): FormArray {
@@ -233,32 +239,8 @@ export class FormPage1Page implements OnInit{
     return (this.artHiveQuestionare.get('selectedETC') as FormArray);
   }
 
-  get additionalQuestions(): FormArray {
-    return this.artHiveQuestionare.get('additionalQuestions') as FormArray;
-  }
-
-  async openAddQuestionModal() {
-    const modal = await this.modalCtrl.create({
-      component: AddQuestionModalComponent,
-    });
-
-    modal.onDidDismiss().then((result) => {
-      if (result.data) {
-        const { questionLabel } = result.data;
-        this.addDynamicQuestion(questionLabel);
-      }
-    });
-
-    await modal.present();
-  }
-
-  addDynamicQuestion(questionLabel: string) {
-    const newQuestionGroup = this.formBuilder.group({
-      label: [questionLabel],
-      answer: [''],
-    });
-
-    this.additionalQuestions.push(newQuestionGroup);
+  get dynamicQuestions() : FormArray {
+    return this.artHiveQuestionare.get('dynamicQuestions') as FormArray;
   }
 
   addMember() {
@@ -415,12 +397,211 @@ export class FormPage1Page implements OnInit{
     await alert.present();
   }
 
+  // async openAddQuestionModal() {
+  //   const modal = await this.modalCtrl.create({
+  //     component: AddQuestionModalComponent
+  //   });
+
+  //   modal.onDidDismiss().then((result) => {
+  //     if (result.data && result.data.questionLabel) {
+  //       this.addDynamicQuestion(result.data.questionLabel);
+  //       this.updateAdditionalQuestions();
+
+  //       this.cdr.detectChanges();
+  //     }
+  //   });
+
+  //   await modal.present();
+  // }
+
+  async openAddQuestionModal() {
+    const modal = await this.modalCtrl.create({
+      component: AddQuestionModalComponent,
+    });
+  
+    modal.onDidDismiss().then(async (result) => {
+      if (result.data && result.data.questionLabel) {
+        // Wait for the dynamic question to be added before updating
+        await this.addDynamicQuestion(result.data.questionLabel);
+        
+        // Fetch the updated questions and update the UI
+        await this.updateAdditionalQuestions();
+        
+        // Trigger change detection to ensure UI reflects the changes
+        this.cdr.detectChanges();
+      }
+    });
+  
+    await modal.present();
+  }
+  
+
+  async addDynamicQuestion(questionLabel: string) {
+    try {
+      // Fetch all documents from the 'AdditionalQuestions' collection
+      const documents = await this.firestoreService.getDocuments('AdditionalQuestions');
+  
+      // Assuming there's only one document, get it
+      const docRef = documents[0]; // Get the first document
+  
+      // Access the current questions directly since `data()` is unnecessary
+      const currentQuestions = docRef || {}; // docRef contains raw data directly
+  
+      // Generate the new field name based on the current number of questions
+      const newQuestionKey = `additionalQuestionLabel${Object.keys(currentQuestions).length + 1}`;
+  
+      // Add the new question label to the document fields
+      await this.firestoreService.updateDocument('AdditionalQuestions', 'additionalQuestions', {
+        [newQuestionKey]: questionLabel,
+      });
+  
+      console.log('Form updated successfully with the new question');
+    } catch (error) {
+      console.error('Error saving new question to Firestore:', error);
+    }
+  }  
+
+  // async updateAdditionalQuestions() {
+  //   try {
+  //     const documents = await this.firestoreService.getDocuments('AdditionalQuestions');
+  
+  //     if (documents.length > 0) {
+  //       const data = documents[0];
+  //       console.log('Fetched data:', data);
+  
+  //       this.additionalQuestionsData = data;
+  
+  //       // Clear and populate the FormArray
+  //       const formArray = this.artHiveQuestionare.get('dynamicQuestions') as FormArray;
+  //       formArray.clear();
+  
+  //       Object.keys(data).forEach((key) => {
+  //         formArray.push(
+  //           this.formBuilder.group({
+  //             question: [data[key]], // Question label
+  //             answer: [''], // Answer control
+  //           })
+  //         );
+  //       });
+  
+  //       this.cdr.detectChanges();
+  //       console.log('Updated FormArray:', formArray.value);
+  //     } else {
+  //       console.log('No additionalQuestions document found.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching additional questions:', error);
+  //   }
+  // }
+
+  async updateAdditionalQuestions() {
+    try {
+      const documents = await this.firestoreService.getDocuments('AdditionalQuestions');
+  
+      if (documents.length > 0) {
+        const data = documents[0];
+        console.log('Fetched data:', data);
+  
+        this.additionalQuestionsData = data;
+  
+        // Clear and populate the FormArray
+        const formArray = this.artHiveQuestionare.get('dynamicQuestions') as FormArray;
+        formArray.clear();
+  
+        Object.keys(data).forEach((key) => {
+          formArray.push(
+            this.formBuilder.group({
+              question: [data[key]], // Question label
+              answer: [''], // Answer control
+            })
+          );
+        });
+  
+        // Trigger UI update after the form is updated
+        this.cdr.detectChanges();
+        console.log('Updated FormArray:', formArray.value);
+      } else {
+        console.log('No additionalQuestions document found.');
+      }
+    } catch (error) {
+      console.error('Error fetching additional questions:', error);
+    }
+  }
+  
+
+  // async displayAdditionalQuestion() {
+  //   try {
+  //     const documents = await this.firestoreService.getDocuments('AdditionalQuestions');
+
+  //     console.log(documents);
+
+  //     if (documents.length > 0) {
+  //       this.additionalQuestionsData = documents[0]; // Assuming there's only one document.
+  //       //this.populateAdditionalQuestionsForm();
+  //     } else {
+  //       console.log('No additionalQuestions document found.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching additional questions:', error);
+  //   }
+  // }
+
+  // async displayAdditionalQuestion() {
+  //   try {
+  //     const documents = await this.firestoreService.getDocuments('AdditionalQuestions');
+  //     if (documents.length > 0) {
+  //       const data = documents[0];
+  //       console.log('Fetched data:', data);
+  
+  //       this.additionalQuestionsData = data;
+  
+  //       // Clear and populate the FormArray based on fetched data
+  //       const formArray = this.artHiveQuestionare.get('dynamicQuestions') as FormArray;
+  //       formArray.clear();
+  //       Object.keys(data).forEach((key) => {
+  //         formArray.push(
+  //           this.formBuilder.group({
+  //             question: [data[key]], // Store question label
+  //             answer: [''], // Answer control
+  //           })
+  //         );
+  //       });
+  //     } else {
+  //       console.log('No additionalQuestions document found.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching additional questions:', error);
+  //   }
+  // }
+  
+  // objectKeys(obj: { [key: string]: string }) {
+  //   return Object.keys(obj);
+  // }
+
+  // populateAdditionalQuestionsForm() {
+  //   if (!this.additionalQuestionsData) return;
+  
+  //   // const formArray = this.artHiveQuestionare.get('dynamicQuestions') as FormArray;
+  //   // formArray.clear(); // Clear any existing controls
+  
+  //   for (const key of Object.keys(this.additionalQuestionsData)) {
+  //     try{
+  //       this.dynamicQuestions.push(
+  //         this.formBuilder.group({
+  //           label: [this.additionalQuestionsData[key]], // Question text
+  //           answer: [''], // Placeholder for user response
+  //         })
+  //       );
+  //       console.log(this.dynamicQuestions); // Check if the FormArray is defined and populated
+  //     }catch(error){
+  //       console.error('Error adding dynamic question:', error);
+  //     }    
+  //   }
+  // }
+
   async deleteQuestion(index: number){
-    const control = this.artHiveQuestionare.get('additionalQuestions') as FormArray;
 
-    // Remove the question from the FormArray
-    control.removeAt(index);
-
+    // 
     try {
       const formData = this.artHiveQuestionare.value;
   
