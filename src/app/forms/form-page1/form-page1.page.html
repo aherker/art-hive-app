@@ -7,8 +7,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="page-background">
-  <ion-button class="adminEditFormButton" *ngIf="(isAdmin$ | async)" (click)="openAddQuestionModal()">Add a question</ion-button>
-   
+  <div class="addQuestionButtonContainer">
+    <ion-button class="adminEditFormButton" *ngIf="(isAdmin$ | async)" (click)="openAddQuestionModal()">Add a question</ion-button>
+   </div>
   <ion-card>
     <ion-card-header>
       <ion-card-title>Form Overview</ion-card-title>
@@ -404,7 +405,7 @@
             <ion-checkbox-group formArrayName="selectedETC">
               <ion-item *ngFor="let option of selectedETCOptions; let i = index">
                 <ion-label>{{ option.label }}</ion-label>
-                <ion-checkbox [formControlName]="i"></ion-checkbox>
+                <ion-checkbox slot="end" [formControlName]="i"></ion-checkbox>
               </ion-item>
             </ion-checkbox-group>
           </ion-item>
@@ -693,10 +694,8 @@
             <ion-card-subtitle>{{ group.get('question')?.value }}</ion-card-subtitle>
             <ion-textarea formControlName="answer"></ion-textarea>
           </ion-card-content>
-          <div *ngIf="(isAdmin$ | async)">
-            <ion-item *ngIf="(isAdmin$ | async)">
-              <ion-button *ngIf="(isAdmin$ | async)" (click)="deleteQuestion(i)">Delete question</ion-button>
-            </ion-item>
+          <div class="deleteQuestionButtonContainer" *ngIf="(isAdmin$ | async)">
+              <ion-button class="deleteQuestionButton" *ngIf="(isAdmin$ | async)" (click)="deleteQuestion(i)">Delete question</ion-button>
           </div>
       </ion-card>
     </div>

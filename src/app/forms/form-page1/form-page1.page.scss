@@ -337,3 +337,25 @@ ion-toolbar {
   --background: none;
 }
 
+.adminEditFormButton {
+  width: auto;
+  text-transform: none;
+}
+
+.addQuestionButtonContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the button horizontally */
+  gap: 1rem; /* Space between the button and the cards */
+  padding: 1rem; /* Optional: Add padding for better appearance */
+}
+
+.deleteQuestionButtonContainer{
+  display: flex;
+  justify-content: flex-end; /* Moves the button to the right */
+  margin-right: 1rem;
+}
+.deleteQuestionButton{
+  text-transform: none;
+  width: auto;
+}
