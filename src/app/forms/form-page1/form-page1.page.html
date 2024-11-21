@@ -693,8 +693,8 @@
             <ion-card-subtitle>{{ group.get('question')?.value }}</ion-card-subtitle>
             <ion-textarea formControlName="answer"></ion-textarea>
           </ion-card-content>
-          <div>
-            <ion-item>
+          <div *ngIf="(isAdmin$ | async)">
+            <ion-item *ngIf="(isAdmin$ | async)">
               <ion-button *ngIf="(isAdmin$ | async)" (click)="deleteQuestion(i)">Delete question</ion-button>
             </ion-item>
           </div>

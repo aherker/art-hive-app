@@ -4,6 +4,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import * as XLSX from 'xlsx';    // Import XLSX from xlsx
 import { saveAs } from 'file-saver';   // Import saveAs from file-saver
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+//import { ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 //import { DApagePage } from 'src/app/pages/dapage/dapage.page'; /// added for etc and discovery methods
 
@@ -15,6 +16,7 @@ import { Subscription } from 'rxjs';
 })
 export class Tab3Page implements OnInit, OnDestroy {
   isAdmin$!: Promise<boolean>;
+  isGlobal: boolean = false;
   selectedItem: any;
   formResponses: any[] = []; 
   userId: string | null = null;
@@ -82,8 +84,11 @@ export class Tab3Page implements OnInit, OnDestroy {
     return this.keyOrderMapping[key] || [];
   }
   
-  
-  
+  // ionViewWillEnter(){
+  //   this.updatePreviousFormsToggle();
+  // }
+
+
   private userIdSubscription!: Subscription;
 
    constructor(private firestoreService: FirestoreService, private globalService: GlobalService) {}//,private daPage: DApagePage
@@ -119,13 +124,14 @@ export class Tab3Page implements OnInit, OnDestroy {
   // Example of getting documents
   async getFormResponses() {
     try {
-      if(await this.isAdmin$){
+      if(this.isGlobal){
         const responses = await this.firestoreService.getDocuments('allForms');
-        this.formResponses = responses;  // Store the fetched data
+        this.formResponses = responses;  // Store the fetched data;
       }else{
         const responses = await this.firestoreService.getDocuments(this.globalService.getUserId());
         this.formResponses = responses;  // Store the fetched data
       }
+
     } catch (error) {
       console.error('Error fetching form responses:', error);
     }
