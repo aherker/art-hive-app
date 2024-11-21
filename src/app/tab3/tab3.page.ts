@@ -19,6 +19,8 @@ export class Tab3Page implements OnInit, OnDestroy {
   formResponses: any[] = []; 
   userId: string | null = null;
   selectedDocumentData: any;
+  dynamicQuestions: Array<{ question: string; answer: string }> = [];
+
   orderedKeys: (string | any)[][] = [
     ['question1', 'membersName'],  
     ['question2', 'startDateLabel', 'startDate', 'endDateLabel', 'endDate'],                 
@@ -89,11 +91,13 @@ export class Tab3Page implements OnInit, OnDestroy {
 
 
   async ngOnInit() {
+    this.isAdmin$ = this.firestoreService.getAdminStatus();
+
     this.userIdSubscription = this.globalService.userId$.subscribe(() => {
       this.getFormResponses();
     });
 
-    this.isAdmin$ = this.firestoreService.getAdminStatus();
+    
   }
 
   ngOnDestroy() {
@@ -110,17 +114,7 @@ export class Tab3Page implements OnInit, OnDestroy {
     });
   }
 
-  // Example of adding a document
-  async addFormResponse() {
-    const formData = {
-      name: "John Doe",
-      email: "johndoe@example.com",
-      message: "Hello, Firestore!",
-      timestamp: new Date()
-    };
 
-    await this.firestoreService.addDocument(this.globalService.getUserId(), formData);
-  }
 
   // Example of getting documents
   async getFormResponses() {
@@ -141,10 +135,18 @@ export class Tab3Page implements OnInit, OnDestroy {
 
   displaySelectedDocument() {
     if (this.selectedItem) {
+      this.dynamicQuestions = [];
       // Find the document matching the selected timestamp in formResponses
       this.selectedDocumentData = this.formResponses.find(doc =>
         doc['timestamp']?.toDate().getTime() === this.selectedItem.toDate().getTime()
       );
+
+      if (this.selectedDocumentData?.dynamicQuestions) {
+        this.dynamicQuestions = this.selectedDocumentData.dynamicQuestions;
+      } else {
+        console.warn('dynamicQuestions not found in the document');
+      }
+    
     } else {
       this.selectedDocumentData = null; // Clear selection if nothing is selected
     }

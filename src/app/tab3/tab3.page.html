@@ -74,10 +74,23 @@
                 </ion-card>
               </ng-container>
             </ng-container>
+            <ion-card *ngFor="let item of dynamicQuestions; let i = index">
+              <ion-card-header>
+                <ion-card-title>Question {{ i + 45 }}:</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <h2 class="question-label">{{ item.question }}</h2>
+
+                <p class="answer">{{ item.answer }}</p>
+              </ion-card-content>
+            </ion-card>
+            
+
           </ion-card-content>
         </ion-card>
       </div>
       
+
       
       
       
