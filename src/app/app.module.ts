@@ -17,12 +17,12 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import {FirestoreService } from 'src/app/services/firestore.service';
 
 import { ColorPickerModule } from 'ngx-color-picker';
-
+import { ResetPasswordPagePageModule  } from './pages/reset-password-page/reset-password-page.module';
 
 
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ...AppStoreModule, StoreDevtoolsModule.instrument({maxAge: 25}), FormsModule, ReactiveFormsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ...AppStoreModule, StoreDevtoolsModule.instrument({maxAge: 25}), FormsModule, ReactiveFormsModule, ResetPasswordPagePageModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, FirestoreService, ColorPickerModule],
   bootstrap: [AppComponent],
 })
