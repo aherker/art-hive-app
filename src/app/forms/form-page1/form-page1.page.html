@@ -684,22 +684,8 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- <div *ngIf="additionalQuestionsData">
-      <ion-card *ngFor="let key of objectKeys(additionalQuestionsData); let i = index" [formGroupName]="i">
-        <ion-card-header>
-          <ion-card-title>Question {{ i + 45 }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-card-subtitle>{{ additionalQuestionsData[key] }}</ion-card-subtitle>
-          <ion-textarea formControlName="answer"></ion-textarea>
-        </ion-card-content>
-      </ion-card>
-    </div> -->
-    
-    <!-- <div *ngIf="additionalQuestionsData"> -->
     <div formArrayName="dynamicQuestions">
       <ion-card *ngFor="let group of dynamicQuestions.controls; let i = index" [formGroupName]="i">
-        <!-- <div *ngFor="let group of dynamicQuestions.controls; let i = index" [formGroupName]="i"> -->
           <ion-card-header>
             <ion-card-title>Question {{ i + 45 }}</ion-card-title>
           </ion-card-header>
@@ -707,7 +693,11 @@
             <ion-card-subtitle>{{ group.get('question')?.value }}</ion-card-subtitle>
             <ion-textarea formControlName="answer"></ion-textarea>
           </ion-card-content>
-      <!-- </div> -->
+          <div>
+            <ion-item>
+              <ion-button *ngIf="(isAdmin$ | async)" (click)="deleteQuestion(i)">Delete question</ion-button>
+            </ion-item>
+          </div>
       </ion-card>
     </div>
     

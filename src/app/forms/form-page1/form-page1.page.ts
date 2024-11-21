@@ -2,10 +2,11 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import {FirestoreService } from 'src/app/services/firestore.service';
 import 'firebase/firestore';
-import { Timestamp } from 'firebase/firestore';
+import { deleteField , doc, updateDoc, getDoc } from 'firebase/firestore';
 import { GlobalService } from 'src/app/services/global.service';
 import { AlertController, ModalController, ViewWillEnter } from '@ionic/angular';
 import { AddQuestionModalComponent } from 'src/app/forms/add-question-modal/add-question-modal.component';
+import { db } from 'src/main';
 
 
 @Component({
@@ -16,7 +17,6 @@ import { AddQuestionModalComponent } from 'src/app/forms/add-question-modal/add-
 export class FormPage1Page implements OnInit, ViewWillEnter{
   artHiveQuestionare!: FormGroup;
   isAdmin$!: Promise<boolean>;
-  //additionalQuestionsData: { [key: string]: string } | null = null; // Store fields as key-value pairs
   additionalQuestionsData: { [key: string]: string } = {};
 
   constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService, private globalService: GlobalService, private alertController: AlertController, private modalCtrl: ModalController, private cdr: ChangeDetectorRef) {}
@@ -397,23 +397,6 @@ export class FormPage1Page implements OnInit, ViewWillEnter{
     await alert.present();
   }
 
-  // async openAddQuestionModal() {
-  //   const modal = await this.modalCtrl.create({
-  //     component: AddQuestionModalComponent
-  //   });
-
-  //   modal.onDidDismiss().then((result) => {
-  //     if (result.data && result.data.questionLabel) {
-  //       this.addDynamicQuestion(result.data.questionLabel);
-  //       this.updateAdditionalQuestions();
-
-  //       this.cdr.detectChanges();
-  //     }
-  //   });
-
-  //   await modal.present();
-  // }
-
   async openAddQuestionModal() {
     const modal = await this.modalCtrl.create({
       component: AddQuestionModalComponent,
@@ -435,84 +418,100 @@ export class FormPage1Page implements OnInit, ViewWillEnter{
     await modal.present();
   }
   
+  // async addDynamicQuestion(questionLabel: string) {
+  //   try {
+  //     // Fetch all documents from the 'AdditionalQuestions' collection
+  //     const documents = await this.firestoreService.getDocuments('AdditionalQuestions');
+  
+  //     // Assuming there's only one document, get it
+  //     const docRef = documents[0]; // Get the first document
+  
+  //     // Access the current questions directly since `data()` is unnecessary
+  //     const currentQuestions = docRef || {}; // docRef contains raw data directly
+  
+  //     // Generate the new field name based on the current number of questions
+  //     const newQuestionKey = `additionalQuestionLabel${Object.keys(currentQuestions).length + 1}`;
+
+  //     // Add the new question label to the document fields
+  //     await this.firestoreService.updateDocument('AdditionalQuestions', 'additionalQuestions', {
+  //       [newQuestionKey]: questionLabel,
+  //     });
+  
+  //     console.log('Form updated successfully with the new question');
+  //   } catch (error) {
+  //     console.error('Error saving new question to Firestore:', error);
+  //   }
+  // }  
 
   async addDynamicQuestion(questionLabel: string) {
     try {
-      // Fetch all documents from the 'AdditionalQuestions' collection
-      const documents = await this.firestoreService.getDocuments('AdditionalQuestions');
+      // Define the document ID and collection name
+      const documentId = 'additionalQuestions'; // Known document ID
+      const collectionName = 'AdditionalQuestions'; // Firestore collection name
   
-      // Assuming there's only one document, get it
-      const docRef = documents[0]; // Get the first document
+      // Fetch the specific document
+      const docRef = doc(db, collectionName, documentId);
   
-      // Access the current questions directly since `data()` is unnecessary
-      const currentQuestions = docRef || {}; // docRef contains raw data directly
+      // Get the current document data
+      const docSnapshot = await getDoc(docRef);
   
-      // Generate the new field name based on the current number of questions
-      const newQuestionKey = `additionalQuestionLabel${Object.keys(currentQuestions).length + 1}`;
+      if (docSnapshot.exists()) {
+        const currentQuestions = docSnapshot.data() || {}; // Get existing questions
   
-      // Add the new question label to the document fields
-      await this.firestoreService.updateDocument('AdditionalQuestions', 'additionalQuestions', {
-        [newQuestionKey]: questionLabel,
-      });
+        // Generate the next available index by finding the next integer key (e.g., additionalQuestionLabel1)
+        let newQuestionKey = `additionalQuestionLabel1`;
+        let i = 1;
+        while (currentQuestions[newQuestionKey]) {
+          i++;
+          newQuestionKey = `additionalQuestionLabel${i}`;
+        }
   
-      console.log('Form updated successfully with the new question');
+        // Prepare the new question data to be added
+        const newQuestionData = {
+          [newQuestionKey]: questionLabel,
+        };
+  
+        // Update the document by adding the new field
+        await updateDoc(docRef, newQuestionData);
+  
+        console.log('Form updated successfully with the new question');
+      } else {
+        console.log('Document does not exist!');
+      }
     } catch (error) {
       console.error('Error saving new question to Firestore:', error);
     }
-  }  
-
-  // async updateAdditionalQuestions() {
-  //   try {
-  //     const documents = await this.firestoreService.getDocuments('AdditionalQuestions');
-  
-  //     if (documents.length > 0) {
-  //       const data = documents[0];
-  //       console.log('Fetched data:', data);
-  
-  //       this.additionalQuestionsData = data;
-  
-  //       // Clear and populate the FormArray
-  //       const formArray = this.artHiveQuestionare.get('dynamicQuestions') as FormArray;
-  //       formArray.clear();
-  
-  //       Object.keys(data).forEach((key) => {
-  //         formArray.push(
-  //           this.formBuilder.group({
-  //             question: [data[key]], // Question label
-  //             answer: [''], // Answer control
-  //           })
-  //         );
-  //       });
-  
-  //       this.cdr.detectChanges();
-  //       console.log('Updated FormArray:', formArray.value);
-  //     } else {
-  //       console.log('No additionalQuestions document found.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching additional questions:', error);
-  //   }
-  // }
+  }
 
   async updateAdditionalQuestions() {
     try {
+      // Fetch documents from the 'AdditionalQuestions' collection
       const documents = await this.firestoreService.getDocuments('AdditionalQuestions');
-  
+      
       if (documents.length > 0) {
-        const data = documents[0];
+        const data = documents[0]; // Assuming only one document exists
         console.log('Fetched data:', data);
-  
+        
+        // Store the fetched data
         this.additionalQuestionsData = data;
-  
-        // Clear and populate the FormArray
+        
+        // Clear the FormArray before repopulating
         const formArray = this.artHiveQuestionare.get('dynamicQuestions') as FormArray;
         formArray.clear();
   
-        Object.keys(data).forEach((key) => {
+        // Sort the keys numerically to ensure the questions are in the correct order
+        const sortedKeys = Object.keys(data).sort((a, b) => {
+          const numA = parseInt(a.replace('additionalQuestionLabel', ''), 10);
+          const numB = parseInt(b.replace('additionalQuestionLabel', ''), 10);
+          return numA - numB;
+        });
+  
+        // Populate the FormArray in the sorted order
+        sortedKeys.forEach((key) => {
           formArray.push(
             this.formBuilder.group({
               question: [data[key]], // Question label
-              answer: [''], // Answer control
+              answer: [''],           // Answer control
             })
           );
         });
@@ -527,99 +526,52 @@ export class FormPage1Page implements OnInit, ViewWillEnter{
       console.error('Error fetching additional questions:', error);
     }
   }
-  
 
-  // async displayAdditionalQuestion() {
-  //   try {
-  //     const documents = await this.firestoreService.getDocuments('AdditionalQuestions');
+async deleteQuestion(index: number) {
+  try {
+    const documentId = 'additionalQuestions'; // Known document ID
+    const collectionName = 'AdditionalQuestions'; // Firestore collection name
 
-  //     console.log(documents);
+    // Fetch the specific document reference
+    const docRef = doc(db, collectionName, documentId);
 
-  //     if (documents.length > 0) {
-  //       this.additionalQuestionsData = documents[0]; // Assuming there's only one document.
-  //       //this.populateAdditionalQuestionsForm();
-  //     } else {
-  //       console.log('No additionalQuestions document found.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching additional questions:', error);
-  //   }
-  // }
+    // Get the current document data
+    const docSnapshot = await getDoc(docRef);
 
-  // async displayAdditionalQuestion() {
-  //   try {
-  //     const documents = await this.firestoreService.getDocuments('AdditionalQuestions');
-  //     if (documents.length > 0) {
-  //       const data = documents[0];
-  //       console.log('Fetched data:', data);
-  
-  //       this.additionalQuestionsData = data;
-  
-  //       // Clear and populate the FormArray based on fetched data
-  //       const formArray = this.artHiveQuestionare.get('dynamicQuestions') as FormArray;
-  //       formArray.clear();
-  //       Object.keys(data).forEach((key) => {
-  //         formArray.push(
-  //           this.formBuilder.group({
-  //             question: [data[key]], // Store question label
-  //             answer: [''], // Answer control
-  //           })
-  //         );
-  //       });
-  //     } else {
-  //       console.log('No additionalQuestions document found.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching additional questions:', error);
-  //   }
-  // }
-  
-  // objectKeys(obj: { [key: string]: string }) {
-  //   return Object.keys(obj);
-  // }
+    if (docSnapshot.exists()) {
+      const currentQuestions = docSnapshot.data() || {}; // Get existing questions
 
-  // populateAdditionalQuestionsForm() {
-  //   if (!this.additionalQuestionsData) return;
-  
-  //   // const formArray = this.artHiveQuestionare.get('dynamicQuestions') as FormArray;
-  //   // formArray.clear(); // Clear any existing controls
-  
-  //   for (const key of Object.keys(this.additionalQuestionsData)) {
-  //     try{
-  //       this.dynamicQuestions.push(
-  //         this.formBuilder.group({
-  //           label: [this.additionalQuestionsData[key]], // Question text
-  //           answer: [''], // Placeholder for user response
-  //         })
-  //       );
-  //       console.log(this.dynamicQuestions); // Check if the FormArray is defined and populated
-  //     }catch(error){
-  //       console.error('Error adding dynamic question:', error);
-  //     }    
-  //   }
-  // }
+      // Get the keys of all current questions (ordered by their numeric suffix)
+      const questionKeys = Object.keys(currentQuestions).sort((a, b) => {
+        const numA = parseInt(a.replace('additionalQuestionLabel', ''), 10);
+        const numB = parseInt(b.replace('additionalQuestionLabel', ''), 10);
+        return numA - numB;
+      });
 
-  async deleteQuestion(index: number){
+      // Check if the index is within bounds
+      if (index < 0 || index >= questionKeys.length) {
+        console.log('Invalid index for deletion');
+        return;
+      }
 
-    // 
-    try {
-      const formData = this.artHiveQuestionare.value;
-  
-      // Get the form ID or any identifier that is part of the form data
-      const formId = formData.id;  // Adjust this line according to your data structure if needed
-  
-      // Update the user's document in Firestore
-      await this.firestoreService.updateDocument(this.globalService.getUserId(), formId, formData);  // Using your updateDocument method
-      console.log('Form data updated successfully to user\'s collection');
-  
-      // Optionally, update the 'allForms' collection if needed
-      await this.firestoreService.updateDocument('allForms', formId, formData);
-      console.log('Form data updated successfully to allForms collection');
-  
-      // Optionally, show an alert to notify the admin that the question was deleted
-      await this.showDeletionAlert();
-    } catch (error) {
-      console.error('Error updating form data:', error);
+      const questionKey = questionKeys[index]; // Get the key of the question to delete
+
+      // Remove the question field from Firestore using deleteField()
+      await updateDoc(docRef, {
+        [questionKey]: deleteField(),
+      });
+
+      console.log(`Field '${questionKey}' successfully deleted from Firestore.`);
+
+      // After deletion, update the form to reflect changes
+      await this.updateAdditionalQuestions();
+
+    } else {
+      console.log('Document does not exist!');
     }
+  } catch (error) {
+    console.error('Error deleting question:', error);
   }
+}
+
 }

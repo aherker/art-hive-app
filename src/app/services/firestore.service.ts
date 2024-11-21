@@ -1,6 +1,6 @@
 // src/app/services/firestore.service.ts
 import { Injectable } from '@angular/core';
-import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc, getDoc, query, where } from "firebase/firestore";
+import { collection, addDoc, FieldValue, getDocs, updateDoc, doc, deleteDoc, getDoc, query, where} from "firebase/firestore";
 import { db } from 'src/main';  // Import the Firestore instance
 
 
