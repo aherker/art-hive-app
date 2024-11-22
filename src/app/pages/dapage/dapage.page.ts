@@ -17,25 +17,6 @@ export class DApagePage implements ViewWillEnter {
   @ViewChild('discoveryDoughnutCanvas') discoveryDoughnutCanvas!: ElementRef;
   @ViewChild('etcDoughnutCanvas') etcDoughnutCanvas!: ElementRef;
 
-// selectedETCOptions = [                    // adding for excel export
-//     { label: 'kinesthetic', value: 'kinesthetic' },
-//     { label: 'sensory', value: 'sensory' },
-//     { label: 'perceptual', value: 'perceptual' },
-//     { label: 'affective', value: 'affective' },
-//     { label: 'cognitive', value: 'cognitive' },
-//     { label: 'symbolic', value: 'symbolic' },
-//     { label: 'creative', value: 'creative' },
-//   ];
-
-//   discoveryMethodsOptions = [
-//     { label: 'Word of mouth', value: 'Word of mouth' },
-//     { label: 'Passing by', value: 'Passing by' },
-//     { label: 'Social media', value: 'Social media' },
-//   ];
-  // adding for excel export
-
-
-
   attendanceDemographicChart: any;
   previousAttendanceChart: any;
   discoveryChart: any;

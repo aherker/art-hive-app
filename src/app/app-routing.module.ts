@@ -36,13 +36,6 @@ const routes: Routes = [
     redirectTo: '/login',
     pathMatch: 'full'
   },
-  // {
-  //   path: 'form-page1',
-  //   loadChildren: () => import('./forms/form-page1/form-page1.module').then( m => m.FormPage1PageModule)
-  // },
-  
-
-
 ];
 @NgModule({
   imports: [

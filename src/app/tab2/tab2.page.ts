@@ -22,13 +22,9 @@ export class Tab2Page {
     
   }
 
-
-
   openMenu() {
     this.menu.toggle(); // Replace 'mainMenu' with your menu ID
   }
-
-
 
   // Method to handle sign out
   logout() {
@@ -51,7 +47,6 @@ export class Tab2Page {
     await this.colorService.saveColorToFirestore(this.temporaryColor);
     console.log('Applied color:', this.colorService.selectedColor);
   }
-
 
 }
 

@@ -4,11 +4,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import * as XLSX from 'xlsx';    // Import XLSX from xlsx
 import { saveAs } from 'file-saver';   // Import saveAs from file-saver
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-//import { ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-//import { DApagePage } from 'src/app/pages/dapage/dapage.page'; /// added for etc and discovery methods
-
-
 
 @Component({
   selector: 'app-tab3',
@@ -85,16 +81,9 @@ export class Tab3Page implements OnInit, OnDestroy {
     return this.keyOrderMapping[key] || [];
   }
   
-  // ionViewWillEnter(){
-  //   this.updatePreviousFormsToggle();
-  // }
-
-
   private userIdSubscription!: Subscription;
 
    constructor(private firestoreService: FirestoreService, private globalService: GlobalService) {}//,private daPage: DApagePage
-
-
 
   async ngOnInit() {
     this.isAdmin$ = this.firestoreService.getAdminStatus();
@@ -103,7 +92,6 @@ export class Tab3Page implements OnInit, OnDestroy {
       this.getFormResponses();
     });
 
-    
   }
 
   ngOnDestroy() {
@@ -120,9 +108,7 @@ export class Tab3Page implements OnInit, OnDestroy {
     });
   }
 
-
-
-  // Example of getting documents
+  // Getting documents
   async getFormResponses() {
     try {
       if(this.isGlobal){
@@ -167,6 +153,8 @@ export class Tab3Page implements OnInit, OnDestroy {
   isArray(value: any): boolean {
     return Array.isArray(value);
   }
+
+
   // Export to Excel //////////////////////////////////////////////////////////////////////////////////////////////////
   
   // // Helper method to check if a value is a FormArray
@@ -295,10 +283,6 @@ async exportAllUserDataToExcel() {
     console.error('Error exporting data to Excel:', error);
   }
 }
-
-
-
-
 
 }
 

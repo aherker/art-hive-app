@@ -53,21 +53,4 @@ export class RegisterPage {
     }
   }
 
-  // Function to handle user registration
-  // register() {
-  //   if (this.password === this.confirmPassword) {
-  //     this.authService.register(this.email, this.password).then(
-  //       (userCredential) => {
-  //         console.log('User registered:', userCredential);
-  //         this.router.navigate(['/login']); // Navigate to login after successful registration
-  //       },
-  //       (error) => {
-  //         console.error('Registration failed', error);
-  //       }
-  //     );
-  //   } else {
-  //     console.error('Passwords do not match');
-  //   }
-  // }
-
 }

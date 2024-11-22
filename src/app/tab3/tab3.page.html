@@ -22,12 +22,10 @@
     </ion-radio-group>
   </ion-list>
 
-
   <div class="button-container">
     <ion-button (click)="getFormResponses()">Get Form Responses</ion-button>
     <ion-button (click)="exportAllUserDataToExcel()">Export To Excel</ion-button>
   </div>
-
 
       <div *ngIf="selectedDocumentData">
         <ion-toolbar>
@@ -43,7 +41,6 @@
             </ion-card-title>
           </ion-card-header>
           <ion-card-content>
-       
             <ng-container *ngFor="let item of orderedKeys; let i = index">
               <ng-container *ngIf="item.length > 0">
                 <ion-card>
@@ -52,8 +49,6 @@
                   </ion-card-header>
                   <ion-card-content>
                     <h2 class="question-label">{{ selectedDocumentData[item[0]] }}</h2> 
-      
-                  
                     <ng-container *ngFor="let mainKey of item.slice(1)">
                       <ng-container *ngIf="isArray(selectedDocumentData[mainKey])">
                         <div class="answer" *ngFor="let subItem of selectedDocumentData[mainKey]">
@@ -83,12 +78,9 @@
               </ion-card-header>
               <ion-card-content>
                 <h2 class="question-label">{{ item.question }}</h2>
-
                 <p class="answer">{{ item.answer }}</p>
               </ion-card-content>
             </ion-card>
-            
-
           </ion-card-content>
         </ion-card>
       </div>
