@@ -32,8 +32,7 @@
       
       <ion-card-content formArrayName="membersName">
         <ion-card-subtitle>
-          Name of the people who are completing this form (Members of the community, if they agree to have their names written here)
-        </ion-card-subtitle>
+          Name of the people who are completing this form (Members of the community, if they agree to have their names written here) *</ion-card-subtitle>
         <div *ngFor="let memberControl of membersName.controls; let i = index" [formGroupName]="i">
           <ion-item>
             <ion-label class="groupMembersName">Member's name:</ion-label>
@@ -57,7 +56,7 @@
         <ion-card-title>Question 2</ion-card-title>   
       </ion-card-header>
       <ion-card-content>
-        <ion-card-subtitle>Starting and ending date of the art hive</ion-card-subtitle>
+        <ion-card-subtitle>Starting and ending date of the art hive *</ion-card-subtitle>
         <ion-item *ngIf="artHiveQuestionare">
           <ion-label class="DateLabels" position="stacked" >Start date:</ion-label>
           <ion-datetime class="dateInput" displayFormat="MM/DD/YYYY" formControlName="startDate"></ion-datetime>
@@ -76,7 +75,7 @@
         <ion-card-title>Question 3</ion-card-title>        
     </ion-card-header>
       <ion-card-content>
-        <ion-card-subtitle>Address</ion-card-subtitle>
+        <ion-card-subtitle>Address*</ion-card-subtitle>
         <ion-item>
           <ion-label >Name:</ion-label>
           <ion-input formControlName="locationName"></ion-input>
@@ -105,7 +104,7 @@
         <ion-card-title>Question 4</ion-card-title>       
       </ion-card-header>
       <ion-card-content formArrayName="contactList">
-        <ion-card-subtitle>Contact(s)</ion-card-subtitle>
+        <ion-card-subtitle>Contact(s) *</ion-card-subtitle>
         <div *ngFor="let memberControl of contactList.controls; let i = index" [formGroupName]="i">
           <ion-item>
             <ion-label >Name:</ion-label>
@@ -137,7 +136,7 @@
         <ion-card-title>Question 5</ion-card-title>
       </ion-card-header>
       <ion-card-content formArrayName="partnerList">   
-        <ion-card-subtitle>Partners for this Art Hive - individuals, programs, projects, or organizations</ion-card-subtitle>
+        <ion-card-subtitle>Partners for this Art Hive - individuals, programs, projects, or organizations *</ion-card-subtitle>
         <div *ngFor="let memberControl of partnerList.controls; let i = index" [formGroupName]="i">
           <ion-item>
             <ion-label class="partnerNameLabel" >Partner's name:</ion-label>
@@ -154,7 +153,7 @@
         <ion-card-title>Question 6</ion-card-title>
       </ion-card-header>
       <ion-card-content formArrayName="facilitatorList">     
-        <ion-card-subtitle>List facilitator names</ion-card-subtitle>
+        <ion-card-subtitle>List facilitator names*</ion-card-subtitle>
         <div *ngFor="let memberControl of facilitatorList.controls; let i = index" [formGroupName]="i">
           <ion-item>
             <ion-label class="facilitatorName">Facilitator's name:</ion-label>
@@ -171,7 +170,7 @@
         <ion-card-title>Question 7</ion-card-title>
       </ion-card-header>
       <ion-card-content>   
-        <ion-card-subtitle>Number of participants (include facilitators)</ion-card-subtitle>
+        <ion-card-subtitle>Number of participants (include facilitators) *</ion-card-subtitle>
         <ion-item>
           <ion-label class="participantsLabel">Number of participants:</ion-label>
           <ion-input type="number" placeholder="0" formControlName="numParticipants"></ion-input>
@@ -184,7 +183,7 @@
         <ion-card-title>Question 8</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-      <ion-card-subtitle>Approximate number of older adults ≥ 65</ion-card-subtitle>
+      <ion-card-subtitle>Approximate number of older adults ≥ 65 *</ion-card-subtitle>
       <ion-item>
         <ion-label class="SeniorLabel">Number of older adults:</ion-label>
         <ion-input type="number" placeholder="0" formControlName="numSeniors"></ion-input>
@@ -197,7 +196,7 @@
         <ion-card-title>Question 9</ion-card-title>       
       </ion-card-header>
       <ion-card-content formArrayName="numStudentsList">
-        <ion-card-subtitle>Approximate numbers of students (label with educational institutions)</ion-card-subtitle>
+        <ion-card-subtitle>Approximate numbers of students (label with educational institutions) *</ion-card-subtitle>
         <div *ngFor="let memberControl of numStudentsList.controls; let i = index" [formGroupName]="i">
           <ion-item>
             <ion-label class="eduLabel">Educational institution:</ion-label>
@@ -221,7 +220,7 @@
         <ion-card-title>Question 10</ion-card-title>
       </ion-card-header>
       <ion-card-content>   
-        <ion-card-subtitle>Approximate number of children</ion-card-subtitle>
+        <ion-card-subtitle>Approximate number of children *</ion-card-subtitle>
         <ion-item>
           <ion-label class="childrenLabel">Number of children:</ion-label>
           <ion-input type="number" placeholder="0" formControlName="numChildren"></ion-input>
@@ -234,7 +233,7 @@
         <ion-card-title>Question 11</ion-card-title>
       </ion-card-header>
       <ion-card-content>        
-        <ion-card-subtitle>Number of new participants</ion-card-subtitle>
+        <ion-card-subtitle>Number of new participants*</ion-card-subtitle>
         <ion-item>
           <ion-label class="newParticipants">Number of new participants:</ion-label>
           <ion-input type="number" placeholder="0" formControlName="numNewParticipants"></ion-input>
@@ -247,7 +246,7 @@
       <ion-card-title>Question 12</ion-card-title>
     </ion-card-header>
     <ion-card-content>       
-    <ion-card-subtitle >How did new participants find the event?</ion-card-subtitle>
+    <ion-card-subtitle >How did new participants find the event? *</ion-card-subtitle>
       <ion-list>
         <ion-checkbox-group formArrayName="discoveryMethods">
           <ion-item *ngFor="let option of discoveryMethodsOptions; let i = index">
@@ -345,7 +344,7 @@
         <ion-card-title>Question 18</ion-card-title>
       </ion-card-header>
       <ion-card-content formArrayName="formsOfExpressionsList">   
-      <ion-card-subtitle>Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1)):</ion-card-subtitle>
+      <ion-card-subtitle>Forms of expression (art, drama, poetry, music, baking, gardening, etc. - please indicate the approximate number of persons using these forms of expression, e.g., art (12), poetry (1), music (1), gardening (1)) *</ion-card-subtitle>
         <div *ngFor="let memberControl of formsOfExpressionsList.controls; let i = index" [formGroupName]="i">
           <ion-item>
             <ion-label class="formsOfExpressionsLabel">Form of art:</ion-label>
@@ -377,7 +376,7 @@
       </ion-card-header>
       <ion-card-content formArrayName="materialsUsedList">
         <ion-card-subtitle>
-          Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1)):
+          Art materials or instruments used (please write the materials and the approximate number of persons using the same type of material (e.g., yarn (2), acrylic (5), collage (1), watercolor (1), guitar (1)) *
         </ion-card-subtitle>
         <div *ngFor="let memberControl of materialsUsedList.controls; let i = index" [formGroupName]="i">
           <ion-item>
@@ -399,7 +398,7 @@
         <ion-card-title>Question 21</ion-card-title>
       </ion-card-header>
       <ion-card-content>     
-      <ion-card-subtitle>Expressive Therapies Continuum (ETC):</ion-card-subtitle>
+      <ion-card-subtitle>Expressive Therapies Continuum (ETC) *</ion-card-subtitle>
         <ion-list>
           <ion-item>
             <ion-checkbox-group formArrayName="selectedETC">
