@@ -174,7 +174,6 @@ export class Tab3Page implements OnInit, OnDestroy {
     return value instanceof FormArray;
   }
 
-
 async exportAllUserDataToExcel() {
   try {
     // Fetch form responses
@@ -190,6 +189,7 @@ async exportAllUserDataToExcel() {
     // Add headers with 'Timestamp' as the first column
     const headers: string[] = ['Timestamp'];
 
+    // Add headers for static questions
     headers.push(
       ...this.orderedKeys.map((keyGroup: string[], questionIndex: number) => {
         const questionPrompt = this.formResponses[0][keyGroup[0]] || `Question ${questionIndex + 1}`;
@@ -197,23 +197,32 @@ async exportAllUserDataToExcel() {
       })
     );
 
-    if (this.formResponses[0].dynamicQuestions) {
-      this.formResponses[0].dynamicQuestions.forEach((dynamicQuestion: { question: string }, index: number) => {
-        const questionNumber = this.orderedKeys.length + index + 1; // Calculate question number for dynamic questions
-        headers.push(`Question ${questionNumber}: ${dynamicQuestion.question}`);
-      });
-    }
+    // Aggregate all unique dynamic questions across submissions and assign numbers
+    const dynamicQuestionsMap: { [key: string]: string } = {};
+    this.formResponses.forEach((form) => {
+      if (form.dynamicQuestions) {
+        form.dynamicQuestions.forEach((dynamicQuestion: { question: string }) => {
+          if (!dynamicQuestionsMap[dynamicQuestion.question]) {
+            const questionNumber = Object.keys(dynamicQuestionsMap).length + this.orderedKeys.length + 1;
+            dynamicQuestionsMap[dynamicQuestion.question] = `Question ${questionNumber}`;
+          }
+        });
+      }
+    });
+
+    // Add headers for dynamic questions (just the numbers)
+    headers.push(...Object.values(dynamicQuestionsMap));
 
     excelData.push(headers);
 
-    // Populate rows with data, including formatted timestamps
+    // Populate rows with data
     this.formResponses.forEach((form) => {
       const row: string[] = [];
 
-      // Format the timestamp field
+      // Add the timestamp
       const timestamp = form.timestamp
-        ? form.timestamp.toDate().toLocaleString() // Convert Firestore.Timestamp to a formatted string
-        : 'N/A'; // Fallback if timestamp is missing
+        ? form.timestamp.toDate().toLocaleString()
+        : 'N/A';
       row.push(timestamp);
 
       // Add answers for static questions
@@ -246,12 +255,18 @@ async exportAllUserDataToExcel() {
         })
       );
 
-      // Add answers for dynamic questions
-      if (form.dynamicQuestions) {
-        form.dynamicQuestions.forEach((dynamicQuestion: { answer: string }) => {
-          row.push(dynamicQuestion.answer || 'N/A');
-        });
-      }
+      // Add answers for dynamic questions (combine the prompt and answer in the cell)
+      Object.keys(dynamicQuestionsMap).forEach((dynamicQuestion) => {
+        const dynamicEntry = form.dynamicQuestions?.find(
+          (dq: { question: string }) => dq.question === dynamicQuestion
+        );
+
+        // Combine the prompt and answer in the cell
+        const dynamicCell = dynamicEntry
+          ? `${dynamicEntry.question}: ${dynamicEntry.answer || 'N/A'}`
+          : 'N/A'; // Fallback if the question is not present
+        row.push(dynamicCell);
+      });
 
       excelData.push(row);
     });
@@ -280,6 +295,10 @@ async exportAllUserDataToExcel() {
     console.error('Error exporting data to Excel:', error);
   }
 }
+
+
+
+
 
 }
 
