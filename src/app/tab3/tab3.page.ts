@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 //import { DApagePage } from 'src/app/pages/dapage/dapage.page'; /// added for etc and discovery methods
 
 
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -173,180 +174,111 @@ export class Tab3Page implements OnInit, OnDestroy {
     return value instanceof FormArray;
   }
 
+
 async exportAllUserDataToExcel() {
   try {
-    // Static mapping of question numbers to prompts, prefixed with "Question #"
-    const questionPrompts: { [key: string]: string } = {
-      1: "Name of the people who are completing this form (Members of the community, if they agree to have their names written here):",
-      2: "Starting and ending date of the art hive:",
-      3: "Address:",
-      4: "Contact(s):",
-      5: "Partners for this Art Hive - individuals, programs, projects, or organizations:",
-      6: "List facilitator names:",
-      7: "Number of participants (include facilitators):",
-      8: "Approximate number of older adults >= 65:",
-      9: "Approximate numbers of students (label with educational institutions):",
-      10: "Approximate number of children:",
-      11: "Number of new participants:",
-      12: "How did new participants find the event?",
-      13: "Were there any discussions related to EDI topics?",
-      14: "If self-identification occurred, what may have facilitated it?",
-      15: "If needed, was a common ground found? If so, how?",
-      16: "What could be done to reach out for under-represented perspectives?",
-      17: "List action steps to reach out for under-represented perspectives. How and when?",
-      18: "Forms of expression:",
-      19: "Themes & symbols:",
-      20: "Art materials or instruments used:",
-      21: "Expressive Therapies Continuum (ETC):",
-      22: "Discussion Theme: related to community",
-      23: "Discussion themes: related to artmaking",
-      24: "Discussion themes: self-care and personal successes",
-      25: "Discussion themes: challenges",
-      26: "Discussion themes: other",
-      27: "Highlights: holding the physical/digital space",
-      28: "Highlights: community experience",
-      29: "Highlights: accessible, third-space studio environment",
-      30: "Highlights: participants' leadership",
-      31: "Highlights: boundaries",
-      32: "Highlights: other",
-      33: "Challenges: holding the physical/digital space",
-      34: "Challenges: community experience",
-      35: "Challenges: artmaking",
-      36: "Challenges: accessible, third-space studio environment",
-      37: "Challenges: participants' leadership",
-      38: "Challenges: boundaries",
-      39: "Challenges: other",
-      40: "Circles of Care connections:",
-      41: "Testimonies - direct quotes from individuals:",
-      42: "Proposed themes/interests from participants",
-      43: "Action items required and who will follow up",
-      44: "Potential research questions",
-    };
+    // Fetch form responses
+    //await this.getFormResponses();
 
-    // Fetch all user form responses
-    const responses = await this.firestoreService.getDocuments(this.globalService.getUserId());
-
-    if (!responses || responses.length === 0) {
-      console.error("No responses found for this user.");
+    if (!this.formResponses || this.formResponses.length === 0) {
+      console.warn('No form responses available to export.');
       return;
     }
 
-    // Prepare the header row dynamically based on the static question prompts
-    const headerRow: { [key: string]: string } = { Timestamp: "Timestamp" }; // First column is Timestamp
-    Object.keys(questionPrompts).forEach((key) => {
-      headerRow[`Question ${key}`] = `Question ${key}: ${questionPrompts[key]}`;
-    });
+    const excelData: any[][] = [];
 
-    // Prepare the data rows
-    const dataRows = responses.map((response) => {
-      const row: { [key: string]: string } = {};
-      row["Timestamp"] = response["timestamp"]?.toDate().toLocaleString() || "N/A";
+    // Add headers with 'Timestamp' as the first column
+    const headers: string[] = ['Timestamp'];
 
-      Object.keys(questionPrompts).forEach((key) => {
-        const questionIndex = parseInt(key, 10) - 1;
-        const keysGroup = this.orderedKeys[questionIndex];
-        const combinedAnswers = keysGroup
-          .slice(1) // Skip the question prompt key
-          .map((subKey) => {
-            if (subKey === "selectedETC") {
-              return this.processETCData(response[subKey]);
-            } else if (subKey === "discoveryMethods") {
-              return this.processDiscoveryMethodsData(response[subKey], response["otherDiscovery"]);
-            } else if (this.isArray(response[subKey])) {
-              const subKeys = this.getOrderedSubKeys(subKey);
-              return response[subKey]
-                .map((item: any) =>
-                  subKeys.map((subField) => `${item[subField] || ""}`).join(", ")
-                )
-                .join(" | ");
-            } else {
-              return response[subKey] || "";
-            }
-          })
-          .filter((answer) => answer)
-          .join(", ");
+    headers.push(
+      ...this.orderedKeys.map((keyGroup: string[], questionIndex: number) => {
+        const questionPrompt = this.formResponses[0][keyGroup[0]] || `Question ${questionIndex + 1}`;
+        return `Question ${questionIndex + 1}: ${questionPrompt}`;
+      })
+    );
 
-        row[`Question ${key}`] = combinedAnswers || "N/A";
+    if (this.formResponses[0].dynamicQuestions) {
+      this.formResponses[0].dynamicQuestions.forEach((dynamicQuestion: { question: string }, index: number) => {
+        const questionNumber = this.orderedKeys.length + index + 1; // Calculate question number for dynamic questions
+        headers.push(`Question ${questionNumber}: ${dynamicQuestion.question}`);
       });
+    }
 
-      return row;
-    });
+    excelData.push(headers);
 
-    // Combine the header row and data rows
-    const allRows = [headerRow, ...dataRows];
+    // Populate rows with data, including formatted timestamps
+    this.formResponses.forEach((form) => {
+      const row: string[] = [];
 
-    // Convert to worksheet
-    const worksheet = XLSX.utils.json_to_sheet(allRows, { skipHeader: true });
+      // Format the timestamp field
+      const timestamp = form.timestamp
+        ? form.timestamp.toDate().toLocaleString() // Convert Firestore.Timestamp to a formatted string
+        : 'N/A'; // Fallback if timestamp is missing
+      row.push(timestamp);
 
-    // Auto-fit column widths
-    const columnWidths = Object.keys(headerRow).map((key) => {
-      const maxLength = Math.max(
-        ...allRows.map((row) => (row[key] ? row[key].toString().length : 0)),
-        key.length
+      // Add answers for static questions
+      row.push(
+        ...this.orderedKeys.map((keyGroup: string[]) => {
+          let questionAnswer = ' ';
+          keyGroup.forEach((key) => {
+            if (key === 'selectedETC' && form[key]) {
+              const etcData = form[key].join(' \n ');
+              questionAnswer += `ETC: \n${etcData} \n `;
+            } else if (key === 'discoveryMethods' && form[key]) {
+              const methods = form[key].join(' \n ');
+              questionAnswer += `Discovery Methods: \n${methods} \n `;
+            } else if (key === 'otherDiscovery' && form[key]) {
+              questionAnswer += `Other: \n${form[key]} \n `;
+            } else if (Array.isArray(form[key])) {
+              form[key].forEach((item: any) => {
+                const subKeys = this.getOrderedSubKeys(key);
+                subKeys.forEach((subKey) => {
+                  if (item[subKey]) {
+                    questionAnswer += `${item[subKey]} \n `;
+                  }
+                });
+              });
+            } else if (form[key] && key !== keyGroup[0]) {
+              questionAnswer += `${form[key]} \n `;
+            }
+          });
+          return questionAnswer.trim();
+        })
       );
-      return { wch: maxLength + 2 };
+
+      // Add answers for dynamic questions
+      if (form.dynamicQuestions) {
+        form.dynamicQuestions.forEach((dynamicQuestion: { answer: string }) => {
+          row.push(dynamicQuestion.answer || 'N/A');
+        });
+      }
+
+      excelData.push(row);
     });
 
-    worksheet["!cols"] = columnWidths;
+    // Create the worksheet and format the columns
+    const worksheet = XLSX.utils.aoa_to_sheet(excelData);
+    const columnWidths = headers.map((_, colIndex) => {
+      const maxWidth = excelData.reduce((max, row) => {
+        const cell = row[colIndex] || '';
+        return Math.max(max, cell.toString().length);
+      }, 10);
+      return { width: maxWidth + 2 };
+    });
+    worksheet['!cols'] = columnWidths;
 
+    // Create a workbook and save it
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "User Data");
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Form Responses');
 
-    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(blob, `Form_Responses_${new Date().toISOString()}.xlsx`);
 
-    const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-    saveAs(blob, `User_Data_${new Date().toISOString()}.xlsx`);
-
-    console.log("Excel file generated and downloaded successfully.");
+    console.log('Excel export successful.');
   } catch (error) {
-    console.error("Error exporting user data to Excel:", error);
+    console.error('Error exporting data to Excel:', error);
   }
-}
-
-// Helper function to process ETC data
-private processETCData(selectedETC: string[]): string {
-  if (!Array.isArray(selectedETC)) {
-    return "N/A";
-  }
-
-  const etcLabels = [
-    { value: "kinesthetic", label: "Kinesthetic" },
-    { value: "sensory", label: "Sensory" },
-    { value: "perceptual", label: "Perceptual" },
-    { value: "affective", label: "Affective" },
-    { value: "cognitive", label: "Cognitive" },
-    { value: "symbolic", label: "Symbolic" },
-    { value: "creative", label: "Creative" },
-  ];
-
-  // Map selectedETC values to their labels
-  return etcLabels
-    .filter((etc, index) => selectedETC[index]) // Match selected options
-    .map((etc) => etc.label)
-    .join(", ");
-}
-
-// Helper function to process Discovery Methods data
-private processDiscoveryMethodsData(selectedMethods: string[], otherDiscovery: string): string {
-  if (!Array.isArray(selectedMethods)) {
-    return "N/A";
-  }
-
-  const discoveryLabels = [
-    { value: "Word of mouth", label: "Word of Mouth" },
-    { value: "Passing by", label: "Passing By" },
-    { value: "Social media", label: "Social Media" },
-  ];
-
-  const selectedLabels = discoveryLabels
-    .filter((method, index) => selectedMethods[index]) // Match selected options
-    .map((method) => method.label);
-
-  if (otherDiscovery && otherDiscovery.trim() !== "") {
-    selectedLabels.push(`Other: ${otherDiscovery.trim()}`);
-  }
-
-  return selectedLabels.join(", ");
 }
 
 }
